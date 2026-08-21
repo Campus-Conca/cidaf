@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="CIDAF">
+  <g fill="#16263e">
+    <g id="aspa">
+      <path d="M50 8 C 72 12, 76 38, 57 47 C 63 34, 60 18, 50 8 Z"/>
+    </g>
+    <use href="#aspa" transform="rotate(90 50 50)"/>
+    <use href="#aspa" transform="rotate(180 50 50)"/>
+    <use href="#aspa" transform="rotate(270 50 50)"/>
+    <circle cx="50" cy="50" r="7.5" fill="none" stroke="#16263e" stroke-width="4"/>
+  </g>
+</svg>
