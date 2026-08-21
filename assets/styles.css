@@ -358,3 +358,94 @@ footer.site .cols { display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content
   header.site, footer.site, .no-print { display: none !important; }
   body { background: white; }
 }
+
+/* ============ Catálogo visual de servicios ============ */
+.cat-head { display: flex; align-items: center; gap: .7rem; margin: 2.4rem 0 1rem; }
+.cat-head .big { font-size: 1.9rem; }
+.cat-head h2 { margin: 0; }
+.serv-grid { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.serv {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.serv .head { padding: 1rem 1.3rem; color: #fff; display: flex; align-items: center; gap: .8rem; }
+.serv .head .big { font-size: 2rem; }
+.serv .head h3 { color: #fff; margin: 0; font-size: 1.05rem; line-height: 1.25; }
+.serv .head.navy { background: linear-gradient(135deg, var(--navy), var(--navy-2)); }
+.serv .head.green { background: linear-gradient(135deg, #2e5f44, var(--green)); }
+.serv .head.amber { background: linear-gradient(135deg, #b57708, var(--amber)); }
+.serv .head.red { background: linear-gradient(135deg, #9a3c33, var(--red)); }
+.serv .body { padding: 1rem 1.3rem 1.2rem; display: flex; flex-direction: column; gap: .55rem; flex: 1; }
+.serv .body p { font-size: .93rem; color: #4a4f57; }
+.serv .meta { font-size: .87rem; color: #55607a; display: flex; gap: .5rem; align-items: flex-start; }
+.serv .meta .ic { flex: 0 0 auto; }
+.price {
+  display: inline-block;
+  background: var(--amber-soft);
+  color: #7c5606;
+  font-weight: 700;
+  font-size: .82rem;
+  padding: .15rem .6rem;
+  border-radius: 999px;
+}
+.serv .quien {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  border-top: 1px dashed #e2ddd2;
+  padding-top: .7rem;
+}
+.avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .85rem;
+  flex: 0 0 auto;
+}
+.avatar.g { background: var(--green); }
+.avatar.a { background: var(--amber); color: var(--navy); }
+.avatar.r { background: var(--red); }
+.serv .quien .nom { font-size: .88rem; line-height: 1.35; }
+.serv .quien .nom a { font-size: .8rem; }
+
+/* ============ Equipamiento visual por módulo ============ */
+.mod { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.mod .mhead { color: #fff; padding: 1.05rem 1.3rem; display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+.mod .mhead .big { font-size: 2rem; }
+.mod .mhead h3 { color: #fff; margin: 0; font-size: 1.15rem; }
+.mod .mhead.navy { background: linear-gradient(135deg, var(--navy), var(--navy-2)); }
+.mod .mhead.green { background: linear-gradient(135deg, #2e5f44, var(--green)); }
+.mod .mhead.amber { background: linear-gradient(135deg, #b57708, var(--amber)); }
+.mod .mhead.red { background: linear-gradient(135deg, #9a3c33, var(--red)); }
+.mod .pide {
+  margin-left: auto;
+  background: rgba(255,255,255,.16);
+  border: 1px solid rgba(255,255,255,.4);
+  border-radius: 999px;
+  padding: .3rem .85rem;
+  font-size: .85rem;
+  white-space: nowrap;
+}
+.mod .mbody { padding: .6rem 1.3rem 1.2rem; }
+.mod .sub {
+  font-size: .78rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--gray);
+  margin: .9rem 0 .4rem;
+}
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.chip {
+  font-size: .82rem;
+  background: #eef0f4;
+  color: var(--navy-2);
+  border-radius: 999px;
+  padding: .22rem .7rem;
+}
+.chip.hot { background: var(--amber-soft); color: #7c5606; font-weight: 600; }
