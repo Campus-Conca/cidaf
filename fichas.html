@@ -39,43 +39,79 @@ button, .b { font: inherit; cursor: pointer; border: 0; border-radius: 999px; pa
 .promise { margin-top: 1.6rem; background: var(--amber-soft); border-radius: var(--radius); padding: 1rem 1.2rem; font-size: .98rem; color: var(--navy); }
 
 /* ---- Barra de progreso ---- */
-.steps { position: sticky; top: 54px; z-index: 30; background: var(--paper); border-bottom: 1px solid #e4e0d6; }
-.steps .wrap { display: flex; align-items: center; gap: .3rem; padding-top: .6rem; padding-bottom: .6rem; overflow-x: auto; scrollbar-width: thin; }
-.dot { flex: 0 0 auto; border: 1.5px solid var(--gray-soft); background: #fff; color: var(--gray); border-radius: 999px; font-size: .78rem; font-weight: 700; padding: .25rem .6rem; cursor: pointer; white-space: nowrap; }
-.dot.done { background: var(--green-soft); border-color: var(--green); color: var(--green); }
-.dot.pend { background: var(--yellow-soft); border-color: var(--yellow); color: #8a6a00; }
-.dot.cur { background: var(--navy); border-color: var(--navy); color: #fff; }
-.saved { margin-left: auto; font-size: .8rem; color: var(--gray); white-space: nowrap; padding-left: .6rem; }
+.steps { position: sticky; top: 54px; z-index: 30; background: rgba(247, 245, 240, .95); backdrop-filter: blur(6px); border-bottom: 1px solid #e4e0d6; }
+.steps .wrap { display: flex; align-items: center; gap: .9rem; padding-top: .6rem; padding-bottom: .6rem; max-width: 840px; }
+.stepper { position: relative; display: flex; align-items: center; justify-content: space-between; flex: 1; min-width: 0; }
+.stepper::before { content: ""; position: absolute; left: .9rem; right: .9rem; top: 50%; height: 2px; background: #e0dbcf; }
+.sdot { position: relative; flex: 0 0 auto; width: 1.9rem; height: 1.9rem; padding: 0; justify-content: center; border-radius: 50%; border: 2px solid #d5d0c4; background: #fff; color: var(--gray); font-size: .8rem; font-weight: 700; transition: transform .15s, border-color .15s; }
+.sdot:hover { transform: scale(1.1); border-color: var(--navy); }
+.sdot.part { border-color: var(--amber); color: #a36d05; }
+.sdot.done { background: var(--green); border-color: var(--green); color: #fff; }
+.sdot.pend { background: var(--yellow-soft); border-color: var(--yellow); color: #8a6a00; }
+.sdot.cur { background: var(--navy); border-color: var(--navy); color: #fff; transform: scale(1.18); box-shadow: 0 0 0 4px rgba(22, 38, 62, .13); }
+.sdot.fin { font-size: .9rem; }
+.saved { font-size: .78rem; color: var(--gray); white-space: nowrap; }
+@media (max-width: 860px) { header.site { position: static; } .steps { top: 0; } }
+@media (max-width: 560px) { .saved { display: none; } .sdot { width: 1.55rem; height: 1.55rem; font-size: .72rem; border-width: 1.5px; } }
 
 /* ---- Paso ---- */
-.stage { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 1.6rem; padding: 2rem 0 3rem; align-items: start; }
-@media (max-width: 860px) { .stage { grid-template-columns: 1fr; } .steps { top: 0; } }
-.stepno { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--red); }
-.stage h2 { margin: .3rem 0 .4rem; }
-.why { color: #4a4f57; font-size: 1rem; max-width: 60ch; }
-.est { display: inline-block; font-size: .8rem; background: #fff; border: 1px solid #e4e0d6; border-radius: 999px; padding: .1rem .6rem; color: var(--gray); margin-top: .5rem; }
+.stage { max-width: 800px; margin: 0 auto; padding: 1.6rem 0 3rem; }
+.tcard { background: #fff; border-radius: 20px; box-shadow: 0 6px 30px rgba(22, 38, 62, .08); padding: 1.8rem 2rem 1.6rem; }
+@media (max-width: 600px) { .tcard { padding: 1.2rem 1.05rem 1.1rem; border-radius: 16px; } }
+.stephead { display: flex; gap: 1rem; align-items: center; }
+.stepicon { flex: 0 0 auto; width: 3.4rem; height: 3.4rem; border-radius: 16px; background: linear-gradient(135deg, var(--amber-soft), #fbf4e3); display: grid; place-items: center; font-size: 1.7rem; }
+.stepno { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--red); }
+.stephead h2 { margin: .15rem 0 0; }
+.why { color: #4a4f57; font-size: 1rem; margin-top: .9rem; }
 .star { color: var(--amber); }
 .must { background: var(--red-soft); color: var(--red); font-size: .78rem; font-weight: 700; padding: .1rem .5rem; border-radius: 6px; margin-left: .3rem; vertical-align: middle; }
 
-.q { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.1rem 1.2rem; margin-top: 1rem; }
-.q label.t { display: block; font-weight: 700; color: var(--navy); font-size: 1rem; }
-.q .h { display: block; font-size: .88rem; color: var(--gray); margin: .1rem 0 .5rem; }
-input[type=text], textarea, select { width: 100%; font: inherit; font-size: .98rem; color: var(--ink); border: 1.5px solid #dcd8ce; border-radius: 10px; padding: .55rem .7rem; background: #fdfcf9; }
+/* ---- Pestañas ---- */
+.tabs { display: flex; gap: .25rem; background: #f1eee6; border-radius: 999px; padding: .25rem; margin: 1.2rem 0 .2rem; }
+.tab { flex: 1; justify-content: center; background: transparent; color: #5b5f66; font-size: .9rem; padding: .5rem .6rem; white-space: nowrap; }
+.tab:hover { color: var(--navy); }
+.tab.on { background: #fff; color: var(--navy); box-shadow: 0 1px 6px rgba(22, 38, 62, .14); }
+.tab .n { font-size: .74rem; background: var(--green-soft); color: var(--green); border-radius: 999px; padding: 0 .45rem; }
+@media (max-width: 560px) { .tab { font-size: .8rem; padding: .45rem .2rem; gap: .2rem; } .tab .e { display: none; } }
+.sub { font-family: "Fraunces", serif; color: var(--navy); font-size: 1.02rem; margin: 1.3rem 0 .3rem; }
+.lead2 { margin-top: 1.1rem; font-size: .95rem; color: #4a4f57; }
+
+/* ---- Partes de un paso ---- */
+.parts { display: flex; align-items: center; gap: .6rem; margin-top: 1.2rem; font-size: .85rem; color: var(--gray); font-weight: 600; }
+.parts .seg { display: flex; gap: .25rem; }
+.parts .seg i { width: 1.7rem; height: .32rem; border-radius: 99px; background: #e4e0d6; }
+.parts .seg i.on { background: var(--amber); }
+
+/* ---- Preguntas ---- */
+.q { margin-top: 1.4rem; }
+.q label.t { display: block; font-weight: 700; color: var(--navy); font-size: 1.05rem; }
+.q .h { display: block; font-size: .9rem; color: var(--gray); margin: .1rem 0 .5rem; }
+.q.note, .q.ideas { background: #faf6ec; border-radius: 12px; padding: .9rem 1rem; }
+.q.ideas ul, .kq { padding-left: 1.1rem; font-size: .92rem; color: #4a4f57; }
+.q.ideas li, .kq li { margin: .25rem 0; }
+.empty { font-size: .88rem; color: var(--gray); font-style: italic; }
+input[type=text], textarea, select { width: 100%; font: inherit; font-size: 1rem; color: var(--ink); border: 1.5px solid #dcd8ce; border-radius: 12px; padding: .65rem .8rem; background: #fdfcf9; }
 textarea { resize: vertical; min-height: 4.2rem; line-height: 1.5; }
-input:focus, textarea:focus, select:focus { outline: none; border-color: var(--amber); background: #fff; box-shadow: 0 0 0 3px rgba(217,147,13,.18); }
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--amber); background: #fff; box-shadow: 0 0 0 3px rgba(217, 147, 13, .18); }
 .row { display: grid; gap: .5rem; }
 .row.two { grid-template-columns: 1fr 1fr; }
 @media (max-width: 560px) { .row.two { grid-template-columns: 1fr; } }
 
-.chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
-.chip { font-size: .83rem; background: #f1eee6; color: var(--navy); border: 1px solid transparent; border-radius: 999px; padding: .22rem .65rem; cursor: pointer; font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .5rem; }
+.chip { font-size: .86rem; background: #f1eee6; color: var(--navy); border: 1px solid transparent; border-radius: 999px; padding: .3rem .75rem; cursor: pointer; font-weight: 600; }
 .chip:hover { border-color: var(--amber); }
 .chip.on { background: var(--navy); color: #fff; }
 .chips .lbl { font-size: .78rem; color: var(--gray); align-self: center; margin-right: .2rem; }
+.chips.col { flex-direction: column; align-items: stretch; }
+.chips.col .chip { text-align: left; border-radius: 10px; }
+.subtabs { display: flex; flex-wrap: wrap; gap: .3rem; margin: .5rem 0 .3rem; }
+.subtabs button { font-size: .82rem; padding: .25rem .7rem; background: #fff; border: 1.5px solid #dcd8ce; color: #5b5f66; }
+.subtabs button.on { background: var(--navy-2); border-color: var(--navy-2); color: #fff; }
 
-.item { border: 1.5px solid #ebe7dd; border-radius: 12px; padding: .7rem .8rem; margin-top: .6rem; background: #fdfcf9; position: relative; }
+.item { border: 1.5px solid #ebe7dd; border-radius: 14px; padding: .8rem .9rem; margin-top: .8rem; background: #fdfcf9; position: relative; }
 .item .x { position: absolute; top: .35rem; right: .45rem; background: none; color: var(--gray); font-size: 1.1rem; padding: .1rem .35rem; }
 .item .x:hover { color: var(--red); }
+.item > .x + input, .item > .x + textarea { width: calc(100% - 1.7rem); }
 .item .row + .row, .item .row + textarea, .item textarea + .row { margin-top: .45rem; }
 .horizon { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .45rem; }
 .horizon button { font-size: .8rem; padding: .22rem .65rem; background: #fff; border: 1.5px solid #dcd8ce; color: var(--gray); }
@@ -83,32 +119,42 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
 .lights { display: flex; gap: .3rem; }
 .lights button { width: 2.1rem; height: 2.1rem; padding: 0; justify-content: center; border: 2px solid #dcd8ce; background: #fff; font-size: 1.05rem; }
 .lights button.on { border-color: var(--navy); transform: scale(1.08); }
+.more { margin-top: .5rem; font-size: .88rem; }
+.more summary { cursor: pointer; color: var(--navy-2); font-weight: 600; }
 
-/* ---- Panel lateral ---- */
-.side { position: sticky; top: 112px; display: flex; flex-direction: column; gap: 1rem; }
-@media (max-width: 860px) { .side { position: static; } }
-.panel { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1rem 1.15rem; }
-.panel h4 { font-family: "Fraunces", serif; color: var(--navy); font-size: 1.02rem; margin-bottom: .45rem; }
-.panel.ex { border-left: 5px solid var(--amber); }
-.panel.ex .exbody { font-size: .9rem; color: #3d424a; white-space: pre-line; }
-.panel.ex .note { margin-top: .6rem; font-size: .85rem; background: var(--amber-soft); border-radius: 8px; padding: .5rem .65rem; color: var(--navy); }
+/* ---- Ayudas ---- */
+.kitbox { margin-top: 1.2rem; background: var(--green-soft); border-radius: 12px; padding: .7rem .9rem .8rem; }
+.kitbox .chip { background: #fff; }
+.kitbox .chip.on { background: var(--navy); }
+.kl { font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; color: #5d6f64; }
+.colega-card { margin-top: .7rem; background: var(--green-soft); border-radius: 10px; padding: .6rem .8rem; font-size: .9rem; display: flex; flex-direction: column; gap: .15rem; }
+.colega-card b { color: var(--navy); }
+.tiplist { list-style: none; counter-reset: tip; margin-top: 1rem; }
+.tiplist li { counter-increment: tip; position: relative; padding: .6rem .9rem .6rem 2.7rem; background: #faf8f3; border-radius: 12px; margin-top: .5rem; font-size: .95rem; color: #3d424a; }
+.tiplist li::before { content: counter(tip); position: absolute; left: .7rem; top: .62rem; width: 1.45rem; height: 1.45rem; border-radius: 50%; background: var(--navy); color: #fff; font-size: .78rem; font-weight: 700; display: grid; place-items: center; }
+.tema { font-size: .8rem; font-weight: 600; color: var(--gray); margin-top: .7rem; }
 .vs { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .3rem; }
-.vs div { font-size: .85rem; border-radius: 8px; padding: .5rem .6rem; }
+.vs div { font-size: .9rem; border-radius: 10px; padding: .6rem .7rem; }
 .vs .bad { background: var(--red-soft); }
 .vs .good { background: var(--green-soft); }
 .vs b { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .15rem; }
-.checks { list-style: none; font-size: .9rem; }
-.checks li { padding: .22rem 0 .22rem 1.6rem; position: relative; color: #4a4f57; }
-.checks li::before { position: absolute; left: 0; top: .2rem; width: 1.2rem; text-align: center; }
+@media (max-width: 560px) { .vs { grid-template-columns: 1fr; } }
+.exbox { margin-top: .6rem; border-left: 5px solid var(--amber); background: #faf8f3; border-radius: 0 12px 12px 0; padding: .9rem 1rem; font-size: .93rem; color: #3d424a; white-space: pre-line; }
+.exnote { margin: .6rem 0; font-size: .9rem; background: var(--amber-soft); border-radius: 10px; padding: .6rem .8rem; color: var(--navy); }
+.checks { list-style: none; font-size: .93rem; }
+.checks li { padding: .25rem 0 .25rem 1.6rem; position: relative; color: #4a4f57; }
+.checks li::before { position: absolute; left: 0; top: .22rem; width: 1.2rem; text-align: center; }
 .checks li.ok::before { content: "✓"; color: var(--green); font-weight: 700; }
 .checks li.no::before { content: "○"; color: var(--gray-soft); font-weight: 700; }
 .checks li.warn::before { content: "!"; color: #b07f00; font-weight: 800; }
-.preview-mini { font-size: .88rem; color: #3d424a; background: #faf8f3; border-radius: 8px; padding: .6rem .7rem; white-space: pre-line; max-height: 16rem; overflow: auto; }
-.pendbox { display: flex; gap: .55rem; align-items: flex-start; font-size: .9rem; color: #5b5f66; background: var(--yellow-soft); border-radius: 10px; padding: .6rem .75rem; margin-top: 1rem; cursor: pointer; }
+.checks li.ask::before { content: "?"; color: var(--navy-2); font-weight: 800; }
+.preview-mini { font-size: .93rem; color: #3d424a; background: #faf8f3; border-radius: 10px; padding: .7rem .85rem; white-space: pre-line; max-height: 18rem; overflow: auto; }
+.pendbox { display: flex; gap: .55rem; align-items: flex-start; font-size: .9rem; color: #5b5f66; background: var(--yellow-soft); border-radius: 12px; padding: .65rem .8rem; margin-top: 1.4rem; cursor: pointer; }
 .pendbox input { margin-top: .25rem; accent-color: #b07f00; }
 
-.navrow { display: flex; justify-content: space-between; gap: .6rem; margin-top: 1.4rem; flex-wrap: wrap; }
-.stopper { background: var(--red-soft); color: #7c2e27; border-radius: 10px; padding: .7rem .85rem; font-size: .92rem; margin-top: .8rem; }
+.navrow { display: flex; justify-content: space-between; gap: .6rem; margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px solid #eee9de; flex-wrap: wrap; }
+.navrow .b { padding: .7rem 1.4rem; }
+.stopper { background: var(--red-soft); color: #7c2e27; border-radius: 12px; padding: .7rem .85rem; font-size: .92rem; margin-top: 1rem; }
 
 /* ---- Ficha renderizada ---- */
 .ficha { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
@@ -140,38 +186,29 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
 .toast { position: fixed; bottom: 1.2rem; left: 50%; transform: translateX(-50%) translateY(1rem); opacity: 0; visibility: hidden; background: var(--navy); color: #fff; padding: .6rem 1.1rem; border-radius: 999px; font-size: .92rem; transition: transform .25s, opacity .25s, visibility .25s; z-index: 99; }
 .toast.on { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; }
 
-/* ---- Colega, kit y consejos ---- */
-.colega-card { margin-top: .7rem; background: var(--green-soft); border-radius: 10px; padding: .6rem .8rem; font-size: .9rem; display: flex; flex-direction: column; gap: .15rem; }
-.colega-card b { color: var(--navy); }
-.q.ideas ul, .kq { padding-left: 1.1rem; font-size: .9rem; color: #4a4f57; }
-.q.ideas li, .kq li { margin: .2rem 0; }
-.panel.kit { border-left: 5px solid var(--green); }
-.kl { font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; color: var(--gray); margin: .6rem 0 .25rem; }
-.panel .kl:first-of-type { margin-top: .1rem; }
-.chips.col { flex-direction: column; align-items: stretch; }
-.chips.col .chip { text-align: left; border-radius: 10px; }
-.chip.static { cursor: default; }
-.chip.static:hover { border-color: transparent; }
+/* ---- Último paso ---- */
+.wrap.narrow { max-width: 840px; }
+.fpane { display: none; }
+.fpane.on { display: block; }
 .b-send { background: var(--green); color: #fff; }
 .b-send:disabled { opacity: .6; cursor: wait; }
-.tips { margin-top: 1.1rem; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); border-left: 5px solid var(--navy-2); padding: .85rem 1.1rem; }
-.tips summary { cursor: pointer; font-weight: 700; color: var(--navy); }
-.tips ul { padding-left: 1.1rem; font-size: .92rem; color: #4a4f57; }
-.tips li { margin: .3rem 0; }
-.tips .tema { font-size: .8rem; font-weight: 600; color: var(--gray); margin-top: .6rem; }
-@media (max-width: 560px) { .tips .vs { grid-template-columns: 1fr; } }
-.coh-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 1.2rem; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.1rem 1.2rem; margin-bottom: 1rem; align-items: start; }
-.coh-wrap p { font-size: .92rem; color: #4a4f57; margin: .3rem 0 .7rem; }
-.coh-wrap .checks li.ask::before { content: "?"; color: var(--navy-2); font-weight: 800; }
+.coh-wrap { background: #fff; border-radius: 16px; box-shadow: var(--shadow); padding: 1.1rem 1.3rem; margin-top: 1.2rem; }
+.coh-wrap p { font-size: .92rem; color: #4a4f57; margin: .3rem 0 .6rem; }
 .coh-wrap .len { font-size: .85rem; color: var(--gray); margin: .5rem 0 0; }
-@media (max-width: 760px) { .coh-wrap { grid-template-columns: 1fr; } }
-.sent { background: var(--green-soft); color: #245a3c; border-radius: 10px; padding: .65rem .9rem; font-size: .93rem; margin-bottom: .6rem; }
+.sendgrid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 1rem; margin-top: 1rem; }
+@media (max-width: 640px) { .sendgrid { grid-template-columns: 1fr; } }
+.sendcard { background: #fff; border-radius: 16px; box-shadow: var(--shadow); padding: 1.2rem 1.3rem; border-top: 5px solid var(--amber); display: flex; flex-direction: column; gap: .5rem; align-items: flex-start; }
+.sendcard.main { border-top-color: var(--green); }
+.sendcard p { font-size: .92rem; color: #4a4f57; flex: 1; }
+.sent { background: var(--green-soft); color: #245a3c; border-radius: 10px; padding: .65rem .9rem; font-size: .93rem; margin-top: 1rem; }
 
 @media print {
   header.site, footer.site, .steps, .no-print, .tf-hero { display: none !important; }
   body { background: #fff; }
   .view { display: none !important; }
   .view.print { display: block !important; }
+  .fpane { display: none !important; }
+  #fp-ficha { display: block !important; }
   .ficha { box-shadow: none; }
 }
 </style>
@@ -265,33 +302,50 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
 <!-- ================= FINAL ================= -->
 <main id="v-final" class="view print">
   <section class="block">
-    <div class="wrap">
+    <div class="wrap narrow">
       <div class="no-print">
         <div class="stepno">Último paso</div>
         <h2>Tu borrador está listo para salir</h2>
-        <p class="why">Revisa el estado de cada campo. Los amarillos puedes enviarlos así: la coordinación te ayuda a completarlos. Lo único que no puede faltar son los dos campos ★.</p>
+        <div class="tabs" id="ftabs"></div>
+      </div>
+      <div class="fpane no-print" id="fp-revisa">
+        <p class="why">Revisa el estado de cada campo; da clic en uno para volver a él. Los amarillos puedes enviarlos así: la coordinación te ayuda a completarlos. Lo único que no puede faltar son los dos campos ★.</p>
         <div class="summary" id="summary"></div>
         <div class="coh-wrap">
-          <div>
-            <h3>Antes de enviar: ¿todo embona?</h3>
-            <p>Las tres primeras revisiones las hace el taller por ti. Las otras tres necesitan tu ojo: lee tu ficha de corrido y contéstalas con honestidad.</p>
-          </div>
+          <h3>Antes de enviar: ¿todo embona?</h3>
+          <p>Las tres primeras revisiones las hace el taller por ti. Las otras tres necesitan tu ojo: lee tu ficha de corrido y contéstalas con honestidad.</p>
           <div id="cohBox"></div>
         </div>
+      </div>
+      <div class="fpane" id="fp-ficha">
+        <p class="why no-print" style="margin-bottom:1rem">Así se verá tu ficha. Lo que falta aparece marcado en amarillo.</p>
+        <div id="finalFicha"></div>
+      </div>
+      <div class="fpane no-print" id="fp-envia">
         <div id="sentBox"></div>
+        <div class="sendgrid">
+          <div class="sendcard main">
+            <h3>Envíala a la coordinación</h3>
+            <p>No tiene que estar perfecta: es un borrador para pulir en conjunto. Puedes volver a enviarla cuando la mejores.</p>
+            <button class="b b-send" id="btnSend" onclick="submitFicha()">📨 Enviar a coordinación</button>
+          </div>
+          <div class="sendcard">
+            <h3>Llévatela en Word</h3>
+            <p>Para seguir trabajándola, compartirla o guardarla.</p>
+            <button class="b b-pri" onclick="downloadDoc()">⬇ Descargar en Word</button>
+          </div>
+        </div>
+        <h4 class="sub">Otras formas de guardarla</h4>
         <div class="actions-bar">
-          <button class="b b-send" id="btnSend" onclick="submitFicha()">📨 Enviar a coordinación</button>
-          <button class="b b-pri" onclick="downloadDoc()">⬇ Descargar en Word</button>
-          <button class="b b-nav" onclick="copyText()">⧉ Copiar texto</button>
+          <button class="b b-ghost" onclick="copyText()">⧉ Copiar texto</button>
           <button class="b b-ghost" onclick="window.print()">🖨 Imprimir / PDF</button>
           <button class="b b-ghost" onclick="exportJSON()">💾 Respaldo (.json)</button>
-          <button class="b b-ghost" onclick="go('taller')">✎ Seguir editando</button>
         </div>
+        <p style="margin-top:1.4rem;font-size:.9rem;color:var(--gray)">
+          ¿Quieres empezar otra ficha? <button class="b-link" onclick="resetAll()">Borrar esta y empezar de cero</button> (descarga antes tu respaldo).
+        </p>
       </div>
-      <div id="finalFicha"></div>
-      <div class="no-print" style="margin-top:1.4rem;font-size:.9rem;color:var(--gray)">
-        ¿Quieres empezar otra ficha? <button class="b-link" onclick="resetAll()">Borrar esta y empezar de cero</button> (descarga antes tu respaldo).
-      </div>
+      <div class="navrow no-print" id="fnav"></div>
     </div>
   </section>
 </main>
@@ -499,23 +553,27 @@ const LIGHT = { r: "🔴", y: "🟡", g: "🟢", "": "⚪" };
 const STEPS = [
   { key: "meta", short: "0 · Compromiso", title: "Antes de escribir: ¿quién la acompaña?", est: "3 min",
     why: "Solo entran al documento las recomendaciones que alguien del campus está dispuesto a acompañar durante el trienio. Empecemos por ahí: te ahorra escribir algo que después no podremos sostener.",
-    render() { const c = COLEGAS.find(x => x.id === F.meta.colega); return `
-      <div class="q"><label class="t">¿Quién eres?</label><span class="h">Elige tu nombre y precargamos lo que ya platicamos en la reunión del 6 de agosto.</span>
-        <div class="chips">${COLEGAS.filter(x => !x.ejemplo).map(x => `<button class="chip ${F.meta.colega === x.id ? "on" : ""}" onclick="pickColega('${x.id}')">${esc(x.nombre)}</button>`).join("")}<button class="chip ${F.meta.colega === "otro" ? "on" : ""}" onclick="pickColega('otro')">No estoy en la lista</button></div>
-        ${c ? `<div class="colega-card"><b>${esc(c.nombre)}</b>${c.linea ? `<span>Línea: ${esc(c.linea)}</span>` : ""}<span>Tema tentativo: ${esc(c.tema || "por definir, a partir de tu línea de investigación")}</span>${c.con ? `<span>Compartes el tema con ${esc(c.con)}: pónganse de acuerdo para que solo una persona llene la ficha.</span>` : ""}</div>` : ""}</div>
-      ${qText("meta.autor", "Tu nombre, como aparecerá en la ficha", "Con grado, si lo deseas.", "Dra. Nombre Apellido")}
-      ${qText("meta.correo", "Tu correo", "Solo para que la coordinación pueda escribirte.", "nombre@uaq.mx")}
-      ${qArea("meta.tema", "¿Sobre qué será tu recomendación?", "Una línea. No tiene que ser el título final.", "p. ej. conservar las variedades criollas de maíz y frijol del municipio", 2)}
-      ${!has(F.meta.tema) || (c && !c.tema) ? `<div class="q ideas"><label class="t">¿Sin tema todavía? Tres preguntas que ayudan</label><ul>
-        <li>¿Qué problema del municipio conoces mejor que casi nadie, gracias a tu investigación?</li>
-        <li>¿Qué decisión del ayuntamiento, si la tomara bien, cambiaría ese problema?</li>
-        <li>¿Qué parte de esa decisión podrías acompañar tú, con tus horas reales?</li></ul></div>` : ""}
-      <div class="q"><label class="t">¿En qué eje cae tu recomendación?</label><span class="h">Si dudas, elige el más cercano; lo acomodamos al integrar. El eje activa ideas específicas en cada paso.</span>
-        <div class="chips">${EJES.map(e => chip("meta.eje", e, true)).join("")}</div></div>
-      ${qText("meta.acompanan", "¿Quién del campus la acompañará? <span class='must'>innegociable</span>", "Tú y, si aplica, colegas o estudiantes. Nombre completo.", "Dra. Nombre Apellido y M. en C. Nombre Apellido")}
-      <div class="q"><label class="t">¿Qué harías tú, concretamente?</label><span class="h">Elige una o varias. Es lo que el municipio puede esperar del campus.</span>
-        <div class="chips">${ROLES.map(r => chip("meta.roles", r)).join("")}</div></div>
-      ${qText("meta.horas", "¿Cuánto tiempo, aproximadamente?", "Una estimación honesta. Ayuda a no prometer de más.", "p. ej. 4 horas al mes, una visita por trimestre")}`; },
+    parts: [
+      { t: "¿Quién eres?", render() { const c = COLEGAS.find(x => x.id === F.meta.colega); return `
+        <div class="q"><label class="t">Elige tu nombre</label><span class="h">Precargamos lo que ya platicamos en la reunión del 6 de agosto.</span>
+          <div class="chips">${COLEGAS.filter(x => !x.ejemplo).map(x => `<button class="chip ${F.meta.colega === x.id ? "on" : ""}" onclick="pickColega('${x.id}')">${esc(x.nombre)}</button>`).join("")}<button class="chip ${F.meta.colega === "otro" ? "on" : ""}" onclick="pickColega('otro')">No estoy en la lista</button></div>
+          ${c ? `<div class="colega-card"><b>${esc(c.nombre)}</b>${c.linea ? `<span>Línea: ${esc(c.linea)}</span>` : ""}<span>Tema tentativo: ${esc(c.tema || "por definir, a partir de tu línea de investigación")}</span>${c.con ? `<span>Compartes el tema con ${esc(c.con)}: pónganse de acuerdo para que solo una persona llene la ficha.</span>` : ""}</div>` : ""}</div>
+        ${qText("meta.autor", "Tu nombre, como aparecerá en la ficha", "Con grado, si lo deseas.", "Dra. Nombre Apellido")}
+        ${qText("meta.correo", "Tu correo", "Solo para que la coordinación pueda escribirte.", "nombre@uaq.mx")}`; } },
+      { t: "Tu tema", render() { const c = COLEGAS.find(x => x.id === F.meta.colega); return `
+        ${qArea("meta.tema", "¿Sobre qué será tu recomendación?", "Una línea. No tiene que ser el título final.", "p. ej. conservar las variedades criollas de maíz y frijol del municipio", 2)}
+        ${!has(F.meta.tema) || (c && !c.tema) ? `<div class="q ideas"><label class="t">¿Sin tema todavía? Tres preguntas que ayudan</label><ul>
+          <li>¿Qué problema del municipio conoces mejor que casi nadie, gracias a tu investigación?</li>
+          <li>¿Qué decisión del ayuntamiento, si la tomara bien, cambiaría ese problema?</li>
+          <li>¿Qué parte de esa decisión podrías acompañar tú, con tus horas reales?</li></ul></div>` : ""}
+        <div class="q"><label class="t">¿En qué eje cae?</label><span class="h">Si dudas, elige el más cercano; lo acomodamos al integrar. El eje activa sugerencias en los siguientes pasos.</span>
+          <div class="chips col">${EJES.map(e => chip("meta.eje", e, true)).join("")}</div></div>`; } },
+      { t: "El compromiso", render() { return `
+        ${qText("meta.acompanan", "¿Quién del campus la acompañará? <span class='must'>innegociable</span>", "Tú y, si aplica, colegas o estudiantes. Nombre completo.", "Dra. Nombre Apellido y M. en C. Nombre Apellido")}
+        <div class="q"><label class="t">¿Qué harías tú, concretamente?</label><span class="h">Elige una o varias. Es lo que el municipio puede esperar del campus.</span>
+          <div class="chips">${ROLES.map(r => chip("meta.roles", r)).join("")}</div></div>
+        ${qText("meta.horas", "¿Cuánto tiempo, aproximadamente?", "Una estimación honesta. Ayuda a no prometer de más.", "p. ej. 4 horas al mes, una visita por trimestre")}`; } }
+    ],
     checks: () => [[has(F.meta.autor), "Tu nombre"], [has(F.meta.tema), "Tema de la recomendación"], [has(F.meta.eje), "Eje elegido"], [has(F.meta.acompanan), "Quién acompaña (★)"], [F.meta.roles.length > 0, "Qué harías concretamente"]],
     stop: () => !has(F.meta.acompanan) ? "Sin alguien que acompañe, la recomendación no puede entrar al documento. Si aún no sabes quién, márcalo como pendiente y platícalo con la coordinación." : "",
     ex: () => `Acompañan: ${EX.meta.acompanan}\nQué hacen: ${EX.meta.roles.join(", ").toLowerCase()}\nTiempo: ${EX.meta.horas}`,
@@ -528,18 +586,22 @@ const STEPS = [
       ${qArea("titulo", "Título de tu recomendación", "Entre 6 y 20 palabras.", "Programa municipal de …", 2)}
       <div class="q"><label class="t">¿Te atoras? Empieza con una de estas fórmulas</label><span class="h">Da clic y complétala.</span>
       <div class="chips">${["Sistema municipal para …", "Programa municipal de … para …", "Reglamento municipal de …", "Fondo municipal de …", "Red comunitaria de …"].map(s => `<button class="chip" onclick="F.titulo='${s}';save();renderStep()">${s}</button>`).join("")}</div></div>`; },
-    checks: () => [[has(F.titulo), "Tiene título"], [words(F.titulo) >= 5 && words(F.titulo) <= 20, "Entre 5 y 20 palabras"], [!/…/.test(F.titulo), "Sin huecos por llenar (…)"]],
+    checks: () => [[has(F.titulo), "Tiene título"], [words(F.titulo) >= 5 && words(F.titulo) <= 20, "Entre 5 y 20 palabras"], [has(F.titulo) && !/…/.test(F.titulo), "Sin huecos por llenar (…)"]],
     ex: () => EX.titulo, preview: () => F.titulo },
 
   { key: "diag", short: "2 · Diagnóstico", title: "¿Cuál es el problema?", est: "8 min",
     why: "Un párrafo que un presidente municipal pueda leer en 90 segundos y entender la urgencia. No es un ensayo: son cuatro piezas. Respóndelas por separado y nosotros las unimos.",
     vs: ["La situación del agua en el municipio es preocupante y requiere atención de las autoridades.", "El [X]% del agua de las redes comunitarias se pierde en fugas ([fuente], [año]). Si no se actúa en este trienio, …"],
-    render() { return `
-      ${qArea("diag.problema", "① El problema, en una o dos frases", "¿Qué pasa y dónde? Sin adjetivos, con hechos.", "En Arroyo Seco …", 3)}
-      ${qArea("diag.dato", "② El dato que lo demuestra", "Un número: porcentaje, hectáreas, casos, pesos. Uno bueno vale más que cinco regulares.", "El 40% de …", 3)}
-      ${qText("diag.fuente", "③ Fuente y año", "Tu propia investigación cuenta. INEGI, CONEVAL, CONANP, tesis, talleres…", "Autor o institución (año)")}
-      ${qArea("diag.consecuencia", "④ ¿Qué pasa si no se actúa?", "La frase que genera urgencia. Idealmente con horizonte de tiempo.", "Si no se actúa en este trienio, …", 2)}`; },
-    checks: () => { const t = T(F).diag; return [[has(F.diag.problema), "Nombra el problema"], [hasNum(F.diag.dato), "Tiene un dato numérico"], [hasYear(F.diag.fuente), "Cita fuente con año"], [has(F.diag.consecuencia), "Dice qué pasa si no se actúa"], [words(t) <= 130, `Breve: ${words(t)} de 130 palabras máx.`, words(t) > 130]]; },
+    parts: [
+      { t: "El problema y su dato", render() { return `
+        ${qArea("diag.problema", "① El problema, en una o dos frases", "¿Qué pasa y dónde? Sin adjetivos, con hechos.", "En Arroyo Seco …", 3)}
+        ${qArea("diag.dato", "② El dato que lo demuestra", "Un número: porcentaje, hectáreas, casos, pesos. Uno bueno vale más que cinco regulares.", "El 40% de …", 3)}`; } },
+      { t: "La fuente y la urgencia", render() { return `
+        ${qText("diag.fuente", "③ Fuente y año", "Tu propia investigación cuenta. INEGI, CONEVAL, CONANP, tesis, talleres…", "Autor o institución (año)")}
+        ${kitFuentes()}
+        ${qArea("diag.consecuencia", "④ ¿Qué pasa si no se actúa?", "La frase que genera urgencia. Idealmente con horizonte de tiempo.", "Si no se actúa en este trienio, …", 2)}`; } }
+    ],
+    checks: () => { const t = T(F).diag; return [[has(F.diag.problema), "Nombra el problema"], [hasNum(F.diag.dato), "Tiene un dato numérico"], [hasYear(F.diag.fuente), "Cita fuente con año"], [has(F.diag.consecuencia), "Dice qué pasa si no se actúa"], [has(t) && words(t) <= 130, `Breve: ${words(t)} de 130 palabras máx.`, words(t) > 130]]; },
     ex: () => T(EX).diag, preview: () => T(F).diag },
 
   { key: "obj", short: "3 · Objetivo", title: "¿Qué quieres lograr al 2030?", est: "4 min",
@@ -566,23 +628,28 @@ const STEPS = [
         </div>`).join("")}</div>
       <button class="b b-ghost b-sm" style="margin-top:.7rem" onclick="F.acciones.push({t:'',h:1});save();renderStep()">+ Agregar acción</button>
       ${qArea("hitos", "Hitos visibles (opcional)", "¿Qué podrá mostrar el gobierno en cada momento? Ayuda a vender la recomendación.", "Reglamento aprobado en cabildo (año 1) …", 2)}`; },
-    checks: () => { const a = F.acciones.filter(x => has(x.t)); return [[a.length >= 3, `Al menos 3 acciones (${a.length})`], [a.some(x => (x.h ?? 0) === 0), "Algo arranca en los primeros 100 días"], [a.length > 0 && a.every(x => infin(x.t)), "Todas empiezan con verbo en infinitivo"], [a.every(x => !vague(x.t)), "Ninguna es vaga (mejorar, fortalecer, promover…)", a.some(x => vague(x.t))]]; },
+    checks: () => { const a = F.acciones.filter(x => has(x.t)); return [[a.length >= 3, `Al menos 3 acciones (${a.length})`], [a.some(x => (x.h ?? 0) === 0), "Algo arranca en los primeros 100 días"], [a.length > 0 && a.every(x => infin(x.t)), "Todas empiezan con verbo en infinitivo"], [a.length > 0 && a.every(x => !vague(x.t)), "Ninguna es vaga (mejorar, fortalecer, promover…)", a.some(x => vague(x.t))]]; },
     ex: () => T(EX).ordered.filter(g => g.items.length).map(g => g.h.toUpperCase() + "\n" + g.items.map(i => `${i.n}. ${i.t}`).join("\n")).join("\n\n"),
     preview: () => T(F).plazo },
 
   { key: "resp", short: "5 · Responsable ★", title: "¿Quién la lleva en el municipio?", est: "4 min", must: true,
     why: "Si no hay un área municipal clara que lidere, la recomendación se queda en el aire. El campus acompaña, pero no gobierna: alguien del ayuntamiento tiene que hacerla suya.",
-    render() { return `
-      <div class="q"><label class="t">Área municipal que lidera <span class="must">innegociable</span></label><span class="h">Elige una o escribe otra.</span>
-        <div class="chips">${AREAS.map(a => chip("resp.lider", a, true)).join("")}</div>
-        <input type="text" style="margin-top:.5rem" placeholder="Otra área" value="${esc(AREAS.includes(F.resp.lider) ? "" : F.resp.lider)}" oninput="set('resp.lider', this.value)"></div>
-      ${qArea("resp.coord", "Quién más coordina, y para qué", "Opcional. Tesorería cobra, Cabildo aprueba, delegaciones difunden…", "Tesorería (…); Cabildo (…)", 2)}
-      <div class="q"><label class="t">Acompañamiento del campus</label><span class="h">Se toma de tu paso 0.</span>
-        <div class="preview-mini">${esc(has(F.meta.acompanan) ? F.meta.acompanan : "Aún no lo indicas.")}</div>
-        <button class="b-link" onclick="goStep(0)">Editar</button></div>
-      <div class="q"><label class="t">Vinculación institucional</label><span class="h">Dependencias con las que hay que coordinarse.</span>
-        <div class="chips">${VINC.map(v => chip("resp.vinc", v)).join("")}</div>
-        <input type="text" style="margin-top:.5rem" placeholder="Otras" value="${esc(F.resp.vincOtro)}" oninput="set('resp.vincOtro', this.value)"></div>`; },
+    parts: [
+      { t: "El área que lidera", render() { return `
+        <div class="q"><label class="t">Área municipal que lidera <span class="must">innegociable</span></label><span class="h">Elige una o escribe otra.</span>
+          ${kitAreas()}
+          <div class="chips">${AREAS.map(a => chip("resp.lider", a, true)).join("")}</div>
+          <input type="text" style="margin-top:.6rem" placeholder="Otra área" value="${esc(AREAS.includes(F.resp.lider) ? "" : F.resp.lider)}" oninput="set('resp.lider', this.value)"></div>
+        ${qArea("resp.coord", "Quién más coordina, y para qué", "Opcional. Tesorería cobra, Cabildo aprueba, delegaciones difunden…", "Tesorería (…); Cabildo (…)", 2)}`; } },
+      { t: "Acompañamiento y vinculación", render() { return `
+        <div class="q"><label class="t">Acompañamiento del campus</label><span class="h">Se toma de tu paso 0.</span>
+          <div class="preview-mini">${esc(has(F.meta.acompanan) ? F.meta.acompanan : "Aún no lo indicas.")}</div>
+          <button class="b-link" onclick="goStep(0, true)">Editar</button></div>
+        <div class="q"><label class="t">Vinculación institucional</label><span class="h">Dependencias con las que hay que coordinarse.</span>
+          ${kitVinc()}
+          <div class="chips">${VINC.map(v => chip("resp.vinc", v)).join("")}</div>
+          <input type="text" style="margin-top:.6rem" placeholder="Otras" value="${esc(F.resp.vincOtro)}" oninput="set('resp.vincOtro', this.value)"></div>`; } }
+    ],
     checks: () => [[has(F.resp.lider), "Área municipal líder (★)"], [has(F.meta.acompanan), "Acompañamiento UAQ con nombre (★)"], [F.resp.vinc.length > 0 || has(F.resp.vincOtro), "Vinculación institucional"]],
     stop: () => !has(F.resp.lider) ? "Este campo es innegociable: sin un área municipal responsable, la recomendación no entra. Si no sabes cuál, márcalo como pendiente y lo resolvemos juntos." : "",
     ex: () => T(EX).resp.join("\n"), preview: () => T(F).resp.join("\n") },
@@ -591,6 +658,7 @@ const STEPS = [
     why: "De dos a cuatro variables medibles. Cada una con dónde estamos (2027), a dónde queremos llegar (2030) y quién lo mide. Si no conoces la línea base, escribe «a determinar» y cómo se medirá: eso también es rigor.",
     vs: ["Mejor calidad del agua.", "% de tomas con cloro residual dentro de norma. Base 2027: [X]%. Meta 2030: ≥ 90%. Fuente: muestreo trimestral UAQ."],
     render() { return `
+      ${kitInd()}
       ${F.ind.map((x, i) => `
         <div class="item">
           <button class="x" title="Quitar" onclick="F.ind.splice(${i},1);save();renderStep()">×</button>
@@ -620,7 +688,7 @@ const STEPS = [
             <input type="text" placeholder="Fuente de financiamiento" value="${esc(x.fuente)}" oninput="F.costo[${i}].fuente=this.value;save();refreshSide()">
           </div>
           <div class="chips"><span class="lbl">Monto:</span>${MONTOS.map(m => `<button class="chip" onclick="F.costo[${i}].monto='${m}';save();renderStep()">${m}</button>`).join("")}</div>
-          <div class="chips"><span class="lbl">Fuente:</span>${FONDOS.map(m => `<button class="chip" onclick="F.costo[${i}].fuente=[F.costo[${i}].fuente,'${m}'].filter(Boolean).join('; ');save();renderStep()">${m}</button>`).join("")}</div>
+          ${det("fz" + i, "＋ Sugerir fuentes de financiamiento", `<div class="chips">${fondosList().map(m => `<button class="chip" onclick='addFondo(${i}, ${JSON.stringify(m)})'>${esc(m)}</button>`).join("")}</div>`)}
         </div>`).join("")}
       <button class="b b-ghost b-sm" style="margin-top:.7rem" onclick="F.costo.push({comp:'',monto:'',fuente:''});save();renderStep()">+ Agregar componente</button>
       <div class="q"><label class="t" style="display:flex;gap:.5rem;align-items:center;cursor:pointer"><input type="checkbox" ${F.ingresos ? "checked" : ""} onchange="F.ingresos=this.checked;save();renderStep()"> ¿Genera ingresos o ahorros para el municipio?</label>
@@ -630,15 +698,23 @@ const STEPS = [
 
   { key: "legal", short: "8 · Marco legal", title: "¿Qué le da piso legal?", est: "3 min",
     why: "Solo la lista de leyes, normas o programas que facultan al municipio para actuar. Marca los que conozcas; la coordinación afinará artículos al integrar. No necesitas ser abogado.",
-    render() { return Object.entries(LEYES).map(([g, ls]) => `
-      <div class="q"><label class="t">${g}</label><div class="chips">${ls.map(l => chip("legal", l)).join("")}</div></div>`).join("") + qArea("legalOtro", "Otros instrumentos o artículos específicos", "Opcional. NOMs, programas, artículos que conozcas.", "LGEEPA Art. …; NOM-…", 2); },
+    render() {
+      const k = kit(); const groups = [...(k ? [["Sugeridos para tu eje", k.leyes]] : []), ...Object.entries(LEYES)];
+      legalG = Math.min(legalG, groups.length - 1);
+      return `
+      <div class="q"><label class="t">Tu lista</label><span class="h">Lo que marques aparece aquí. Da clic en uno para quitarlo.</span>
+        <div class="chips">${F.legal.length ? F.legal.map(l => `<button class="chip on" onclick='toggleChip("legal", ${JSON.stringify(l)}, false)'>${esc(l)} ×</button>`).join("") : `<span class="empty">Aún no eliges ninguno.</span>`}</div></div>
+      <div class="q"><label class="t">Elige por tema</label><span class="h">Cambia de tema y marca los que apliquen.</span>
+        <div class="subtabs">${groups.map(([g], i) => `<button class="${i === legalG ? "on" : ""}" onclick="legalG=${i};renderStep()">${esc(g)}</button>`).join("")}</div>
+        <div class="chips">${groups[legalG][1].map(l => chip("legal", l)).join("")}</div></div>
+      ${qArea("legalOtro", "Otros instrumentos o artículos específicos", "Opcional. NOMs, programas, artículos que conozcas.", "LGEEPA Art. …; NOM-…", 2)}`; },
     checks: () => [[F.legal.length + (has(F.legalOtro) ? 1 : 0) >= 1, "Al menos un instrumento"]],
     ex: () => T(EX).legal.join("\n"), preview: () => T(F).legal.join("\n") },
 
   { key: "sem", short: "9 · Semáforo", title: "¿Qué tan lejos estamos hoy?", est: "3 min",
     why: "Un color por componente de tu propuesta y una frase que lo justifique. Permite ver de un vistazo qué existe y qué falta. 🔴 no existe · 🟡 existe a medias · 🟢 funciona.",
     render() { return `
-      ${F.acciones.some(a => has(a.t)) && !F.sem.some(s => has(s.comp)) ? `<div class="q" style="background:var(--amber-soft)"><b>Atajo:</b> ¿usamos tus acciones como componentes? <button class="b b-nav b-sm" onclick="semFromActions()">Sí, precárgalas</button></div>` : ""}
+      ${F.acciones.some(a => has(a.t)) && !F.sem.some(s => has(s.comp)) ? `<div class="q note"><b>Atajo:</b> ¿usamos tus acciones como componentes? <button class="b b-nav b-sm" onclick="semFromActions()">Sí, precárgalas</button></div>` : ""}
       ${F.sem.map((s, i) => `
         <div class="item">
           <button class="x" title="Quitar" onclick="F.sem.splice(${i},1);save();renderStep()">×</button>
@@ -668,30 +744,21 @@ function pickColega(id) {
 
 /* ---- Kit de ideas por eje ---- */
 function kit() { const i = EJES.indexOf(F.meta.eje); return i >= 0 ? KIT[i] : null; }
-function kitPanel(key) {
+function kitBox(title, body) { return `<div class="kitbox"><p class="kl">💡 ${title} · eje ${esc(F.meta.eje.split(".")[0])}</p>${body}</div>`; }
+function kitFuentes() { const k = kit(); return k ? kitBox("Fuentes que suelen servir", `<div class="chips">${k.fuentes.map(f => `<button class="chip" onclick='setIfEmpty("diag.fuente", ${JSON.stringify(f + " (año)")})'>${esc(f)}</button>`).join("")}</div>`) : ""; }
+function kitAreas() { const k = kit(); return k ? kitBox("Áreas que suelen liderar", `<div class="chips">${k.areas.map(a => chip("resp.lider", a, true)).join("")}</div>`) : ""; }
+function kitVinc() { const k = kit(); return k ? kitBox("Dependencias frecuentes", `<div class="chips">${k.vinc.map(v => chip("resp.vinc", v)).join("")}</div>`) : ""; }
+function kitInd() { const k = kit(); return k ? kitBox("Indicadores típicos, clic para usar", `<div class="chips col">${k.indicadores.map(x => `<button class="chip" onclick='useInd(${JSON.stringify(x)})'>+ ${esc(x.nombre)}</button>`).join("")}</div>`) : ""; }
+function kitQs(key) {
+  if (!["meta", "titulo", "diag", "obj", "acciones"].includes(key)) return "";
   const k = kit();
-  if (!k) return key === "meta" ? "" : `<div class="panel kit"><h4>💡 Ideas para tu eje</h4><p style="font-size:.88rem;color:var(--gray)">Elige tu eje en el <button class="b-link" onclick="goStep(0)">paso 0</button> y aquí aparecerán sugerencias específicas.</p></div>`;
-  const head = `<div class="panel kit"><h4>💡 Ideas para el eje ${esc(F.meta.eje.split(".")[0])}</h4>`;
-  const add = (path, v) => `<button class="chip" onclick='addTo(${JSON.stringify(path)}, ${JSON.stringify(v)})'>+ ${esc(v)}</button>`;
-  switch (key) {
-    case "titulo": case "meta": case "diag":
-      return head + `<p class="kl">Preguntas para pensar</p><ul class="kq">${k.preguntas.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
-        <p class="kl">Fuentes que suelen servir</p><div class="chips">${k.fuentes.map(f => `<button class="chip" onclick='setIfEmpty("diag.fuente", ${JSON.stringify(f + " (año)")})'>${esc(f)}</button>`).join("")}</div></div>`;
-    case "obj": case "acciones":
-      return head + `<p class="kl">Preguntas para pensar</p><ul class="kq">${k.preguntas.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
-        <p class="kl">Recuerda</p><ul class="kq"><li>Lo barato y posible, primero: socializar, capacitar o publicar lo que ya existe.</li><li>Lo que deba sobrevivir al trienio va en «Permanente».</li></ul></div>`;
-    case "resp":
-      return head + `<p class="kl">Áreas que suelen liderar</p><div class="chips">${k.areas.map(a => `<button class="chip" onclick='F.resp.lider=${JSON.stringify(a)};save();renderStep()'>${esc(a)}</button>`).join("")}</div>
-        <p class="kl">Dependencias frecuentes</p><div class="chips">${k.vinc.map(v => add("resp.vinc", v)).join("")}</div></div>`;
-    case "ind":
-      return head + `<p class="kl">Indicadores típicos (clic para usar)</p><div class="chips col">${k.indicadores.map(x => `<button class="chip" onclick='useInd(${JSON.stringify(x)})'>+ ${esc(x.nombre)}</button>`).join("")}</div></div>`;
-    case "costo":
-      return head + `<p class="kl">Fondos pertinentes para este eje</p><div class="chips">${k.fondos.map(f => `<span class="chip static">${esc(f)}</span>`).join("")}</div><p style="font-size:.84rem;color:var(--gray);margin-top:.4rem">Úsalos en el campo «Fuente» de cada componente.</p></div>`;
-    case "legal":
-      return head + `<p class="kl">Instrumentos más pertinentes</p><div class="chips">${k.leyes.map(l => add("legal", l)).join("")}</div></div>`;
-    default: return "";
-  }
+  return k ? kitBox("Preguntas para pensar", `<ul class="kq">${k.preguntas.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`)
+    : `<p class="lead2">Elige tu eje en el <button class="b-link" onclick="goStep(0)">paso 0</button> y aquí aparecerán preguntas específicas para tu tema.</p>`;
 }
+function fondosList() { const k = kit(); return [...new Set([...(k ? k.fondos : []), ...FONDOS])]; }
+function addFondo(i, m) { F.costo[i].fuente = [F.costo[i].fuente, m].filter(Boolean).join("; "); save(); renderStep(); }
+const openDet = new Set();
+function det(id, summary, body) { return `<details class="more" ${openDet.has(id) ? "open" : ""} ontoggle="this.open?openDet.add('${id}'):openDet.delete('${id}')"><summary>${summary}</summary>${body}</details>`; }
 function addTo(path, v) { const a = get(path); if (!a.includes(v)) a.push(v); save(); renderStep(); }
 function setIfEmpty(path, v) { if (!has(get(path))) { set(path, v); renderStep(); } else toast("Ya tienes una fuente escrita"); }
 function useInd(x) {
@@ -796,12 +863,38 @@ const TIPS = {
       "La frase dice el hecho, no la opinión."],
     vs: [["Protección civil", "🔴 Brigadas — Falta mucho por hacer.", "🟡 Brigadas comunitarias — Existen en [X] delegaciones, sin equipo ni capacitación vigente."]] }
 };
-let tipsOpen = false;
-function tipsHTML(key) {
-  const t = TIPS[key]; if (!t) return "";
-  return `<details class="tips" ${tipsOpen ? "open" : ""} ontoggle="tipsOpen=this.open"><summary>💡 ¿Te atoras? Consejos y ejemplos para este campo</summary>
-    <ul>${t.tips.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
-    ${(t.vs || []).map(([tema, no, si]) => `<p class="tema">Ejemplo · ${esc(tema)}</p><div class="vs"><div class="bad"><b>Así no</b>${esc(no)}</div><div class="good"><b>Así sí</b>${esc(si).replace(/\n/g, "<br>")}</div></div>`).join("")}</details>`;
+
+/* ---- Contenido de cada pestaña del paso ---- */
+const ICONS = { meta: "🤝", titulo: "🏷️", diag: "🔎", obj: "🎯", acciones: "🛠️", resp: "🏛️", ind: "📈", costo: "💰", legal: "⚖️", sem: "🚦" };
+/* Nota de la ficha ejemplo que corresponde a cada paso (índice en EXNOTES). */
+const EXNOTE = { meta: "Esta ficha existe porque dos personas del campus se comprometieron a acompañarla unas 8 horas al mes.", titulo: 0, diag: 1, obj: 2, acciones: 3, resp: 4, ind: 6, costo: 7, legal: 8, sem: 9 };
+let tab = "form", part = 0, legalG = 0;
+
+function paneForm(s) {
+  const p = s.parts, last = !p || part === p.length - 1;
+  return `${p ? `<div class="parts"><span class="seg">${p.map((x, k) => `<i class="${k <= part ? "on" : ""}"></i>`).join("")}</span>Parte ${part + 1} de ${p.length} · ${esc(p[part].t)}</div>` : ""}
+    ${p ? p[part].render() : s.render()}
+    ${last ? `<div id="stopBox"></div>
+    <label class="pendbox"><input type="checkbox" ${F.pend[s.key] ? "checked" : ""} onchange="F.pend['${s.key}']=this.checked;save();renderDots();refreshSide()"><span><b>Aún no lo tengo claro.</b> Márcalo como pendiente y sigue: la coordinación te ayuda a completarlo.</span></label>` : ""}`;
+}
+function paneTips(s) {
+  const t = TIPS[s.key] || { tips: [] };
+  const pairs = [...(s.vs ? [["Agua", s.vs[0], s.vs[1]]] : []), ...(t.vs || [])];
+  return `<ol class="tiplist">${t.tips.map(x => `<li>${esc(x)}</li>`).join("")}</ol>
+    ${pairs.length ? `<h4 class="sub">Así no / así sí</h4>` + pairs.map(([tema, no, si]) => `<p class="tema">Ejemplo · ${esc(tema)}</p><div class="vs"><div class="bad"><b>Así no</b>${esc(no)}</div><div class="good"><b>Así sí</b>${esc(si).replace(/\n/g, "<br>")}</div></div>`).join("") : ""}
+    ${kitQs(s.key)}`;
+}
+function paneEx(s) {
+  const n = EXNOTE[s.key], note = typeof n === "number" ? EXNOTES[n][1] : n;
+  return `<p class="lead2">Así quedó este campo en la ficha de uso de suelo.</p>
+    <div class="exbox">${esc(s.ex())}</div>
+    <div class="exnote"><b>Por qué funciona.</b> ${esc(note)}</div>
+    ${s.key === "acciones" ? `<div class="exnote"><b>El plazo.</b> ${esc(EXNOTES[5][1])}</div>` : ""}
+    <button class="b-link" onclick="go('ejemplo')">Ver la ficha ejemplo completa →</button>`;
+}
+function panePv() {
+  return `<h4 class="sub">Tu texto, ya armado</h4><div class="preview-mini" id="pv"></div>
+    <h4 class="sub">Lista rápida</h4><ul class="checks" id="checks"></ul>`;
 }
 
 /* ---- Revisión de coherencia, sin servicio externo ---- */
@@ -825,7 +918,7 @@ async function submitFicha() {
   const btn = document.getElementById("btnSend"); btn.disabled = true; btn.textContent = "Enviando…";
   try {
     await callAPI({ action: "submit", ...who(), titulo: F.titulo, avance: progress(), pendientes: STEPS.filter((s, i) => st[i] !== "done").map(s => s.short).join(", "), texto: fichaText(F), json: JSON.stringify(F) });
-    F.enviada = new Date().toISOString(); save(); renderFinal(); toast("¡Ficha enviada a la coordinación!");
+    F.enviada = new Date().toISOString(); save(); renderFinal(true); toast("¡Ficha enviada a la coordinación!");
   } catch (e) { btn.disabled = false; btn.textContent = "📨 Enviar a coordinación"; toast("No se pudo enviar. Descarga el Word como respaldo e intenta de nuevo."); }
 }
 
@@ -856,48 +949,49 @@ function status(i) {
   return c.every(x => x[0]) ? "done" : (c.some(x => x[0]) ? "part" : "none");
 }
 function renderDots() {
-  document.getElementById("dots").innerHTML = STEPS.map((s, i) => {
+  document.getElementById("dots").innerHTML = `<div class="stepper">${STEPS.map((s, i) => {
     const st = status(i);
-    return `<span class="dot ${i === F.step ? "cur" : st === "done" ? "done" : st === "pend" ? "pend" : ""}" onclick="goStep(${i})">${st === "done" && i !== F.step ? "✓ " : ""}${s.short}</span>`;
-  }).join("") + `<span class="dot" onclick="go('final')">Revisar →</span><span class="saved" id="savedLbl"></span>`;
+    return `<button class="sdot ${i === F.step ? "cur" : st === "done" ? "done" : st === "pend" ? "pend" : st === "part" ? "part" : ""}" title="${esc(s.short)}" onclick="goStep(${i})">${st === "done" && i !== F.step ? "✓" : i}</button>`;
+  }).join("")}<button class="sdot fin" title="Revisar y enviar" onclick="go('final')">🏁</button></div><span class="saved" id="savedLbl"></span>`;
 }
 function renderStep() {
-  const i = F.step, s = STEPS[i];
-  const y = window.scrollY;
+  const i = F.step, s = STEPS[i], y = window.scrollY;
+  const p = s.parts, np = p ? p.length : 1;
+  part = Math.min(part, np - 1);
+  const c = s.checks(), ok = c.filter(x => x[0]).length;
+  const TABS = [["form", "✍️", "Escribir"], ["tips", "💡", "Consejos"], ["ex", "📄", "Ejemplo"], ["pv", "👁", "Así va"]];
+  const pane = tab === "tips" ? paneTips(s) : tab === "ex" ? paneEx(s) : tab === "pv" ? panePv() : paneForm(s);
+  const prev = part > 0 ? `<button class="b b-ghost" onclick="goPart(${part - 1})">← Anterior</button>`
+    : i > 0 ? `<button class="b b-ghost" onclick="goStep(${i - 1}, true)">← Anterior</button>`
+    : `<button class="b b-ghost" onclick="go('inicio')">← Inicio</button>`;
+  const next = part < np - 1 ? `<button class="b b-pri" onclick="goPart(${part + 1})">Siguiente →</button>`
+    : i < STEPS.length - 1 ? `<button class="b b-pri" onclick="goStep(${i + 1})">Siguiente paso →</button>`
+    : `<button class="b b-pri" onclick="go('final')">Ver mi ficha completa →</button>`;
   document.getElementById("stage").innerHTML = `
-    <div>
-      <div class="stepno">Paso ${i} de ${STEPS.length - 1}</div>
-      <h2>${s.title}${s.must ? ' <span class="star">★</span>' : ""}</h2>
-      <p class="why">${s.why}</p>
-      <span class="est">⏱ ${s.est}</span>
-      ${s.render()}
-      <div id="stopBox"></div>
-      ${tipsHTML(s.key)}
-      <label class="pendbox"><input type="checkbox" ${F.pend[s.key] ? "checked" : ""} onchange="F.pend['${s.key}']=this.checked;save();renderDots()"><span><b>Aún no lo tengo claro.</b> Márcalo como pendiente y sigue: la coordinación te ayuda a completarlo.</span></label>
-      <div class="navrow">
-        ${i > 0 ? `<button class="b b-ghost" onclick="goStep(${i - 1})">← Anterior</button>` : `<button class="b b-ghost" onclick="go('inicio')">← Inicio</button>`}
-        ${i < STEPS.length - 1 ? `<button class="b b-pri" onclick="goStep(${i + 1})">Siguiente →</button>` : `<button class="b b-pri" onclick="go('final')">Ver mi ficha completa →</button>`}
+    <div class="tcard">
+      <div class="stephead">
+        <div class="stepicon">${ICONS[s.key]}</div>
+        <div><div class="stepno">Paso ${i} de ${STEPS.length - 1} · ⏱ ${s.est}</div>
+          <h2>${s.title}${s.must ? ' <span class="star">★</span>' : ""}</h2></div>
       </div>
-    </div>
-    <aside class="side">
-      <div class="panel"><h4>Lista rápida</h4><ul class="checks" id="checks"></ul></div>
-      ${kitPanel(s.key)}
-      ${s.vs ? `<div class="panel"><h4>Así no / así sí</h4><div class="vs"><div class="bad"><b>Así no</b>${esc(s.vs[0])}</div><div class="good"><b>Así sí</b>${esc(s.vs[1])}</div></div></div>` : ""}
-      <details class="panel ex" ${innerWidth > 860 ? "open" : ""}><summary style="cursor:pointer"><h4 style="display:inline">Cómo quedó en la ficha ejemplo</h4></summary>
-        <div class="exbody" style="margin-top:.5rem">${esc(s.ex())}</div>
-        <div class="note">${esc(EXNOTES[Math.max(0, i - 1)][1])}</div></details>
-      <div class="panel"><h4>Así va quedando tu campo</h4><div class="preview-mini" id="pv"></div></div>
-    </aside>`;
+      <p class="why">${s.why}</p>
+      <div class="tabs">${TABS.map(([k, e, l]) => `<button class="tab ${tab === k ? "on" : ""}" onclick="setTab('${k}')"><span class="e">${e}</span>${l}${k === "pv" ? `<span class="n" id="tabCount">${ok}/${c.length}</span>` : ""}</button>`).join("")}</div>
+      <div class="pane">${pane}</div>
+      <div class="navrow">${prev}${next}</div>
+    </div>`;
   renderDots(); refreshSide();
   window.scrollTo(0, y);
 }
+function setTab(t) { tab = t; renderStep(); }
+function goPart(k) { part = k; tab = "form"; renderStep(); window.scrollTo(0, 0); }
 function refreshSide() {
-  const s = STEPS[F.step]; if (!document.getElementById("checks")) return;
-  document.getElementById("checks").innerHTML = s.checks().map(([ok, t, warn]) => `<li class="${ok ? "ok" : warn ? "warn" : "no"}">${esc(t)}</li>`).join("");
-  const pv = s.preview(); document.getElementById("pv").textContent = has(pv) ? pv : "Aquí verás el texto armado conforme escribas.";
+  const s = STEPS[F.step], c = s.checks();
+  const tc = document.getElementById("tabCount"); if (tc) tc.textContent = c.filter(x => x[0]).length + "/" + c.length;
+  const ck = document.getElementById("checks"); if (ck) ck.innerHTML = c.map(([ok, t, warn]) => `<li class="${ok ? "ok" : warn ? "warn" : "no"}">${esc(t)}</li>`).join("");
+  const pv = document.getElementById("pv"); if (pv) { const txt = s.preview(); pv.textContent = has(txt) ? txt : "Aquí verás el texto armado conforme escribas."; }
   const st = s.stop ? s.stop() : ""; const sb = document.getElementById("stopBox"); if (sb) sb.innerHTML = st && !F.pend[s.key] ? `<div class="stopper">${st}</div>` : "";
 }
-function goStep(i) { F.step = i; save(); go("taller"); window.scrollTo(0, 0); ping(); }
+function goStep(i, last) { F.step = i; tab = "form"; part = last && STEPS[i].parts ? STEPS[i].parts.length - 1 : 0; save(); go("taller"); window.scrollTo(0, 0); ping(); }
 
 /* =========================================================
    Ficha completa (vista, Word, texto)
@@ -935,7 +1029,16 @@ function fichaText(f) {
     "10. SEMÁFORO\n" + t.sem.map(s => LIGHT[s.c] + " " + s.t).join("\n"),
     has(f.refs) ? "EXPERIENCIAS DE REFERENCIA\n" + f.refs : ""].filter(Boolean).join("\n\n");
 }
-function renderFinal() {
+let finalTab = "revisa";
+function setFinalTab(t) { finalTab = t; renderFinal(true); window.scrollTo(0, 0); }
+function renderFinal(quiet) {
+  const FT = [["revisa", "1 · Revisa"], ["ficha", "2 · Tu ficha"], ["envia", "3 · Descarga y envía"]];
+  document.getElementById("ftabs").innerHTML = FT.map(([k, l]) => `<button class="tab ${finalTab === k ? "on" : ""}" onclick="setFinalTab('${k}')">${l}</button>`).join("");
+  FT.forEach(([k]) => document.getElementById("fp-" + k).classList.toggle("on", k === finalTab));
+  const edit = `<button class="b b-ghost" onclick="go('taller')">✎ Seguir editando</button>`;
+  document.getElementById("fnav").innerHTML = finalTab === "revisa" ? edit + `<button class="b b-pri" onclick="setFinalTab('ficha')">Ver mi ficha →</button>`
+    : finalTab === "ficha" ? `<button class="b b-ghost" onclick="setFinalTab('revisa')">← Revisa</button><button class="b b-pri" onclick="setFinalTab('envia')">Descargar y enviar →</button>`
+    : `<button class="b b-ghost" onclick="setFinalTab('ficha')">← Tu ficha</button>` + edit;
   document.getElementById("summary").innerHTML = STEPS.map((s, i) => {
     const st = status(i); const cls = st === "done" ? "" : (s.must || i === 0) && st !== "pend" && st !== "done" ? "r" : "p";
     const lbl = st === "done" ? "Completo" : st === "pend" ? "Marcado como pendiente" : st === "part" ? "A medias" : "Sin llenar";
@@ -946,7 +1049,7 @@ function renderFinal() {
   document.getElementById("sentBox").innerHTML = F.enviada ? `<div class="sent">✓ Enviaste esta ficha el ${new Date(F.enviada).toLocaleString("es-MX", { dateStyle: "long", timeStyle: "short" })} — si la editas, vuelve a enviarla: la coordinación conserva todas las versiones.</div>` : "";
   const b = document.getElementById("btnSend"); b.disabled = false; b.textContent = F.enviada ? "📨 Enviar versión actualizada" : "📨 Enviar a coordinación";
   if (!API) b.title = "El envío central se activa cuando la coordinación instale el servicio";
-  ping(true);
+  if (!quiet) ping(true);
 }
 function slug() { return (F.titulo || "ficha").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "_").slice(0, 50).replace(/^_|_$/g, "") || "ficha"; }
 function dl(name, blob) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
