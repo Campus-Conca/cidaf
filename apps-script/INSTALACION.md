@@ -55,6 +55,7 @@ Guarda y sube el cambio. En uno o dos minutos GitHub Pages lo publica. Comprueba
 - **Si editas `Code.gs`:** *Implementar → Gestionar implementaciones → ✏️ → Versión: Nueva versión → Implementar*. La URL no cambia.
 - **Sumar o corregir colegas:** `assets/taller-datos.js`, lista `COLEGAS`.
 - **Cambiar los consejos y ejemplos de cada paso:** `fichas.html`, lista `TIPS`.
+- **Cambiar el ejemplo que se ve en cada paso:** `fichas.html`, objeto `EX`. La pestaña «Ejemplo» muestra el mismo formulario del paso, lleno con esa ficha.
 
 ## Privacidad
 
