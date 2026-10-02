@@ -140,7 +140,11 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
 .vs .good { background: var(--green-soft); }
 .vs b { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .15rem; }
 @media (max-width: 560px) { .vs { grid-template-columns: 1fr; } }
-.exbox { margin-top: .6rem; border-left: 5px solid var(--amber); background: #faf8f3; border-radius: 0 12px 12px 0; padding: .9rem 1rem; font-size: .93rem; color: #3d424a; white-space: pre-line; }
+.exbar { margin-top: 1.1rem; background: var(--amber-soft); color: var(--navy); border-radius: 12px; padding: .6rem .85rem; font-size: .9rem; }
+.exform { margin: .2rem 0 1.2rem; border-left: 4px solid var(--amber); padding-left: 1rem; }
+.exform button { cursor: default; }
+.exform input, .exform textarea { background: #fdf8ec; }
+.exform input:focus, .exform textarea:focus { border-color: #dcd8ce; box-shadow: none; background: #fdf8ec; }
 .exnote { margin: .6rem 0; font-size: .9rem; background: var(--amber-soft); border-radius: 10px; padding: .6rem .8rem; color: var(--navy); }
 .checks { list-style: none; font-size: .93rem; }
 .checks li { padding: .25rem 0 .25rem 1.6rem; position: relative; color: #4a4f57; }
@@ -892,11 +896,30 @@ function paneTips(s) {
 }
 function paneEx(s) {
   const n = EXNOTE[s.key], note = typeof n === "number" ? EXNOTES[n][1] : n;
-  return `<p class="lead2">Así quedó este campo en la ficha de uso de suelo.</p>
-    <div class="exbox">${esc(s.ex())}</div>
+  linea();                        // fija la línea de sugerencias con los datos de quien escribe, no con los del ejemplo
+  const mine = F; let form;
+  F = merge(EX);                  // el mismo formulario del paso, lleno con la ficha ejemplo
+  try { form = s.parts ? s.parts[part].render() : s.render(); } finally { F = mine; }
+  return `<div class="exbar">📄 Así se llenó esta pantalla en la ficha ejemplo. Es solo para leer: tus respuestas siguen en «Escribir».</div>
+    <div class="exform" id="exForm">${form}</div>
     <div class="exnote"><b>Por qué funciona.</b> ${esc(note)}</div>
     ${s.key === "acciones" ? `<div class="exnote"><b>El plazo.</b> ${esc(EXNOTES[5][1])}</div>` : ""}
     <button class="b-link" onclick="go('ejemplo')">Ver la ficha ejemplo completa →</button>`;
+}
+/* Deja el formulario del ejemplo solo para leer: mismos campos y opciones, sin los botones que agregan o quitan. */
+function tidyExample(root) {
+  root.querySelectorAll(".kitbox, .more, .x, .b-link, .b-ghost").forEach(e => e.remove());
+  root.querySelectorAll(".lbl").forEach(e => e.parentElement.remove());
+  root.querySelectorAll(".subtabs").forEach(e => (e.closest(".q") || e).remove());
+  root.querySelectorAll("button").forEach(b => { b.disabled = true; b.removeAttribute("onclick"); b.textContent = b.textContent.replace(/ ×$/, ""); });
+  root.querySelectorAll("input[type=checkbox]").forEach(c => { c.disabled = true; c.removeAttribute("onchange"); });
+  root.querySelectorAll("input[type=text], textarea").forEach(el => {
+    el.readOnly = true; el.removeAttribute("oninput");
+    if (el.tagName === "INPUT" && el.scrollWidth > el.clientWidth) {   // lo que no cabe en un renglón se muestra completo
+      const t = document.createElement("textarea"); t.readOnly = true; t.rows = 1; t.value = el.value; t.style.cssText = el.style.cssText; el.replaceWith(t); el = t;
+    }
+    if (el.tagName === "TEXTAREA") { el.style.minHeight = "0"; el.style.resize = "none"; el.style.height = "auto"; el.style.height = el.scrollHeight + 2 + "px"; }
+  });
 }
 function panePv() {
   return `<h4 class="sub">Tu texto, ya armado</h4><div class="preview-mini" id="pv"></div>
@@ -985,6 +1008,7 @@ function renderStep() {
       <div class="pane">${pane}</div>
       <div class="navrow">${prev}${next}</div>
     </div>`;
+  const exf = document.getElementById("exForm"); if (exf) tidyExample(exf);
   renderDots(); refreshSide();
   window.scrollTo(0, y);
 }
