@@ -140,7 +140,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
 .toast { position: fixed; bottom: 1.2rem; left: 50%; transform: translateX(-50%) translateY(1rem); opacity: 0; visibility: hidden; background: var(--navy); color: #fff; padding: .6rem 1.1rem; border-radius: 999px; font-size: .92rem; transition: transform .25s, opacity .25s, visibility .25s; z-index: 99; }
 .toast.on { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; }
 
-/* ---- Colega, kit e IA ---- */
+/* ---- Colega, kit y consejos ---- */
 .colega-card { margin-top: .7rem; background: var(--green-soft); border-radius: 10px; padding: .6rem .8rem; font-size: .9rem; display: flex; flex-direction: column; gap: .15rem; }
 .colega-card b { color: var(--navy); }
 .q.ideas ul, .kq { padding-left: 1.1rem; font-size: .9rem; color: #4a4f57; }
@@ -152,31 +152,19 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
 .chips.col .chip { text-align: left; border-radius: 10px; }
 .chip.static { cursor: default; }
 .chip.static:hover { border-color: transparent; }
-.ai { margin-top: 1.1rem; }
-.b-ai { background: linear-gradient(135deg, #223a5e, #3b5a86); color: #fff; }
-.b-ai:hover { filter: brightness(1.12); }
 .b-send { background: var(--green); color: #fff; }
 .b-send:disabled { opacity: .6; cursor: wait; }
-.ai-res { margin-top: .7rem; border-radius: 12px; padding: .8rem 1rem; font-size: .92rem; background: #fff; box-shadow: var(--shadow); border-left: 5px solid var(--gray-soft); }
-.ai-res.ok { border-left-color: var(--green); }
-.ai-res.mid { border-left-color: var(--yellow); }
-.ai-res.low { border-left-color: var(--red); }
-.ai-res.off { background: #f1eee6; box-shadow: none; color: #5b5f66; }
-.ai-res.wait { color: var(--navy); display: flex; align-items: center; gap: .6rem; }
-.ai-res ul { padding-left: 1.1rem; }
-.ai-v { font-family: "Fraunces", serif; font-weight: 600; color: var(--navy); font-size: 1.05rem; }
-.ai-prop { background: #faf8f3; border-radius: 8px; padding: .55rem .7rem; margin-bottom: .5rem; white-space: pre-line; }
-.ai-foot { font-size: .8rem; color: var(--gray); margin-top: .5rem; }
-.spin { width: 1rem; height: 1rem; border: 2.5px solid #d8dee8; border-top-color: var(--navy); border-radius: 50%; animation: sp 0.8s linear infinite; }
-@keyframes sp { to { transform: rotate(360deg); } }
+.tips { margin-top: 1.1rem; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); border-left: 5px solid var(--navy-2); padding: .85rem 1.1rem; }
+.tips summary { cursor: pointer; font-weight: 700; color: var(--navy); }
+.tips ul { padding-left: 1.1rem; font-size: .92rem; color: #4a4f57; }
+.tips li { margin: .3rem 0; }
+.tips .tema { font-size: .8rem; font-weight: 600; color: var(--gray); margin-top: .6rem; }
+@media (max-width: 560px) { .tips .vs { grid-template-columns: 1fr; } }
 .coh-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 1.2rem; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.1rem 1.2rem; margin-bottom: 1rem; align-items: start; }
 .coh-wrap p { font-size: .92rem; color: #4a4f57; margin: .3rem 0 .7rem; }
-.coh-wrap .ai-res { margin-top: 0; box-shadow: none; background: #faf8f3; }
+.coh-wrap .checks li.ask::before { content: "?"; color: var(--navy-2); font-weight: 800; }
+.coh-wrap .len { font-size: .85rem; color: var(--gray); margin: .5rem 0 0; }
 @media (max-width: 760px) { .coh-wrap { grid-template-columns: 1fr; } }
-table.coh { width: 100%; border-collapse: collapse; margin-top: .5rem; font-size: .88rem; }
-table.coh td { border-top: 1px solid #ebe7dd; padding: .4rem .3rem; vertical-align: top; }
-table.coh td:first-child { width: 28%; color: var(--navy); }
-table.coh .sug { color: var(--green); margin-top: .15rem; }
 .sent { background: var(--green-soft); color: #245a3c; border-radius: 10px; padding: .65rem .9rem; font-size: .93rem; margin-bottom: .6rem; }
 
 @media print {
@@ -285,9 +273,8 @@ table.coh .sug { color: var(--green); margin-top: .15rem; }
         <div class="summary" id="summary"></div>
         <div class="coh-wrap">
           <div>
-            <h3>✨ Revisión de coherencia</h3>
-            <p>Claude lee tu ficha completa y revisa que todo embone: que los indicadores midan el objetivo, que cada acción tenga responsable y costo, que el diagnóstico sostenga lo que propones.</p>
-            <button class="b b-ai" onclick="coherence()">Revisar mi ficha completa</button>
+            <h3>Antes de enviar: ¿todo embona?</h3>
+            <p>Las tres primeras revisiones las hace el taller por ti. Las otras tres necesitan tu ojo: lee tu ficha de corrido y contéstalas con honestidad.</p>
           </div>
           <div id="cohBox"></div>
         </div>
@@ -440,7 +427,6 @@ function blank() {
     sem: [{ comp: "", c: "", j: "" }],
     refs: "",
     pend: {},
-    ai: {},
     enviada: "",
     step: 0
   };
@@ -450,7 +436,7 @@ function load() {
   try { const s = localStorage.getItem(KEY); if (s) return merge(JSON.parse(s)); } catch (e) {}
   return blank();
 }
-function merge(o) { const b = blank(); const r = Object.assign(b, o); r.meta = Object.assign(blank().meta, o.meta || {}); r.ai = o.ai || {}; return r; }
+function merge(o) { const b = blank(); const r = Object.assign(b, o); r.meta = Object.assign(blank().meta, o.meta || {}); return r; }
 let saveT;
 function save() {
   clearTimeout(saveT);
@@ -715,7 +701,7 @@ function useInd(x) {
 }
 
 /* =========================================================
-   Servicio central (Apps Script): progreso, envío, IA
+   Servicio central (Apps Script): progreso y envío
    ========================================================= */
 async function callAPI(payload) {
   if (!API) throw new Error("sin-servicio");
@@ -735,59 +721,102 @@ function ping(force) {
   callAPI({ action: "progress", ...who(), titulo: F.titulo, avance: progress(), pendientes: pend.join(", ") }).catch(() => {});
 }
 
-const AI_CRIT = {
-  meta: "Compromiso de acompañamiento: debe haber nombres concretos de quién acompaña desde el campus, qué hará (asesoría, capacitación, medición…) y una estimación honesta de tiempo. Señala si el compromiso parece excesivo o vago.",
-  titulo: "Título: frase breve (5-20 palabras) que nombre el instrumento (sistema, programa, reglamento, fondo…) y el problema. Debe entenderse sin leer nada más.",
-  diag: "Diagnóstico: 4-6 oraciones, máximo ~120 palabras; nombra el problema, lo cuantifica con al menos un dato, cita fuente y año, y cierra con la consecuencia de no actuar. Sin adjetivos vacíos ni tono de ensayo.",
-  obj: "Objetivo: inicia con verbo en infinitivo, dice qué habrá cambiado al cierre del trienio 2027–2030 y es verificable; idealmente con meta numérica.",
-  acciones: "Acciones: cada una empieza con verbo en infinitivo, es concreta y verificable (sí/no), está ubicada en un horizonte (100 días, año 1, años 2–3, permanente) y es competencia o alcance del municipio. Debe haber algo factible y barato en los primeros 100 días. Evita verbos vagos como mejorar, fortalecer, promover.",
-  resp: "Área responsable: un área municipal concreta lidera (innegociable); se indica quién coordina y para qué, el acompañamiento del campus con nombre y las dependencias con que hay que vincularse.",
-  ind: "Indicadores: 1-4 variables medibles, cada una con línea base 2027 (o «a determinar» con método), meta 2030 con número y fuente de verificación. Deben medir el objetivo, no la actividad.",
-  costo: "Costo y financiamiento: orden de magnitud por componente y fuente plausible (recursos propios, FAISMUN, PROCODES, INAES, SADER, convenio UAQ…). Señalar si genera ingresos propios o ahorros.",
-  legal: "Marco legal: lista de leyes, reglamentos, NOMs o programas que facultan al municipio. Señala omisiones evidentes o instrumentos que no correspondan; no pidas artículos si no son necesarios.",
-  sem: "Semáforo: cada componente con color (rojo inexistente, amarillo parcial, verde funciona) y una frase que justifique el color."
+/* =========================================================
+   Consejos y ejemplos preestablecidos por paso
+   ========================================================= */
+const TIPS = {
+  meta: {
+    tips: ["Pon nombres completos: «el campus» no acompaña, las personas sí.",
+      "Promete solo lo que cabe en tus horas reales. Cuatro horas al mes cumplidas valen más que veinte prometidas.",
+      "Si la recomendación necesita algo que tú no puedes dar, suma a un colega o a estudiantes.",
+      "Si compartes tema con alguien, llenen una sola ficha y aparezcan los dos como acompañantes."],
+    vs: [["Compromiso", "La UAQ dará seguimiento.", "Dra. [Nombre Apellido] y dos estudiantes de servicio social: capacitación a brigadas y medición anual del indicador (6 horas al mes)."]] },
+  titulo: {
+    tips: ["Usa la fórmula instrumento + para qué: «Programa municipal de … para …».",
+      "Evita lemas y nombres de campaña: el título describe, no vende.",
+      "Si necesitas una «y» para unir dos propuestas, quizá son dos fichas.",
+      "Léelo en voz alta a alguien ajeno al tema: ¿entiende qué se propone?"],
+    vs: [["Residuos", "Arroyo Seco limpio", "Servicio municipal de recolección y separación de residuos para las localidades sin cobertura"],
+      ["Protección civil", "Prevención de incendios", "Red de brigadas comunitarias equipadas para prevenir y combatir incendios forestales"]] },
+  diag: {
+    tips: ["Empieza por el hecho, no por la historia del problema.",
+      "Basta un dato fuerte. Si aún no lo tienes, escribe [dato] y di dónde se buscaría: la coordinación ayuda a conseguirlo.",
+      "Tu propia investigación es fuente válida: tesis, talleres, muestreos.",
+      "Quita adjetivos como grave, preocupante o alarmante. Ese trabajo lo hace el número.",
+      "La última frase dice qué se pierde y para cuándo."],
+    vs: [["Protección civil", "Los incendios forestales son un grave problema que afecta a nuestra región.", "Entre [año] y [año] se quemaron [X] hectáreas en el municipio ([fuente]). Hoy ninguna brigada comunitaria tiene equipo ni capacitación vigente. Si no se actúa antes de la próxima temporada de secas, …"],
+      ["Residuos", "La basura es un tema que preocupa a la población.", "[X] de las [N] localidades no tienen servicio de recolección y queman o tiran sus residuos en barrancas ([fuente], [año]). En cada temporada de lluvias esos residuos llegan a …"]] },
+  obj: {
+    tips: ["Un objetivo, un verbo. Si te salen dos, elige el que describe el cambio final.",
+      "Describe el cambio, no la actividad: capacitar es una acción; que las brigadas operen es un objetivo.",
+      "La meta debe poder comprobarse en 2030 con el indicador del paso 6.",
+      "Para un municipio pequeño, una meta alcanzable convence más que una total (100%, todos, erradicar)."],
+    vs: [["Residuos", "Promover el manejo adecuado de los residuos.", "Establecer un servicio de recolección que llegue a [N] localidades, con la meta de que al menos [X]% de los hogares separe sus residuos."],
+      ["Protección civil", "Fortalecer a las brigadas.", "Garantizar que cada delegación cuente con una brigada comunitaria equipada y capacitada antes de cada temporada de secas."]] },
+  acciones: {
+    tips: ["Haz la prueba del sí o no: ¿alguien podría comprobar que se hizo?",
+      "Empieza por lo que ya existe: publicar, convocar, firmar un convenio. Lo que cuesta poco va en los primeros 100 días.",
+      "Que sea competencia del municipio. Lo que toca al estado o a la federación se escribe como «gestionar ante …».",
+      "Entre cinco y diez acciones. Más de diez suele indicar que hay dos fichas.",
+      "Deja algo en «Permanente»: lo que debe seguir cuando cambie la administración."],
+    vs: [["Protección civil", "Fomentar la cultura de la prevención.", "Realizar un simulacro de incendio por delegación antes de marzo de cada año."],
+      ["Desarrollo económico", "Apoyar a los productores.", "Instalar un mercado mensual de productores en la cabecera, con reglamento y padrón de participantes."]] },
+  resp: {
+    tips: ["Una sola área lidera. Si pones tres, ninguna se hace cargo.",
+      "Nombra el área, no a la persona: los funcionarios cambian, las áreas permanecen.",
+      "Si no sabes qué áreas tiene el municipio, elige la más cercana de la lista; la coordinación lo verifica.",
+      "En «quién más coordina», di para qué: Tesorería cobra, Cabildo aprueba.",
+      "El campus acompaña, no ejecuta."],
+    vs: [["Protección civil", "El municipio, en coordinación con las dependencias correspondientes.", "Responsable principal: Protección Civil. Coordinación: delegaciones municipales (convocan a las brigadas); Tesorería (compra de equipo). Vinculación: CONAFOR; CONANP-RBSG."]] },
+  ind: {
+    tips: ["Mide el resultado, no la actividad: «talleres impartidos» dice que trabajaste; «% de hogares que separa» dice que funcionó.",
+      "Si no hay línea base, dilo y explica cómo se medirá en 2027.",
+      "Elige indicadores que alguien pueda medir con lo que ya tiene: un padrón, un registro, un recorrido anual.",
+      "Dos buenos indicadores bastan.",
+      "Ponle número a la meta, aunque sea conservador."],
+    vs: [["Residuos", "Número de talleres impartidos.", "% de hogares de la cabecera que separa sus residuos. Base 2027: a determinar con muestreo. Meta 2030: ≥ [X]%. Mide: recorrido anual de la UAQ."],
+      ["Protección civil", "Mayor preparación ante incendios.", "Número de delegaciones con brigada equipada y capacitada. Base 2027: [X] de [N]. Meta 2030: todas. Mide: Protección Civil, registro anual."]] },
+  costo: {
+    tips: ["Basta el orden de magnitud: los rangos de la lista sirven.",
+      "Separa por componente; así se ve qué puede arrancar sin dinero.",
+      "Lo que cuesta $0 también se anota: es el mejor argumento.",
+      "Si no sabes la fuente, piensa primero en recursos propios y en el convenio con la UAQ; los fondos de tu eje están en el panel de ideas.",
+      "Si genera ingresos o ahorros, dilo en una frase."],
+    vs: [["Protección civil", "Se requiere presupuesto suficiente.", "Equipo básico para [N] brigadas: $50–200 mil. Fuente: FORTAMUN; CONAFOR.\nCapacitación anual: $0. Fuente: convenio UAQ."]] },
+  legal: {
+    tips: ["Marca solo lo que faculta al municipio para actuar; no hace falta la lista completa.",
+      "Casi siempre aplican el Art. 115 constitucional y la Ley Orgánica Municipal: de ahí salen las facultades del ayuntamiento.",
+      "No escribas artículos de memoria: si no recuerdas el número, deja solo el nombre de la ley.",
+      "Si tu propuesta toca la Reserva, incluye el Programa de Manejo de la RBSG."] },
+  sem: {
+    tips: ["Un componente por renglón: cada pieza grande de tu propuesta.",
+      "Rojo no es regaño: es el punto de partida y justifica la recomendación.",
+      "Amarillo pide explicación: qué existe y qué le falta.",
+      "Verde solo si funciona hoy, no si está en un plan.",
+      "La frase dice el hecho, no la opinión."],
+    vs: [["Protección civil", "🔴 Brigadas — Falta mucho por hacer.", "🟡 Brigadas comunitarias — Existen en [X] delegaciones, sin equipo ni capacitación vigente."]] }
 };
-function fieldText(key) {
-  const s = STEPS.find(x => x.key === key);
-  if (key === "acciones") return T(F).ordered.filter(g => g.items.length).map(g => g.h + ":\n" + g.items.map(i => `${i.n}. ${i.t}`).join("\n")).join("\n") + (has(F.hitos) ? "\nHitos: " + F.hitos : "");
-  if (key === "meta") return `Autor: ${F.meta.autor}\nTema: ${F.meta.tema}\nEje: ${F.meta.eje}\nAcompañan: ${F.meta.acompanan}\nRoles: ${F.meta.roles.join(", ")}\nTiempo: ${F.meta.horas}`;
-  return s.preview();
+let tipsOpen = false;
+function tipsHTML(key) {
+  const t = TIPS[key]; if (!t) return "";
+  return `<details class="tips" ${tipsOpen ? "open" : ""} ontoggle="tipsOpen=this.open"><summary>💡 ¿Te atoras? Consejos y ejemplos para este campo</summary>
+    <ul>${t.tips.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+    ${(t.vs || []).map(([tema, no, si]) => `<p class="tema">Ejemplo · ${esc(tema)}</p><div class="vs"><div class="bad"><b>Así no</b>${esc(no)}</div><div class="good"><b>Así sí</b>${esc(si).replace(/\n/g, "<br>")}</div></div>`).join("")}</details>`;
 }
-async function askAI(key) {
-  const box = document.getElementById("aiBox");
-  if (!API) { box.innerHTML = `<div class="ai-res off">La revisión con Claude se activa cuando la coordinación instale el servicio central. Mientras tanto, guíate por la lista rápida y el ejemplo.</div>`; return; }
-  const txt = fieldText(key);
-  if (!has(txt)) { box.innerHTML = `<div class="ai-res off">Escribe algo primero y luego pide la revisión.</div>`; return; }
-  box.innerHTML = `<div class="ai-res wait"><span class="spin"></span> Claude está leyendo tu campo…</div>`;
-  try {
-    const j = await callAPI({ action: "review", ...who(), campo: STEPS.find(s => s.key === key).short, criterio: AI_CRIT[key], texto: txt, contexto: `Título: ${F.titulo}\nObjetivo: ${T(F).obj}\nTema: ${F.meta.tema}\nEje: ${F.meta.eje}` });
-    F.ai[key] = j.review; save(); box.innerHTML = aiHTML(j.review);
-  } catch (e) { box.innerHTML = `<div class="ai-res off">${e.message === "limite" ? "Se alcanzó el límite diario de revisiones del equipo. Intenta mañana." : "No se pudo conectar con el servicio. Tu ficha sigue guardada; intenta de nuevo en un momento."}</div>`; }
-}
-function aiHTML(r) {
-  if (!r) return "";
-  const cls = { listo: "ok", casi: "mid", "falta trabajo": "low" }[r.veredicto] || "mid";
-  return `<div class="ai-res ${cls}"><div class="ai-v">${{ ok: "✓ Listo", mid: "◐ Casi", low: "○ Le falta trabajo" }[cls]}</div>
-    ${r.fortalezas?.length ? `<p class="kl">Lo que funciona</p><ul>${r.fortalezas.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
-    ${r.mejoras?.length ? `<p class="kl">Para mejorar</p><ul>${r.mejoras.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
-    ${has(r.propuesta) ? `<p class="kl">Una posible redacción</p><div class="ai-prop">${esc(r.propuesta)}</div><button class="b b-ghost b-sm" onclick='navigator.clipboard.writeText(${JSON.stringify(r.propuesta)}).then(()=>toast("Propuesta copiada"))'>⧉ Copiar propuesta</button>` : ""}
-    <p class="ai-foot">Es una sugerencia, no un veredicto: tú conoces el tema.</p></div>`;
-}
-async function coherence() {
-  const box = document.getElementById("cohBox");
-  if (!API) { box.innerHTML = `<div class="ai-res off">La revisión de coherencia se activa cuando la coordinación instale el servicio central.</div>`; return; }
-  box.innerHTML = `<div class="ai-res wait"><span class="spin"></span> Claude está revisando la ficha completa (≈ 30 segundos)…</div>`;
-  try {
-    const j = await callAPI({ action: "coherence", ...who(), texto: fichaText(F) });
-    F.ai._coh = j.review; save(); box.innerHTML = cohHTML(j.review);
-  } catch (e) { box.innerHTML = `<div class="ai-res off">${e.message === "limite" ? "Se alcanzó el límite diario de revisiones del equipo." : "No se pudo conectar con el servicio. Intenta de nuevo en un momento."}</div>`; }
-}
-function cohHTML(r) {
-  if (!r) return "";
-  const cls = { listo: "ok", casi: "mid", "falta trabajo": "low" }[r.veredicto] || "mid";
-  return `<div class="ai-res ${cls}"><div class="ai-v">${{ ok: "✓ Coherente y lista para pulir", mid: "◐ Casi lista", low: "○ Le falta trabajo" }[cls]}</div><p>${esc(r.resumen)}</p>
-    ${r.observaciones?.length ? `<table class="coh">${r.observaciones.map(o => `<tr><td><b>${esc(o.campo)}</b></td><td>${esc(o.observacion)}<div class="sug">→ ${esc(o.sugerencia)}</div></td></tr>`).join("")}</table>` : ""}
-    <p class="ai-foot">Revisión automática de Claude con los criterios del CIDAF. La coordinación hace la revisión final.</p></div>`;
+
+/* ---- Revisión de coherencia, sin servicio externo ---- */
+function cohHTML() {
+  const acc = F.acciones.filter(a => has(a.t)), ind = F.ind.filter(i => has(i.nombre));
+  const auto = [
+    [has(F.resp.lider) && has(F.meta.acompanan) && ind.length > 0, "Los dos campos ★ están completos: área responsable con acompañamiento del campus, e indicador"],
+    [acc.some(a => (a.h ?? 0) === 0) && acc.some(a => a.h === 3), "Hay algo para los primeros 100 días y algo permanente"],
+    [ind.length > 0 && ind.every(i => has(i.meta) && has(i.fuente)), "Cada indicador tiene meta 2030 y quién lo mide"]
+  ];
+  const ask = ["¿Tus indicadores miden el objetivo, o solo que se hicieron actividades?",
+    "¿Cada acción importante tiene un área responsable y un costo o una fuente?",
+    "¿El diagnóstico sostiene lo que propones? El dato y el objetivo deben hablar del mismo problema."];
+  return `<ul class="checks">${auto.map(([ok, t]) => `<li class="${ok ? "ok" : "no"}">${esc(t)}</li>`).join("")}${ask.map(t => `<li class="ask">${esc(t)}</li>`).join("")}</ul>
+    <p class="len">Tu ficha tiene ${words(fichaText(F))} palabras. La ficha ejemplo tiene ${words(fichaText(EX))}: si la tuya es mucho más larga, recorta.</p>`;
 }
 async function submitFicha() {
   const st = STEPS.map((s, i) => status(i));
@@ -843,10 +872,7 @@ function renderStep() {
       <span class="est">⏱ ${s.est}</span>
       ${s.render()}
       <div id="stopBox"></div>
-      <div class="ai">
-        <button class="b b-ai" onclick="askAI('${s.key}')">✨ ¿Cómo va este campo? Pide opinión a Claude</button>
-        <div id="aiBox">${aiHTML(F.ai[s.key])}</div>
-      </div>
+      ${tipsHTML(s.key)}
       <label class="pendbox"><input type="checkbox" ${F.pend[s.key] ? "checked" : ""} onchange="F.pend['${s.key}']=this.checked;save();renderDots()"><span><b>Aún no lo tengo claro.</b> Márcalo como pendiente y sigue: la coordinación te ayuda a completarlo.</span></label>
       <div class="navrow">
         ${i > 0 ? `<button class="b b-ghost" onclick="goStep(${i - 1})">← Anterior</button>` : `<button class="b b-ghost" onclick="go('inicio')">← Inicio</button>`}
@@ -916,7 +942,7 @@ function renderFinal() {
     return `<div class="sumcard ${cls}" onclick="goStep(${i})"><b>${s.short}</b>${lbl}</div>`;
   }).join("");
   document.getElementById("finalFicha").innerHTML = fichaHTML(F);
-  document.getElementById("cohBox").innerHTML = cohHTML(F.ai._coh);
+  document.getElementById("cohBox").innerHTML = cohHTML();
   document.getElementById("sentBox").innerHTML = F.enviada ? `<div class="sent">✓ Enviaste esta ficha el ${new Date(F.enviada).toLocaleString("es-MX", { dateStyle: "long", timeStyle: "short" })} — si la editas, vuelve a enviarla: la coordinación conserva todas las versiones.</div>` : "";
   const b = document.getElementById("btnSend"); b.disabled = false; b.textContent = F.enviada ? "📨 Enviar versión actualizada" : "📨 Enviar a coordinación";
   if (!API) b.title = "El envío central se activa cuando la coordinación instale el servicio";
