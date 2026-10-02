@@ -61,26 +61,37 @@ const ENVIOS_COLS = ['fecha', 'colega', 'nombre', 'correo', 'eje', 'tema', 'titu
 
 function clip_(s, n) { s = String(s == null ? '' : s); return s.length > n ? s.slice(0, n) : s; }
 
+// Todo lo que llega del navegador se guarda como texto. Sin el apóstrofo, la Hoja evaluaría como
+// fórmula cualquier valor que empiece con = + - @, y el tablero público devolvería su resultado
+// (por ejemplo, el correo de otra fila).
+function celda_(s, n) { s = clip_(s, n); return /^[=+\-@\t\r\n]/.test(s) ? "'" + s : s; }
+
+// Identificador de integrante: solo minúsculas, números y guiones, como los ids de taller-datos.js.
+function id_(s) { return String(s == null ? '' : s).toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 60); }
+
 function upsertEstado_(p, estado) {
-  if (!p.colega) throw new Error('sin colega');
+  const colega = id_(p.colega);
+  if (!colega) throw new Error('sin colega');
   const lock = LockService.getScriptLock(); lock.waitLock(10000);
   try {
     const sh = sheet_(SHEET_ESTADO, ESTADO_COLS);
     const data = sh.getDataRange().getValues();
     let row = -1;
-    for (let i = 1; i < data.length; i++) if (data[i][0] === p.colega) { row = i + 1; break; }
+    for (let i = 1; i < data.length; i++) if (data[i][0] === colega) { row = i + 1; break; }
     // Una ficha ya enviada sigue como «enviada» aunque su autor vuelva a editarla.
     if (row > 0 && estado === 'borrador' && data[row - 1][7] === 'enviada') estado = 'enviada';
-    const vals = [p.colega, clip_(p.nombre, 120), clip_(p.correo, 120), clip_(p.eje, 80), clip_(p.tema, 300),
-                  clip_(p.titulo, 300), Number(p.avance) || 0, estado, clip_(p.pendientes, 300), new Date()];
+    const vals = [colega, celda_(p.nombre, 120), celda_(p.correo, 120), celda_(p.eje, 80), celda_(p.tema, 300),
+                  celda_(p.titulo, 300), Number(p.avance) || 0, estado, celda_(p.pendientes, 300), new Date()];
     if (row > 0) sh.getRange(row, 1, 1, vals.length).setValues([vals]); else sh.appendRow(vals);
   } finally { lock.releaseLock(); }
 }
 
 function logEnvio_(p) {
+  const colega = id_(p.colega);
+  if (!colega) throw new Error('sin colega');
   const sh = sheet_(SHEET_ENVIOS, ENVIOS_COLS);
-  sh.appendRow([new Date(), p.colega, clip_(p.nombre, 120), clip_(p.correo, 120), clip_(p.eje, 80), clip_(p.tema, 300),
-                clip_(p.titulo, 300), Number(p.avance) || 0, clip_(p.pendientes, 300), clip_(p.texto, 45000), clip_(p.json, 45000)]);
+  sh.appendRow([new Date(), colega, celda_(p.nombre, 120), celda_(p.correo, 120), celda_(p.eje, 80), celda_(p.tema, 300),
+                celda_(p.titulo, 300), Number(p.avance) || 0, celda_(p.pendientes, 300), celda_(p.texto, 45000), celda_(p.json, 45000)]);
 }
 
 function board_() {

@@ -80,6 +80,7 @@ Guarda y sube el cambio. En uno o dos minutos GitHub Pages lo publica. Comprueba
 
 - El tablero público muestra nombre, tema, título, eje, avance y pendientes. **No** muestra correos ni el contenido de las fichas.
 - El contenido completo vive solo en tu Hoja de Google.
+- Lo que escribe cada persona se guarda en la Hoja como texto, nunca como fórmula, para que nadie pueda usar el tablero para leer otras celdas.
 - Lo que se manda a Claude para revisión es el texto del campo o de la ficha; no se envían correos.
 
 ---
