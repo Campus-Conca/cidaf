@@ -125,6 +125,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
 /* ---- Ayudas ---- */
 .kitbox { margin-top: 1.2rem; background: var(--green-soft); border-radius: 12px; padding: .7rem .9rem .8rem; }
 .kitbox .chip { background: #fff; }
+.kitbox .subtabs { margin: .35rem 0 .1rem; }
 .kitbox .chip.on { background: var(--navy); }
 .kl { font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; color: #5d6f64; }
 .colega-card { margin-top: .7rem; background: var(--green-soft); border-radius: 10px; padding: .6rem .8rem; font-size: .9rem; display: flex; flex-direction: column; gap: .15rem; }
@@ -374,7 +375,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
 <script src="assets/taller-datos.js"></script>
 <script>
 /* =========================================================
-   Datos de apoyo (EJES, COLEGAS y KIT viven en assets/taller-datos.js)
+   Datos de apoyo (EJES, COLEGAS y LINEAS viven en assets/taller-datos.js)
    ========================================================= */
 const API = (window.TALLER_API_URL || "").trim();
 const HZ = ["100 días", "Año 1", "Años 2–3", "Permanente"];
@@ -565,16 +566,14 @@ const STEPS = [
         ${!has(F.meta.tema) || (c && !c.tema) ? `<div class="q ideas"><label class="t">¿Sin tema todavía? Tres preguntas que ayudan</label><ul>
           <li>¿Qué problema del municipio conoces mejor que casi nadie, gracias a tu investigación?</li>
           <li>¿Qué decisión del ayuntamiento, si la tomara bien, cambiaría ese problema?</li>
-          <li>¿Qué parte de esa decisión podrías acompañar tú, con tus horas reales?</li></ul></div>` : ""}
-        <div class="q"><label class="t">¿En qué eje cae?</label><span class="h">Si dudas, elige el más cercano; lo acomodamos al integrar. El eje activa sugerencias en los siguientes pasos.</span>
-          <div class="chips col">${EJES.map(e => chip("meta.eje", e, true)).join("")}</div></div>`; } },
+          <li>¿Qué parte de esa decisión podrías acompañar tú, con tus horas reales?</li></ul></div>` : ""}`; } },
       { t: "El compromiso", render() { return `
         ${qText("meta.acompanan", "¿Quién del campus la acompañará? <span class='must'>innegociable</span>", "Tú y, si aplica, colegas o estudiantes. Nombre completo.", "Dra. Nombre Apellido y M. en C. Nombre Apellido")}
         <div class="q"><label class="t">¿Qué harías tú, concretamente?</label><span class="h">Elige una o varias. Es lo que el municipio puede esperar del campus.</span>
           <div class="chips">${ROLES.map(r => chip("meta.roles", r)).join("")}</div></div>
         ${qText("meta.horas", "¿Cuánto tiempo, aproximadamente?", "Una estimación honesta. Ayuda a no prometer de más.", "p. ej. 4 horas al mes, una visita por trimestre")}`; } }
     ],
-    checks: () => [[has(F.meta.autor), "Tu nombre"], [has(F.meta.tema), "Tema de la recomendación"], [has(F.meta.eje), "Eje elegido"], [has(F.meta.acompanan), "Quién acompaña (★)"], [F.meta.roles.length > 0, "Qué harías concretamente"]],
+    checks: () => [[has(F.meta.autor), "Tu nombre"], [has(F.meta.tema), "Tema de la recomendación"], [has(F.meta.acompanan), "Quién acompaña (★)"], [F.meta.roles.length > 0, "Qué harías concretamente"]],
     stop: () => !has(F.meta.acompanan) ? "Sin alguien que acompañe, la recomendación no puede entrar al documento. Si aún no sabes quién, márcalo como pendiente y platícalo con la coordinación." : "",
     ex: () => `Acompañan: ${EX.meta.acompanan}\nQué hacen: ${EX.meta.roles.join(", ").toLowerCase()}\nTiempo: ${EX.meta.horas}`,
     preview: () => T(F).resp.find(s => s.startsWith("Acompañamiento")) || "" },
@@ -699,7 +698,7 @@ const STEPS = [
   { key: "legal", short: "8 · Marco legal", title: "¿Qué le da piso legal?", est: "3 min",
     why: "Solo la lista de leyes, normas o programas que facultan al municipio para actuar. Marca los que conozcas; la coordinación afinará artículos al integrar. No necesitas ser abogado.",
     render() {
-      const k = kit(); const groups = [...(k ? [["Sugeridos para tu eje", k.leyes]] : []), ...Object.entries(LEYES)];
+      const groups = Object.entries(LEYES);
       legalG = Math.min(legalG, groups.length - 1);
       return `
       <div class="q"><label class="t">Tu lista</label><span class="h">Lo que marques aparece aquí. Da clic en uno para quitarlo.</span>
@@ -742,20 +741,27 @@ function pickColega(id) {
   save(); renderStep(); ping();
 }
 
-/* ---- Kit de ideas por eje ---- */
-function kit() { const i = EJES.indexOf(F.meta.eje); return i >= 0 ? KIT[i] : null; }
-function kitBox(title, body) { return `<div class="kitbox"><p class="kl">💡 ${title} · eje ${esc(F.meta.eje.split(".")[0])}</p>${body}</div>`; }
-function kitFuentes() { const k = kit(); return k ? kitBox("Fuentes que suelen servir", `<div class="chips">${k.fuentes.map(f => `<button class="chip" onclick='setIfEmpty("diag.fuente", ${JSON.stringify(f + " (año)")})'>${esc(f)}</button>`).join("")}</div>`) : ""; }
-function kitAreas() { const k = kit(); return k ? kitBox("Áreas que suelen liderar", `<div class="chips">${k.areas.map(a => chip("resp.lider", a, true)).join("")}</div>`) : ""; }
-function kitVinc() { const k = kit(); return k ? kitBox("Dependencias frecuentes", `<div class="chips">${k.vinc.map(v => chip("resp.vinc", v)).join("")}</div>`) : ""; }
-function kitInd() { const k = kit(); return k ? kitBox("Indicadores típicos, clic para usar", `<div class="chips col">${k.indicadores.map(x => `<button class="chip" onclick='useInd(${JSON.stringify(x)})'>+ ${esc(x.nombre)}</button>`).join("")}</div>`) : ""; }
+/* ---- Sugerencias por línea de trabajo ---- */
+let kitL = null;
+function linea() {
+  // Arranca en la línea más cercana al eje precargado de cada integrante.
+  if (kitL === null) { const i = [5, 4, 1].indexOf(EJES.indexOf(F.meta.eje)); kitL = i >= 0 ? i : 0; }
+  return LINEAS[kitL];
+}
+function kitBox(title, body) {
+  return `<div class="kitbox"><p class="kl">💡 ${title}</p>
+    <div class="subtabs">${LINEAS.map((l, i) => `<button class="${i === kitL ? "on" : ""}" onclick="kitL=${i};renderStep()">${esc(l.nombre)}</button>`).join("")}</div>${body}</div>`;
+}
+function kitFuentes() { const k = linea(); return kitBox("Fuentes que suelen servir", `<div class="chips">${k.fuentes.map(f => `<button class="chip" onclick='setIfEmpty("diag.fuente", ${JSON.stringify(f + " (año)")})'>${esc(f)}</button>`).join("")}</div>`); }
+function kitAreas() { const k = linea(); return kitBox("Áreas que suelen liderar", `<div class="chips">${k.areas.map(a => chip("resp.lider", a, true)).join("")}</div>`); }
+function kitVinc() { const k = linea(); return kitBox("Dependencias frecuentes", `<div class="chips">${k.vinc.map(v => chip("resp.vinc", v)).join("")}</div>`); }
+function kitInd() { const k = linea(); return kitBox("Indicadores típicos, clic para usar", `<div class="chips col">${k.indicadores.map(x => `<button class="chip" onclick='useInd(${JSON.stringify(x)})'>+ ${esc(x.nombre)}</button>`).join("")}</div>`); }
 function kitQs(key) {
   if (!["meta", "titulo", "diag", "obj", "acciones"].includes(key)) return "";
-  const k = kit();
-  return k ? kitBox("Preguntas para pensar", `<ul class="kq">${k.preguntas.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`)
-    : `<p class="lead2">Elige tu eje en el <button class="b-link" onclick="goStep(0)">paso 0</button> y aquí aparecerán preguntas específicas para tu tema.</p>`;
+  const k = linea();
+  return kitBox("Preguntas para pensar", `<ul class="kq">${k.preguntas.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`);
 }
-function fondosList() { const k = kit(); return [...new Set([...(k ? k.fondos : []), ...FONDOS])]; }
+function fondosList() { return [...new Set([...LINEAS.flatMap(l => l.fondos), ...FONDOS])]; }
 function addFondo(i, m) { F.costo[i].fuente = [F.costo[i].fuente, m].filter(Boolean).join("; "); save(); renderStep(); }
 const openDet = new Set();
 function det(id, summary, body) { return `<details class="more" ${openDet.has(id) ? "open" : ""} ontoggle="this.open?openDet.add('${id}'):openDet.delete('${id}')"><summary>${summary}</summary>${body}</details>`; }
@@ -847,7 +853,7 @@ const TIPS = {
     tips: ["Basta el orden de magnitud: los rangos de la lista sirven.",
       "Separa por componente; así se ve qué puede arrancar sin dinero.",
       "Lo que cuesta $0 también se anota: es el mejor argumento.",
-      "Si no sabes la fuente, piensa primero en recursos propios y en el convenio con la UAQ; los fondos de tu eje están en el panel de ideas.",
+      "Si no sabes la fuente, piensa primero en recursos propios y en el convenio con la UAQ; en «Sugerir fuentes» hay más opciones.",
       "Si genera ingresos o ahorros, dilo en una frase."],
     vs: [["Protección civil", "Se requiere presupuesto suficiente.", "Equipo básico para [N] brigadas: $50–200 mil. Fuente: FORTAMUN; CONAFOR.\nCapacitación anual: $0. Fuente: convenio UAQ."]] },
   legal: {
@@ -1011,7 +1017,7 @@ function fichaHTML(f, forWord) {
   if (has(f.refs)) rows.push(["Experiencias de referencia", p(f.refs)]);
   const k = forWord ? ' style="width:26%;background:#faf8f3;font-weight:bold;color:#16263e;vertical-align:top;padding:6pt;border:1px solid #d9d4c7;font-size:10pt"' : ' class="k"';
   const v = forWord ? ' style="vertical-align:top;padding:6pt;border:1px solid #d9d4c7;font-size:10pt"' : "";
-  const head = `EJE ${esc((f.meta.eje || "—").split(".")[0])} · FICHA DE RECOMENDACIÓN`;
+  const head = (has(f.meta.eje) ? `EJE ${esc(f.meta.eje.split(".")[0])} · ` : "") + "FICHA DE RECOMENDACIÓN";
   const by = has(f.meta.autor) ? " · " + esc(f.meta.autor) : "";
   if (forWord) return `<table style="width:100%;border-collapse:collapse;font-family:Calibri,sans-serif">
     <tr><td colspan="2" style="background:#16263e;color:#fff;padding:8pt;border:1px solid #16263e"><span style="color:#e8b35a;font-size:8pt;letter-spacing:2pt">${head}${by}</span><br><b style="font-size:13pt">${esc(t.titulo || "Título por definir")}</b></td></tr>
@@ -1022,7 +1028,7 @@ function fichaHTML(f, forWord) {
 function fichaText(f) {
   const t = T(f);
   const acc = t.ordered.filter(g => g.items.length).map(g => g.h + ":\n" + g.items.map(i => `  ${i.n}. ${i.t}`).join("\n")).join("\n");
-  return [`FICHA DE RECOMENDACIÓN · Eje ${f.meta.eje || "—"}${has(f.meta.autor) ? " · " + f.meta.autor : ""}`, "",
+  return [`FICHA DE RECOMENDACIÓN${has(f.meta.eje) ? " · Eje " + f.meta.eje : ""}${has(f.meta.autor) ? " · " + f.meta.autor : ""}`, "",
     "1. TÍTULO\n" + t.titulo, "2. DIAGNÓSTICO\n" + t.diag, "3. OBJETIVO\n" + t.obj, "4. ACCIONES\n" + acc,
     "5. ÁREA RESPONSABLE ★\n" + t.resp.join("\n"), "6. PLAZO\n" + t.plazo, "7. INDICADOR ★\n" + t.ind.join("\n"),
     "8. COSTO Y FINANCIAMIENTO\n" + t.costo.join("\n"), "9. MARCO LEGAL\n" + t.legal.join("\n"),
