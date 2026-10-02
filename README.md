@@ -13,8 +13,14 @@ Sitio web del CIDAF, centro de investigación y vinculación de la UAQ Campus Co
 | `integrantes.html` | Equipo de investigadoras e investigadores |
 | `investigacion.html` | Áreas de trabajo (LGAC) y proyectos estratégicos |
 | `politica-publica.html` | Think tank regional: método de fichas de 10 campos, Arroyo Seco 2027 |
+| `fichas.html` | Taller de fichas: guía paso a paso, ficha ejemplo comentada, consejos por campo y envío |
+| `tablero.html` | Avance de las fichas de cada integrante |
 | `servicios.html` | Catálogo público de servicios + Ventanilla de la Sierra |
 | `difusion.html` | Cascada de formatos, biblioteca, Reporte CIDAF, eventos |
 | `sala.html` | Sala de investigadores (acceso interno con clave) |
 
 Sitio estático sin dependencias. Estilos en `assets/styles.css`; identidad: azul marino + ámbar, tipografías Fraunces y Source Sans 3.
+
+## Taller de fichas
+
+`fichas.html` y `tablero.html` usan `assets/taller-datos.js` (colegas, ejes y kit de ideas) y `assets/taller-config.js` (URL del servicio central). El servicio central es un Google Apps Script: código en `apps-script/Code.gs` e instalación en `apps-script/INSTALACION.md`.

@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taller de fichas — CIDAF</title>
+<meta name="description" content="Guía paso a paso para que cada integrante del CIDAF escriba su ficha de recomendación de política pública para Arroyo Seco 2027–2030.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+/* ============ Taller de fichas ============ */
+.tf-hero { background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%); color: #fff; padding: 3rem 0 2.6rem; }
+.tf-hero h1 { color: #fff; max-width: 22ch; }
+.tf-hero h1 em { color: var(--amber); font-style: normal; }
+.tf-hero .lead { color: #c9d2df; max-width: 60ch; margin-top: .9rem; font-size: 1.08rem; }
+.tf-hero .kicker { color: #e8b35a; }
+.view { display: none; }
+.view.on { display: block; }
+
+.route { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 2rem; }
+.route .stop { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.3rem 1.3rem 1.4rem; display: flex; flex-direction: column; gap: .5rem; border-top: 5px solid var(--gray-soft); }
+.route .stop.a { border-top-color: var(--amber); }
+.route .stop.g { border-top-color: var(--green); }
+.route .n { font-family: "Fraunces", serif; font-size: 2.2rem; color: var(--amber); line-height: 1; }
+.route .time { font-size: .82rem; color: var(--gray); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
+.route p { font-size: .95rem; color: #4a4f57; flex: 1; }
+
+button, .b { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: .6rem 1.2rem; font-weight: 600; font-size: .95rem; text-decoration: none; display: inline-flex; align-items: center; gap: .4rem; }
+.b-pri { background: var(--amber); color: var(--navy); }
+.b-pri:hover { filter: brightness(1.06); }
+.b-nav { background: var(--navy); color: #fff; }
+.b-ghost { background: transparent; color: var(--navy); border: 1.5px solid var(--gray-soft); }
+.b-ghost:hover { border-color: var(--navy); }
+.b-sm { padding: .35rem .8rem; font-size: .85rem; }
+.b-link { background: none; padding: .2rem 0; color: var(--navy-2); text-decoration: underline; border-radius: 0; font-weight: 600; }
+
+.promise { margin-top: 1.6rem; background: var(--amber-soft); border-radius: var(--radius); padding: 1rem 1.2rem; font-size: .98rem; color: var(--navy); }
+
+/* ---- Barra de progreso ---- */
+.steps { position: sticky; top: 54px; z-index: 30; background: var(--paper); border-bottom: 1px solid #e4e0d6; }
+.steps .wrap { display: flex; align-items: center; gap: .3rem; padding-top: .6rem; padding-bottom: .6rem; overflow-x: auto; scrollbar-width: thin; }
+.dot { flex: 0 0 auto; border: 1.5px solid var(--gray-soft); background: #fff; color: var(--gray); border-radius: 999px; font-size: .78rem; font-weight: 700; padding: .25rem .6rem; cursor: pointer; white-space: nowrap; }
+.dot.done { background: var(--green-soft); border-color: var(--green); color: var(--green); }
+.dot.pend { background: var(--yellow-soft); border-color: var(--yellow); color: #8a6a00; }
+.dot.cur { background: var(--navy); border-color: var(--navy); color: #fff; }
+.saved { margin-left: auto; font-size: .8rem; color: var(--gray); white-space: nowrap; padding-left: .6rem; }
+
+/* ---- Paso ---- */
+.stage { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 1.6rem; padding: 2rem 0 3rem; align-items: start; }
+@media (max-width: 860px) { .stage { grid-template-columns: 1fr; } .steps { top: 0; } }
+.stepno { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--red); }
+.stage h2 { margin: .3rem 0 .4rem; }
+.why { color: #4a4f57; font-size: 1rem; max-width: 60ch; }
+.est { display: inline-block; font-size: .8rem; background: #fff; border: 1px solid #e4e0d6; border-radius: 999px; padding: .1rem .6rem; color: var(--gray); margin-top: .5rem; }
+.star { color: var(--amber); }
+.must { background: var(--red-soft); color: var(--red); font-size: .78rem; font-weight: 700; padding: .1rem .5rem; border-radius: 6px; margin-left: .3rem; vertical-align: middle; }
+
+.q { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.1rem 1.2rem; margin-top: 1rem; }
+.q label.t { display: block; font-weight: 700; color: var(--navy); font-size: 1rem; }
+.q .h { display: block; font-size: .88rem; color: var(--gray); margin: .1rem 0 .5rem; }
+input[type=text], textarea, select { width: 100%; font: inherit; font-size: .98rem; color: var(--ink); border: 1.5px solid #dcd8ce; border-radius: 10px; padding: .55rem .7rem; background: #fdfcf9; }
+textarea { resize: vertical; min-height: 4.2rem; line-height: 1.5; }
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--amber); background: #fff; box-shadow: 0 0 0 3px rgba(217,147,13,.18); }
+.row { display: grid; gap: .5rem; }
+.row.two { grid-template-columns: 1fr 1fr; }
+@media (max-width: 560px) { .row.two { grid-template-columns: 1fr; } }
+
+.chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
+.chip { font-size: .83rem; background: #f1eee6; color: var(--navy); border: 1px solid transparent; border-radius: 999px; padding: .22rem .65rem; cursor: pointer; font-weight: 600; }
+.chip:hover { border-color: var(--amber); }
+.chip.on { background: var(--navy); color: #fff; }
+.chips .lbl { font-size: .78rem; color: var(--gray); align-self: center; margin-right: .2rem; }
+
+.item { border: 1.5px solid #ebe7dd; border-radius: 12px; padding: .7rem .8rem; margin-top: .6rem; background: #fdfcf9; position: relative; }
+.item .x { position: absolute; top: .35rem; right: .45rem; background: none; color: var(--gray); font-size: 1.1rem; padding: .1rem .35rem; }
+.item .x:hover { color: var(--red); }
+.item .row + .row, .item .row + textarea, .item textarea + .row { margin-top: .45rem; }
+.horizon { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .45rem; }
+.horizon button { font-size: .8rem; padding: .22rem .65rem; background: #fff; border: 1.5px solid #dcd8ce; color: var(--gray); }
+.horizon button.on { border-color: var(--navy); background: var(--navy); color: #fff; }
+.lights { display: flex; gap: .3rem; }
+.lights button { width: 2.1rem; height: 2.1rem; padding: 0; justify-content: center; border: 2px solid #dcd8ce; background: #fff; font-size: 1.05rem; }
+.lights button.on { border-color: var(--navy); transform: scale(1.08); }
+
+/* ---- Panel lateral ---- */
+.side { position: sticky; top: 112px; display: flex; flex-direction: column; gap: 1rem; }
+@media (max-width: 860px) { .side { position: static; } }
+.panel { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1rem 1.15rem; }
+.panel h4 { font-family: "Fraunces", serif; color: var(--navy); font-size: 1.02rem; margin-bottom: .45rem; }
+.panel.ex { border-left: 5px solid var(--amber); }
+.panel.ex .exbody { font-size: .9rem; color: #3d424a; white-space: pre-line; }
+.panel.ex .note { margin-top: .6rem; font-size: .85rem; background: var(--amber-soft); border-radius: 8px; padding: .5rem .65rem; color: var(--navy); }
+.vs { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .3rem; }
+.vs div { font-size: .85rem; border-radius: 8px; padding: .5rem .6rem; }
+.vs .bad { background: var(--red-soft); }
+.vs .good { background: var(--green-soft); }
+.vs b { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .15rem; }
+.checks { list-style: none; font-size: .9rem; }
+.checks li { padding: .22rem 0 .22rem 1.6rem; position: relative; color: #4a4f57; }
+.checks li::before { position: absolute; left: 0; top: .2rem; width: 1.2rem; text-align: center; }
+.checks li.ok::before { content: "✓"; color: var(--green); font-weight: 700; }
+.checks li.no::before { content: "○"; color: var(--gray-soft); font-weight: 700; }
+.checks li.warn::before { content: "!"; color: #b07f00; font-weight: 800; }
+.preview-mini { font-size: .88rem; color: #3d424a; background: #faf8f3; border-radius: 8px; padding: .6rem .7rem; white-space: pre-line; max-height: 16rem; overflow: auto; }
+.pendbox { display: flex; gap: .55rem; align-items: flex-start; font-size: .9rem; color: #5b5f66; background: var(--yellow-soft); border-radius: 10px; padding: .6rem .75rem; margin-top: 1rem; cursor: pointer; }
+.pendbox input { margin-top: .25rem; accent-color: #b07f00; }
+
+.navrow { display: flex; justify-content: space-between; gap: .6rem; margin-top: 1.4rem; flex-wrap: wrap; }
+.stopper { background: var(--red-soft); color: #7c2e27; border-radius: 10px; padding: .7rem .85rem; font-size: .92rem; margin-top: .8rem; }
+
+/* ---- Ficha renderizada ---- */
+.ficha { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.ficha .fh { background: var(--navy); color: #fff; padding: .9rem 1.2rem; }
+.ficha .fh small { display: block; color: #e8b35a; letter-spacing: .14em; text-transform: uppercase; font-size: .74rem; font-weight: 700; }
+.ficha .fh b { font-family: "Fraunces", serif; font-size: 1.2rem; font-weight: 600; }
+.ficha table { width: 100%; border-collapse: collapse; }
+.ficha td { vertical-align: top; padding: .75rem 1rem; border-top: 1px solid #ece8de; font-size: .93rem; }
+.ficha td.k { width: 26%; background: #faf8f3; font-weight: 700; color: var(--navy); font-size: .88rem; }
+.ficha td.k .star { margin-left: .15rem; }
+.ficha ul { padding-left: 1.1rem; }
+.ficha .hz { font-weight: 700; color: var(--navy-2); margin-top: .35rem; }
+.ficha .hz:first-child { margin-top: 0; }
+.ficha .ph { color: #b07f00; background: var(--yellow-soft); padding: 0 .3rem; border-radius: 4px; font-style: italic; }
+.ficha .it { margin-bottom: .35rem; }
+@media (max-width: 600px) { .ficha td { display: block; width: 100% !important; } .ficha td.k { border-top: 1px solid #ece8de; padding-bottom: .2rem; } .ficha td:not(.k) { border-top: 0; } }
+
+.annot { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 1.4rem; align-items: start; }
+@media (max-width: 860px) { .annot { grid-template-columns: 1fr; } }
+.anote { background: #fff; border-radius: 12px; box-shadow: var(--shadow); padding: .8rem 1rem; font-size: .9rem; border-left: 4px solid var(--green); margin-bottom: .7rem; }
+.anote b { color: var(--navy); display: block; font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; }
+
+.summary { display: grid; gap: .6rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 1rem 0 1.4rem; }
+.sumcard { background: #fff; border-radius: 12px; padding: .75rem .9rem; box-shadow: var(--shadow); font-size: .9rem; border-left: 5px solid var(--green); cursor: pointer; }
+.sumcard.p { border-left-color: var(--yellow); }
+.sumcard.r { border-left-color: var(--red); }
+.sumcard b { display: block; color: var(--navy); }
+.actions-bar { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; }
+.toast { position: fixed; bottom: 1.2rem; left: 50%; transform: translateX(-50%) translateY(1rem); opacity: 0; visibility: hidden; background: var(--navy); color: #fff; padding: .6rem 1.1rem; border-radius: 999px; font-size: .92rem; transition: transform .25s, opacity .25s, visibility .25s; z-index: 99; }
+.toast.on { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; }
+
+/* ---- Colega, kit y consejos ---- */
+.colega-card { margin-top: .7rem; background: var(--green-soft); border-radius: 10px; padding: .6rem .8rem; font-size: .9rem; display: flex; flex-direction: column; gap: .15rem; }
+.colega-card b { color: var(--navy); }
+.q.ideas ul, .kq { padding-left: 1.1rem; font-size: .9rem; color: #4a4f57; }
+.q.ideas li, .kq li { margin: .2rem 0; }
+.panel.kit { border-left: 5px solid var(--green); }
+.kl { font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; color: var(--gray); margin: .6rem 0 .25rem; }
+.panel .kl:first-of-type { margin-top: .1rem; }
+.chips.col { flex-direction: column; align-items: stretch; }
+.chips.col .chip { text-align: left; border-radius: 10px; }
+.chip.static { cursor: default; }
+.chip.static:hover { border-color: transparent; }
+.b-send { background: var(--green); color: #fff; }
+.b-send:disabled { opacity: .6; cursor: wait; }
+.tips { margin-top: 1.1rem; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); border-left: 5px solid var(--navy-2); padding: .85rem 1.1rem; }
+.tips summary { cursor: pointer; font-weight: 700; color: var(--navy); }
+.tips ul { padding-left: 1.1rem; font-size: .92rem; color: #4a4f57; }
+.tips li { margin: .3rem 0; }
+.tips .tema { font-size: .8rem; font-weight: 600; color: var(--gray); margin-top: .6rem; }
+@media (max-width: 560px) { .tips .vs { grid-template-columns: 1fr; } }
+.coh-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 1.2rem; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.1rem 1.2rem; margin-bottom: 1rem; align-items: start; }
+.coh-wrap p { font-size: .92rem; color: #4a4f57; margin: .3rem 0 .7rem; }
+.coh-wrap .checks li.ask::before { content: "?"; color: var(--navy-2); font-weight: 800; }
+.coh-wrap .len { font-size: .85rem; color: var(--gray); margin: .5rem 0 0; }
+@media (max-width: 760px) { .coh-wrap { grid-template-columns: 1fr; } }
+.sent { background: var(--green-soft); color: #245a3c; border-radius: 10px; padding: .65rem .9rem; font-size: .93rem; margin-bottom: .6rem; }
+
+@media print {
+  header.site, footer.site, .steps, .no-print, .tf-hero { display: none !important; }
+  body { background: #fff; }
+  .view { display: none !important; }
+  .view.print { display: block !important; }
+  .ficha { box-shadow: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="assets/logo-blanco.svg" alt="" width="34" height="34">CIDAF</a>
+    <nav class="main">
+      <a href="index.html">Inicio</a>
+      <a href="centro.html">El Centro</a>
+      <a href="integrantes.html">Integrantes</a>
+      <a href="investigacion.html">Investigación</a>
+      <a href="politica-publica.html" class="active">Política pública</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="difusion.html">Difusión</a>
+      <a href="sala.html" class="lock">🔑 Sala de investigadores</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= INICIO ================= -->
+<main id="v-inicio" class="view on">
+  <div class="tf-hero">
+    <div class="wrap">
+      <div class="kicker">Taller de fichas · Arroyo Seco 2027–2030</div>
+      <h1>Tu recomendación, en <em>una página</em> y sin pelearte con el formato</h1>
+      <p class="lead">Este taller te lleva de la mano: te hace preguntas cortas, te muestra cómo lo resolvimos en una ficha real y arma el texto por ti. Al final descargas un primer borrador en Word que después pulimos juntos.</p>
+    </div>
+  </div>
+  <section class="block">
+    <div class="wrap">
+      <h2>La ruta, en tres paradas</h2>
+      <div class="route">
+        <div class="stop a">
+          <span class="n">1</span><span class="time">5 minutos</span>
+          <h3>Mira una ficha terminada</h3>
+          <p>La del sistema municipal contra los cambios irregulares de uso de suelo, con notas de por qué cada campo funciona.</p>
+          <div><button class="b b-ghost" onclick="go('ejemplo')">Ver el ejemplo</button></div>
+        </div>
+        <div class="stop">
+          <span class="n">2</span><span class="time">≈ 45 minutos, en una o varias sentadas</span>
+          <h3>Responde, paso a paso</h3>
+          <p>Diez pasos cortos. Lo que aún no sepas, márcalo como pendiente y sigue. Todo se guarda solo en este navegador.</p>
+          <div><button class="b b-pri" id="btnStart" onclick="go('taller')">Empezar mi ficha</button></div>
+        </div>
+        <div class="stop g">
+          <span class="n">3</span><span class="time">1 minuto</span>
+          <h3>Descarga y envía</h3>
+          <p>Obtén tu ficha en Word y mándala a la coordinación. No tiene que estar perfecta: es un borrador para pulir en conjunto.</p>
+          <div><button class="b b-ghost" onclick="go('final')">Ir a mi borrador</button></div>
+        </div>
+      </div>
+      <div class="promise"><strong>La regla de oro:</strong> solo proponemos lo que estamos dispuestos a acompañar. Por eso el primer paso no es escribir, sino decir quién del campus sostendrá la recomendación durante el trienio.</div>
+      <p style="margin-top:1rem;font-size:.95rem">📊 ¿Cómo vamos como equipo? Mira el <a href="tablero.html">tablero de avance de las fichas</a>.</p>
+      <p style="margin-top:.4rem;font-size:.9rem;color:var(--gray)">¿Trabajas en otra computadora? Descarga el respaldo (.json) al final y cárgalo aquí: <label class="b-link" style="cursor:pointer">cargar respaldo<input type="file" accept=".json" hidden onchange="importJSON(this)"></label></p>
+    </div>
+  </section>
+</main>
+
+<!-- ================= EJEMPLO ================= -->
+<main id="v-ejemplo" class="view">
+  <div class="tf-hero">
+    <div class="wrap">
+      <div class="kicker">Ficha ejemplo · Eje III</div>
+      <h1>Así se ve una ficha <em>encarnada</em></h1>
+      <p class="lead">Recomendación de Eduardo Luna y Miguel Bartorila, ajustada a los acuerdos de la reunión interinstitucional del 17 de julio de 2026 con CONANP, SEDESU y el municipio. A la derecha: por qué funciona cada campo.</p>
+    </div>
+  </div>
+  <section class="block">
+    <div class="wrap">
+      <div class="annot">
+        <div id="exFicha"></div>
+        <div id="exNotes"></div>
+      </div>
+      <div class="navrow no-print">
+        <button class="b b-ghost" onclick="go('inicio')">← Inicio</button>
+        <button class="b b-pri" onclick="go('taller')">Ahora, mi ficha →</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= TALLER ================= -->
+<main id="v-taller" class="view">
+  <div class="steps no-print"><div class="wrap" id="dots"></div></div>
+  <div class="wrap"><div class="stage" id="stage"></div></div>
+</main>
+
+<!-- ================= FINAL ================= -->
+<main id="v-final" class="view print">
+  <section class="block">
+    <div class="wrap">
+      <div class="no-print">
+        <div class="stepno">Último paso</div>
+        <h2>Tu borrador está listo para salir</h2>
+        <p class="why">Revisa el estado de cada campo. Los amarillos puedes enviarlos así: la coordinación te ayuda a completarlos. Lo único que no puede faltar son los dos campos ★.</p>
+        <div class="summary" id="summary"></div>
+        <div class="coh-wrap">
+          <div>
+            <h3>Antes de enviar: ¿todo embona?</h3>
+            <p>Las tres primeras revisiones las hace el taller por ti. Las otras tres necesitan tu ojo: lee tu ficha de corrido y contéstalas con honestidad.</p>
+          </div>
+          <div id="cohBox"></div>
+        </div>
+        <div id="sentBox"></div>
+        <div class="actions-bar">
+          <button class="b b-send" id="btnSend" onclick="submitFicha()">📨 Enviar a coordinación</button>
+          <button class="b b-pri" onclick="downloadDoc()">⬇ Descargar en Word</button>
+          <button class="b b-nav" onclick="copyText()">⧉ Copiar texto</button>
+          <button class="b b-ghost" onclick="window.print()">🖨 Imprimir / PDF</button>
+          <button class="b b-ghost" onclick="exportJSON()">💾 Respaldo (.json)</button>
+          <button class="b b-ghost" onclick="go('taller')">✎ Seguir editando</button>
+        </div>
+      </div>
+      <div id="finalFicha"></div>
+      <div class="no-print" style="margin-top:1.4rem;font-size:.9rem;color:var(--gray)">
+        ¿Quieres empezar otra ficha? <button class="b-link" onclick="resetAll()">Borrar esta y empezar de cero</button> (descarga antes tu respaldo).
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap cols">
+    <div>
+      <strong style="color:#fff">CIDAF</strong><br>
+      Centro de Investigación y Desarrollo Tecnológico en Materia<br>Agrícola, Pecuaria, Acuícola y Forestal
+    </div>
+    <div>
+      Universidad Autónoma de Querétaro · Campus Concá<br>
+      Facultad de Ingeniería · Facultad de Ciencias Naturales<br>
+      Concá, Arroyo Seco, Querétaro
+    </div>
+    <div>
+      <a href="politica-publica.html">Política pública</a><br>
+      <a href="https://labrural.org/" target="_blank" rel="noopener">labrural.org</a>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/taller-config.js"></script>
+<script src="assets/taller-datos.js"></script>
+<script>
+/* =========================================================
+   Datos de apoyo (EJES, COLEGAS y KIT viven en assets/taller-datos.js)
+   ========================================================= */
+const API = (window.TALLER_API_URL || "").trim();
+const HZ = ["100 días", "Año 1", "Años 2–3", "Permanente"];
+const VERBOS = ["Establecer", "Reducir", "Garantizar", "Incrementar", "Proteger", "Recuperar", "Consolidar", "Institucionalizar"];
+const AREAS = ["Obras Públicas y Desarrollo Urbano", "Ecología / Medio Ambiente", "Desarrollo Agropecuario", "Desarrollo Social", "Desarrollo Económico y Turismo", "Tesorería", "Protección Civil", "DIF municipal", "Salud municipal", "Educación y Cultura", "Organismo o comités de agua", "Delegaciones municipales", "Cabildo", "Presidencia municipal"];
+const VINC = ["CONANP-RBSG", "CONAGUA", "PROFEPA", "SEMARNAT", "CONAFOR", "SADER", "INAES", "IMSS-Bienestar", "SEDESU Qro.", "SEDEA Qro.", "Secretaría de Salud Qro.", "Procuraduría Estatal de Protección al Ambiente", "Ejidos y comunidades", "Comités de vigilancia ambiental"];
+const ROLES = ["Asesoría técnica a funcionarios", "Capacitación", "Medición del indicador", "Elaborar un estudio o documento técnico", "Vincular con dependencias", "Acompañar a comunidades o productores"];
+const FONDOS = ["Recursos propios", "FAISMUN (Ramo 33)", "FORTAMUN", "PROCODES (CONANP)", "Pago por servicios ambientales (CONAFOR)", "INAES", "SADER", "SEDEA Qro.", "SEDESU Qro.", "Convenio UAQ", "Cooperación internacional"];
+const MONTOS = ["$0", "< $50 mil", "$50–200 mil", "$200 mil–1 millón", "> $1 millón"];
+const LEYES = {
+  "Municipal": ["Constitución, Art. 115", "Ley Orgánica Municipal del Estado de Querétaro", "Ley de Planeación del Estado de Querétaro"],
+  "Ambiente": ["LGEEPA", "Programa de Manejo de la RBSG (1999)", "Ley General de Desarrollo Forestal Sustentable", "Ley General para la Prevención y Gestión Integral de los Residuos", "NOM-059-SEMARNAT-2010"],
+  "Territorio": ["LGAHOTDU", "Código Urbano del Estado de Querétaro", "PMDU de Arroyo Seco"],
+  "Agua": ["Ley de Aguas Nacionales", "NOM-127-SSA1-2021"],
+  "Campo": ["Ley de Desarrollo Rural Sustentable", "Ley Agraria", "Ley de la Economía Social y Solidaria"],
+  "Social y salud": ["Ley General de Desarrollo Social", "Ley General de Salud", "Ley General de Protección Civil"]
+};
+
+/* =========================================================
+   Ficha ejemplo — III.1, actualizada al 17 jul 2026
+   ========================================================= */
+const EX = {
+  meta: { autor: "Dr. Eduardo Luna Sánchez", eje: "III. Ordenamiento territorial", tema: "Mecanismo para detener cambios irregulares de uso de suelo", acompanan: "Dr. Eduardo Luna Sánchez y Dr. Miguel Bartorila (UAQ Campus Concá)", roles: ["Asesoría técnica a funcionarios", "Capacitación", "Medición del indicador", "Vincular con dependencias"], horas: "8 horas al mes" },
+  titulo: "Sistema municipal para prevenir y dar seguimiento a los cambios irregulares de uso de suelo",
+  diag: {
+    problema: "Arroyo Seco cuenta con un Programa Municipal de Desarrollo Urbano (PMDU) con dictamen de congruencia aprobado, pero carece de los instrumentos que lo hagan exigible: no hay reglamento de construcción aplicado, padrón de licencias ni un canal ciudadano para reportar obras irregulares.",
+    dato: "En zonas como Las Trancas el suelo alcanza $1,000/m², lo que impulsa la lotificación de tierras agrícolas y de conservación, la invasión de márgenes de ríos y construcciones —financiadas por turismo y remesas— que no pasan por licencia.",
+    fuente: "Talleres participativos EDVAC-UAQ (2025); reunión interinstitucional CONANP–SEDESU–Municipio–UAQ (17 de julio de 2026).",
+    consecuencia: "Cada mes sin control se pierde suelo agrícola y zonas de recarga de forma prácticamente irreversible, y el municipio deja de recaudar ingresos propios."
+  },
+  obj: { verbo: "Establecer", que: "un sistema municipal de control territorial que haga exigible el PMDU en todo el municipio, genere ingresos propios por licencias y canalice los reportes ciudadanos a la autoridad competente", meta: "que al menos 80% de los reportes ciudadanos completos reciba respuesta documental en máximo 30 días" },
+  acciones: [
+    { t: "Socializar el PMDU: publicar el mapa de zonificación consultable en línea y en cada delegación, con la ruta de trámites y las consecuencias de construir sin licencia.", h: 0 },
+    { t: "Capacitar al personal de Desarrollo Urbano y a delegados en la operación del PMDU, en su vía técnica y jurídica, con SEDESU, CONANP y UAQ.", h: 0 },
+    { t: "Aprobar en cabildo el Reglamento Municipal de Construcción y Uso del Suelo, alineado al PMDU y al Programa de Manejo de la RBSG, con licencia obligatoria, multas escalonadas y criterios de eficiencia hídrica y energética.", h: 1 },
+    { t: "Implementar el padrón digital de licencias de construcción, vinculado al predial y actualizado cada mes.", h: 1 },
+    { t: "Habilitar un canal de reporte ciudadano anclado al municipio (formulario web y WhatsApp) con foto y ubicación obligatorias: el municipio recibe, verifica en campo y canaliza a PROFEPA, CONAGUA o CONANP por los conductos oficiales.", h: 1 },
+    { t: "Suscribir convenio con la UAQ Campus Concá para acompañamiento técnico y resguardo de un repositorio de capacitación que sobreviva a los cambios de administración.", h: 1 },
+    { t: "Informar cada semestre sobre los reportes recibidos ante el Consejo Asesor de la RBSG, con notificación parcial a CONANP y participación de los comités de vigilancia ambiental.", h: 2 },
+    { t: "Diseñar una estrategia de difusión dirigida a compradores migrantes (temporadas de retorno) y a agentes inmobiliarios.", h: 2 },
+    { t: "Crear una contribución por incremento de valor del suelo (captura de plusvalía) que alimente un Fondo Municipal de Conservación Territorial.", h: 2 },
+    { t: "Aplicar sanciones progresivas: notificación, multa, suspensión y demolición con restauración del predio.", h: 3 }
+  ],
+  hitos: "Mapa de zonificación publicado en todas las delegaciones (100 días). Reglamento aprobado y padrón operando (año 1). Primer informe ante el Consejo Asesor de la RBSG (año 2).",
+  resp: { lider: "Obras Públicas y Desarrollo Urbano", coord: "Tesorería (licencias y multas); Sindicatura (seguimiento legal); Cabildo (reglamento y contribución); delegaciones municipales (primer punto de contacto ciudadano).", vinc: ["CONANP-RBSG", "SEDESU Qro.", "PROFEPA", "CONAGUA", "SEMARNAT", "Procuraduría Estatal de Protección al Ambiente"], vincOtro: "" },
+  ind: [
+    { nombre: "% de obras en construcción con licencia vigente en el padrón", base: "< 10% (a verificar)", meta: "≥ 60% en localidades de más de 200 hab.", fuente: "Padrón municipal; recorrido anual UAQ" },
+    { nombre: "% de reportes ciudadanos completos con respuesta documental en ≤ 30 días", base: "0% (no existe el canal)", meta: "≥ 80%", fuente: "Registro de folios; informe al Consejo Asesor RBSG" },
+    { nombre: "Hectáreas del polígono agrícola y de conservación con cambio de uso no autorizado", base: "A determinar con imagen satelital 2027", meta: "0 ha nuevas", fuente: "Imagen satelital anual (UAQ)" },
+    { nombre: "Recaudación anual por licencias de construcción", base: "A determinar (cuenta pública 2027)", meta: "Incremento sostenido año con año", fuente: "Estado financiero municipal" }
+  ],
+  costo: [
+    { comp: "Socialización del PMDU y capacitación", monto: "$50–200 mil", fuente: "Convenio UAQ; SEDESU Qro.; recursos propios" },
+    { comp: "Reglamento y padrón digital de licencias", monto: "≈ $120,000", fuente: "Recursos propios" },
+    { comp: "Canal de reporte ciudadano", monto: "$0", fuente: "WhatsApp Business + formulario web" },
+    { comp: "Rendición de cuentas ante el Consejo Asesor", monto: "$0", fuente: "Órgano ya constituido" }
+  ],
+  ingresos: true,
+  ingresosTxt: "El cobro de licencias, las multas y la contribución por plusvalía convierten el sistema en ingreso propio: se paga a sí mismo.",
+  legal: ["LGAHOTDU", "Código Urbano del Estado de Querétaro", "PMDU de Arroyo Seco", "LGEEPA", "Ley de Aguas Nacionales", "Programa de Manejo de la RBSG (1999)", "Ley Orgánica Municipal del Estado de Querétaro"],
+  legalOtro: "LGAHOTDU Arts. 11 y 59 (licencias y control del uso del suelo); LGEEPA Art. 189 (denuncia popular); LAN Art. 113 (zona federal de cauces); Ley General de Protección de Datos Personales en Posesión de Sujetos Obligados.",
+  sem: [
+    { comp: "PMDU", c: "y", j: "Dictamen de congruencia aprobado; falta inscripción en el Registro Público y difusión." },
+    { comp: "Reglamento de construcción", c: "r", j: "No existe uno vigente y aplicado." },
+    { comp: "Padrón de licencias", c: "r", j: "Inexistente." },
+    { comp: "Reporte ciudadano municipal", c: "r", j: "No existe canal municipal; solo denuncias sueltas ante dependencias." },
+    { comp: "Rendición de cuentas", c: "y", j: "El Consejo Asesor de la RBSG existe, pero no recibe informes de uso de suelo." },
+    { comp: "Captura de plusvalía", c: "r", j: "Inexistente." }
+  ],
+  refs: "Observatorio Ciudadano de Valle de Bravo (municipio con ANP); clausuras de PROFEPA por denuncia popular en el Corredor Chichinautzin; captura de plusvalía en Guadalajara (ICUS) y Zapopan.",
+  pend: {}
+};
+
+const EXNOTES = [
+  ["Título", "Nombra el instrumento (un sistema) y el problema. Se entiende sin leer nada más."],
+  ["Diagnóstico", "Cuatro piezas: problema, dato duro, fuente con año y consecuencia de no actuar. Menos de 120 palabras: se lee en 60 segundos."],
+  ["Objetivo", "Verbo en infinitivo + qué se instala + una meta con número. Se puede verificar en 2030."],
+  ["Acciones", "Cada una empieza con verbo y es verificable (¿se aprobó el reglamento? sí/no). Arranca con lo barato y posible: socializar lo que ya existe."],
+  ["Responsable ★", "Un área municipal lidera; la UAQ acompaña con nombre y apellido. Esto es lo que vuelve encarnada la recomendación."],
+  ["Plazo", "Se arma solo a partir de las acciones. Los hitos dicen qué podrá mostrar el gobierno en cada momento."],
+  ["Indicador ★", "Cuando no hay línea base se dice «a determinar» y cómo se medirá. Es honesto y sigue siendo medible."],
+  ["Costo", "Orden de magnitud, no contabilidad. Señalar que genera ingresos propios es el mejor argumento político."],
+  ["Marco legal", "Una lista de piso legal, no un ensayo. La coordinación afina artículos."],
+  ["Semáforo", "Un color por componente y una frase de por qué. Se ve de golpe qué tan lejos estamos."]
+];
+
+/* =========================================================
+   Estado
+   ========================================================= */
+const KEY = "cidaf_ficha_v1";
+function blank() {
+  return {
+    meta: { colega: "", autor: "", correo: "", eje: "", tema: "", acompanan: "", roles: [], horas: "" },
+    titulo: "",
+    diag: { problema: "", dato: "", fuente: "", consecuencia: "" },
+    obj: { verbo: "", que: "", meta: "" },
+    acciones: [{ t: "", h: 0 }, { t: "", h: 1 }, { t: "", h: 2 }],
+    hitos: "",
+    resp: { lider: "", coord: "", vinc: [], vincOtro: "" },
+    ind: [{ nombre: "", base: "", meta: "", fuente: "" }],
+    costo: [{ comp: "", monto: "", fuente: "" }],
+    ingresos: false, ingresosTxt: "",
+    legal: [], legalOtro: "",
+    sem: [{ comp: "", c: "", j: "" }],
+    refs: "",
+    pend: {},
+    enviada: "",
+    step: 0
+  };
+}
+let F = load();
+function load() {
+  try { const s = localStorage.getItem(KEY); if (s) return merge(JSON.parse(s)); } catch (e) {}
+  return blank();
+}
+function merge(o) { const b = blank(); const r = Object.assign(b, o); r.meta = Object.assign(blank().meta, o.meta || {}); return r; }
+let saveT;
+function save() {
+  clearTimeout(saveT);
+  saveT = setTimeout(() => {
+    try { localStorage.setItem(KEY, JSON.stringify(F)); } catch (e) {}
+    const el = document.getElementById("savedLbl"); if (el) el.textContent = "✓ Guardado " + new Date().toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" });
+  }, 350);
+}
+
+/* =========================================================
+   Utilidades
+   ========================================================= */
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const words = s => (String(s || "").trim().match(/\S+/g) || []).length;
+const has = s => String(s || "").trim().length > 0;
+const hasNum = s => /\d/.test(s || "");
+const hasYear = s => /(19|20)\d{2}/.test(s || "");
+const infin = s => /^\s*[A-Za-zÁÉÍÓÚáéíóúñÑ]+(ar|er|ir)(lo|la|los|las|se)?\b/i.test(s || "");
+const vague = s => /^\s*(mejorar|fortalecer|promover|impulsar|fomentar|apoyar)\b/i.test(s || "");
+function get(path) { return path.split(".").reduce((o, k) => o?.[k], F); }
+function set(path, v) { const ks = path.split("."); const last = ks.pop(); ks.reduce((o, k) => o[k], F)[last] = v; save(); refreshSide(); }
+function toast(m) { const t = document.getElementById("toast"); t.textContent = m; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 2200); }
+
+/* =========================================================
+   Texto ensamblado
+   ========================================================= */
+function T(f) {
+  const d = f.diag;
+  const diag = [d.problema, d.dato, d.consecuencia].filter(has).map(s => s.trim()).join(" ") + (has(d.fuente) ? "\nFuente: " + d.fuente.trim() : "");
+  const o = f.obj;
+  let obj = "";
+  if (has(o.verbo) || has(o.que)) obj = `${o.verbo || "[Verbo]"}, al cierre del trienio 2027–2030, ${(o.que || "[qué se busca]").trim()}` + (has(o.meta) ? `, con la meta de ${o.meta.trim()}` : "") + ".";
+  obj = obj.replace(/\.\.$/, ".");
+  const acc = f.acciones.filter(a => has(a.t));
+  let n = 0; const byH = HZ.map(() => []);
+  acc.forEach(a => byH[a.h ?? 0].push({ n: ++n, t: a.t.trim() }));
+  // numeración en orden de horizonte
+  n = 0; const ordered = HZ.map((h, i) => ({ h, items: f.acciones.filter(a => has(a.t) && (a.h ?? 0) === i).map(a => ({ n: ++n, t: a.t.trim() })) }));
+  const plazo = ordered.filter(g => g.items.length).map(g => `${g.h}: ` + (g.items.length === 1 ? `acción ${g.items[0].n}` : `acciones ${g.items[0].n}–${g.items[g.items.length - 1].n}`)).join(" · ") + (has(f.hitos) ? "\nHitos: " + f.hitos.trim() : "");
+  const r = f.resp;
+  const vinc = [...r.vinc, ...(has(r.vincOtro) ? [r.vincOtro.trim()] : [])].join("; ");
+  const resp = [
+    has(r.lider) ? "Responsable principal: " + r.lider : "",
+    has(r.coord) ? "Coordinación: " + r.coord.trim() : "",
+    has(f.meta.acompanan) ? "Acompañamiento UAQ: " + f.meta.acompanan.trim() + (f.meta.roles.length ? " — " + f.meta.roles.join(", ").toLowerCase() : "") + (has(f.meta.horas) ? ` (${f.meta.horas.trim()})` : "") : "",
+    vinc ? "Vinculación: " + vinc : ""
+  ].filter(Boolean);
+  const ind = f.ind.filter(i => has(i.nombre)).map((i, k) => `Indicador ${k + 1} — ${i.nombre.trim()}. Línea base 2027: ${has(i.base) ? i.base.trim() : "por definir"}. Meta 2030: ${has(i.meta) ? i.meta.trim() : "por definir"}.` + (has(i.fuente) ? ` Verificación: ${i.fuente.trim()}.` : ""));
+  const costo = f.costo.filter(c => has(c.comp)).map(c => `${c.comp.trim()}: ${has(c.monto) ? c.monto.trim() : "por estimar"}.` + (has(c.fuente) ? ` Fuente: ${c.fuente.trim()}.` : ""));
+  if (f.ingresos) costo.push("Genera ingresos propios: " + (has(f.ingresosTxt) ? f.ingresosTxt.trim() : "sí."));
+  const legal = [...f.legal, ...(has(f.legalOtro) ? [f.legalOtro.trim()] : [])];
+  const sem = f.sem.filter(s => has(s.comp)).map(s => ({ c: s.c, t: `${s.comp.trim()}` + (has(s.j) ? ` — ${s.j.trim()}` : "") }));
+  return { titulo: f.titulo.trim(), diag: diag.trim(), obj, ordered, plazo, resp, ind, costo, legal, sem };
+}
+const LIGHT = { r: "🔴", y: "🟡", g: "🟢", "": "⚪" };
+
+/* =========================================================
+   Pasos
+   ========================================================= */
+const STEPS = [
+  { key: "meta", short: "0 · Compromiso", title: "Antes de escribir: ¿quién la acompaña?", est: "3 min",
+    why: "Solo entran al documento las recomendaciones que alguien del campus está dispuesto a acompañar durante el trienio. Empecemos por ahí: te ahorra escribir algo que después no podremos sostener.",
+    render() { const c = COLEGAS.find(x => x.id === F.meta.colega); return `
+      <div class="q"><label class="t">¿Quién eres?</label><span class="h">Elige tu nombre y precargamos lo que ya platicamos en la reunión del 6 de agosto.</span>
+        <div class="chips">${COLEGAS.filter(x => !x.ejemplo).map(x => `<button class="chip ${F.meta.colega === x.id ? "on" : ""}" onclick="pickColega('${x.id}')">${esc(x.nombre)}</button>`).join("")}<button class="chip ${F.meta.colega === "otro" ? "on" : ""}" onclick="pickColega('otro')">No estoy en la lista</button></div>
+        ${c ? `<div class="colega-card"><b>${esc(c.nombre)}</b>${c.linea ? `<span>Línea: ${esc(c.linea)}</span>` : ""}<span>Tema tentativo: ${esc(c.tema || "por definir, a partir de tu línea de investigación")}</span>${c.con ? `<span>Compartes el tema con ${esc(c.con)}: pónganse de acuerdo para que solo una persona llene la ficha.</span>` : ""}</div>` : ""}</div>
+      ${qText("meta.autor", "Tu nombre, como aparecerá en la ficha", "Con grado, si lo deseas.", "Dra. Nombre Apellido")}
+      ${qText("meta.correo", "Tu correo", "Solo para que la coordinación pueda escribirte.", "nombre@uaq.mx")}
+      ${qArea("meta.tema", "¿Sobre qué será tu recomendación?", "Una línea. No tiene que ser el título final.", "p. ej. conservar las variedades criollas de maíz y frijol del municipio", 2)}
+      ${!has(F.meta.tema) || (c && !c.tema) ? `<div class="q ideas"><label class="t">¿Sin tema todavía? Tres preguntas que ayudan</label><ul>
+        <li>¿Qué problema del municipio conoces mejor que casi nadie, gracias a tu investigación?</li>
+        <li>¿Qué decisión del ayuntamiento, si la tomara bien, cambiaría ese problema?</li>
+        <li>¿Qué parte de esa decisión podrías acompañar tú, con tus horas reales?</li></ul></div>` : ""}
+      <div class="q"><label class="t">¿En qué eje cae tu recomendación?</label><span class="h">Si dudas, elige el más cercano; lo acomodamos al integrar. El eje activa ideas específicas en cada paso.</span>
+        <div class="chips">${EJES.map(e => chip("meta.eje", e, true)).join("")}</div></div>
+      ${qText("meta.acompanan", "¿Quién del campus la acompañará? <span class='must'>innegociable</span>", "Tú y, si aplica, colegas o estudiantes. Nombre completo.", "Dra. Nombre Apellido y M. en C. Nombre Apellido")}
+      <div class="q"><label class="t">¿Qué harías tú, concretamente?</label><span class="h">Elige una o varias. Es lo que el municipio puede esperar del campus.</span>
+        <div class="chips">${ROLES.map(r => chip("meta.roles", r)).join("")}</div></div>
+      ${qText("meta.horas", "¿Cuánto tiempo, aproximadamente?", "Una estimación honesta. Ayuda a no prometer de más.", "p. ej. 4 horas al mes, una visita por trimestre")}`; },
+    checks: () => [[has(F.meta.autor), "Tu nombre"], [has(F.meta.tema), "Tema de la recomendación"], [has(F.meta.eje), "Eje elegido"], [has(F.meta.acompanan), "Quién acompaña (★)"], [F.meta.roles.length > 0, "Qué harías concretamente"]],
+    stop: () => !has(F.meta.acompanan) ? "Sin alguien que acompañe, la recomendación no puede entrar al documento. Si aún no sabes quién, márcalo como pendiente y platícalo con la coordinación." : "",
+    ex: () => `Acompañan: ${EX.meta.acompanan}\nQué hacen: ${EX.meta.roles.join(", ").toLowerCase()}\nTiempo: ${EX.meta.horas}`,
+    preview: () => T(F).resp.find(s => s.startsWith("Acompañamiento")) || "" },
+
+  { key: "titulo", short: "1 · Título", title: "Ponle nombre", est: "2 min",
+    why: "Una frase que diga qué se propone. Si alguien lee solo el título, debe entender la idea. Nombra el instrumento (sistema, programa, reglamento, fondo…) y el problema que resuelve.",
+    vs: ["Agua para todos", "Programa municipal de medición y reparación de fugas en las redes comunitarias de agua"],
+    render() { return `
+      ${qArea("titulo", "Título de tu recomendación", "Entre 6 y 20 palabras.", "Programa municipal de …", 2)}
+      <div class="q"><label class="t">¿Te atoras? Empieza con una de estas fórmulas</label><span class="h">Da clic y complétala.</span>
+      <div class="chips">${["Sistema municipal para …", "Programa municipal de … para …", "Reglamento municipal de …", "Fondo municipal de …", "Red comunitaria de …"].map(s => `<button class="chip" onclick="F.titulo='${s}';save();renderStep()">${s}</button>`).join("")}</div></div>`; },
+    checks: () => [[has(F.titulo), "Tiene título"], [words(F.titulo) >= 5 && words(F.titulo) <= 20, "Entre 5 y 20 palabras"], [!/…/.test(F.titulo), "Sin huecos por llenar (…)"]],
+    ex: () => EX.titulo, preview: () => F.titulo },
+
+  { key: "diag", short: "2 · Diagnóstico", title: "¿Cuál es el problema?", est: "8 min",
+    why: "Un párrafo que un presidente municipal pueda leer en 90 segundos y entender la urgencia. No es un ensayo: son cuatro piezas. Respóndelas por separado y nosotros las unimos.",
+    vs: ["La situación del agua en el municipio es preocupante y requiere atención de las autoridades.", "El [X]% del agua de las redes comunitarias se pierde en fugas ([fuente], [año]). Si no se actúa en este trienio, …"],
+    render() { return `
+      ${qArea("diag.problema", "① El problema, en una o dos frases", "¿Qué pasa y dónde? Sin adjetivos, con hechos.", "En Arroyo Seco …", 3)}
+      ${qArea("diag.dato", "② El dato que lo demuestra", "Un número: porcentaje, hectáreas, casos, pesos. Uno bueno vale más que cinco regulares.", "El 40% de …", 3)}
+      ${qText("diag.fuente", "③ Fuente y año", "Tu propia investigación cuenta. INEGI, CONEVAL, CONANP, tesis, talleres…", "Autor o institución (año)")}
+      ${qArea("diag.consecuencia", "④ ¿Qué pasa si no se actúa?", "La frase que genera urgencia. Idealmente con horizonte de tiempo.", "Si no se actúa en este trienio, …", 2)}`; },
+    checks: () => { const t = T(F).diag; return [[has(F.diag.problema), "Nombra el problema"], [hasNum(F.diag.dato), "Tiene un dato numérico"], [hasYear(F.diag.fuente), "Cita fuente con año"], [has(F.diag.consecuencia), "Dice qué pasa si no se actúa"], [words(t) <= 130, `Breve: ${words(t)} de 130 palabras máx.`, words(t) > 130]]; },
+    ex: () => T(EX).diag, preview: () => T(F).diag },
+
+  { key: "obj", short: "3 · Objetivo", title: "¿Qué quieres lograr al 2030?", est: "4 min",
+    why: "Qué habrá cambiado al cierre del trienio. Tiene que poder verificarse: si incluye una meta con número, mucho mejor.",
+    vs: ["Mejorar la gestión del agua en el municipio.", "Reducir a la mitad las pérdidas por fugas en las 10 redes comunitarias más grandes."],
+    render() { return `
+      <div class="q"><label class="t">① Empieza con un verbo</label><span class="h">Elige uno o escribe el tuyo.</span>
+        <div class="chips">${VERBOS.map(v => chip("obj.verbo", v, true)).join("")}</div>
+        <input type="text" style="margin-top:.5rem" placeholder="Otro verbo en infinitivo" value="${esc(VERBOS.includes(F.obj.verbo) ? "" : F.obj.verbo)}" oninput="set('obj.verbo', this.value)"></div>
+      ${qArea("obj.que", "② ¿Qué?", "Lo que quedará instalado o habrá cambiado. Continúa la frase después del verbo.", "un sistema de … que …", 3)}
+      ${qArea("obj.meta", "③ La meta, con número", "Opcional pero muy recomendable.", "que al menos 80% de …", 2)}`; },
+    checks: () => [[has(F.obj.verbo) && /(ar|er|ir)$/i.test(F.obj.verbo.trim()), "Verbo en infinitivo"], [has(F.obj.que), "Dice qué se logra"], [hasNum(F.obj.meta), "Tiene meta numérica"]],
+    ex: () => T(EX).obj, preview: () => T(F).obj },
+
+  { key: "acciones", short: "4 · Acciones y plazos", title: "¿Qué hay que hacer, y cuándo?", est: "10 min",
+    why: "Pasos concretos, cada uno empezando con verbo, y ubicados en el tiempo. Pregúntate: ¿podría alguien verificar si se hizo, sí o no? Arranca con lo barato y posible en los primeros 100 días. Aquí también se arma el campo Plazo, sin escribirlo dos veces.",
+    vs: ["Mejorar la gestión del agua.", "Instalar 12 medidores volumétricos en las tomas principales del sistema de agua."],
+    render() { return `
+      <div id="accList">${F.acciones.map((a, i) => `
+        <div class="item">
+          <button class="x" title="Quitar" onclick="F.acciones.splice(${i},1);save();renderStep()">×</button>
+          <textarea rows="2" placeholder="Acción ${i + 1}: verbo + qué + (dónde o cuántos)" oninput="F.acciones[${i}].t=this.value;save();refreshSide()">${esc(a.t)}</textarea>
+          <div class="horizon">${HZ.map((h, k) => `<button class="${(a.h ?? 0) === k ? "on" : ""}" onclick="F.acciones[${i}].h=${k};save();renderStep()">${h}</button>`).join("")}</div>
+        </div>`).join("")}</div>
+      <button class="b b-ghost b-sm" style="margin-top:.7rem" onclick="F.acciones.push({t:'',h:1});save();renderStep()">+ Agregar acción</button>
+      ${qArea("hitos", "Hitos visibles (opcional)", "¿Qué podrá mostrar el gobierno en cada momento? Ayuda a vender la recomendación.", "Reglamento aprobado en cabildo (año 1) …", 2)}`; },
+    checks: () => { const a = F.acciones.filter(x => has(x.t)); return [[a.length >= 3, `Al menos 3 acciones (${a.length})`], [a.some(x => (x.h ?? 0) === 0), "Algo arranca en los primeros 100 días"], [a.length > 0 && a.every(x => infin(x.t)), "Todas empiezan con verbo en infinitivo"], [a.every(x => !vague(x.t)), "Ninguna es vaga (mejorar, fortalecer, promover…)", a.some(x => vague(x.t))]]; },
+    ex: () => T(EX).ordered.filter(g => g.items.length).map(g => g.h.toUpperCase() + "\n" + g.items.map(i => `${i.n}. ${i.t}`).join("\n")).join("\n\n"),
+    preview: () => T(F).plazo },
+
+  { key: "resp", short: "5 · Responsable ★", title: "¿Quién la lleva en el municipio?", est: "4 min", must: true,
+    why: "Si no hay un área municipal clara que lidere, la recomendación se queda en el aire. El campus acompaña, pero no gobierna: alguien del ayuntamiento tiene que hacerla suya.",
+    render() { return `
+      <div class="q"><label class="t">Área municipal que lidera <span class="must">innegociable</span></label><span class="h">Elige una o escribe otra.</span>
+        <div class="chips">${AREAS.map(a => chip("resp.lider", a, true)).join("")}</div>
+        <input type="text" style="margin-top:.5rem" placeholder="Otra área" value="${esc(AREAS.includes(F.resp.lider) ? "" : F.resp.lider)}" oninput="set('resp.lider', this.value)"></div>
+      ${qArea("resp.coord", "Quién más coordina, y para qué", "Opcional. Tesorería cobra, Cabildo aprueba, delegaciones difunden…", "Tesorería (…); Cabildo (…)", 2)}
+      <div class="q"><label class="t">Acompañamiento del campus</label><span class="h">Se toma de tu paso 0.</span>
+        <div class="preview-mini">${esc(has(F.meta.acompanan) ? F.meta.acompanan : "Aún no lo indicas.")}</div>
+        <button class="b-link" onclick="goStep(0)">Editar</button></div>
+      <div class="q"><label class="t">Vinculación institucional</label><span class="h">Dependencias con las que hay que coordinarse.</span>
+        <div class="chips">${VINC.map(v => chip("resp.vinc", v)).join("")}</div>
+        <input type="text" style="margin-top:.5rem" placeholder="Otras" value="${esc(F.resp.vincOtro)}" oninput="set('resp.vincOtro', this.value)"></div>`; },
+    checks: () => [[has(F.resp.lider), "Área municipal líder (★)"], [has(F.meta.acompanan), "Acompañamiento UAQ con nombre (★)"], [F.resp.vinc.length > 0 || has(F.resp.vincOtro), "Vinculación institucional"]],
+    stop: () => !has(F.resp.lider) ? "Este campo es innegociable: sin un área municipal responsable, la recomendación no entra. Si no sabes cuál, márcalo como pendiente y lo resolvemos juntos." : "",
+    ex: () => T(EX).resp.join("\n"), preview: () => T(F).resp.join("\n") },
+
+  { key: "ind", short: "6 · Indicador ★", title: "¿Cómo sabremos que funcionó?", est: "6 min", must: true,
+    why: "De dos a cuatro variables medibles. Cada una con dónde estamos (2027), a dónde queremos llegar (2030) y quién lo mide. Si no conoces la línea base, escribe «a determinar» y cómo se medirá: eso también es rigor.",
+    vs: ["Mejor calidad del agua.", "% de tomas con cloro residual dentro de norma. Base 2027: [X]%. Meta 2030: ≥ 90%. Fuente: muestreo trimestral UAQ."],
+    render() { return `
+      ${F.ind.map((x, i) => `
+        <div class="item">
+          <button class="x" title="Quitar" onclick="F.ind.splice(${i},1);save();renderStep()">×</button>
+          <label class="t" style="font-weight:700;color:var(--navy);font-size:.92rem">Indicador ${i + 1}</label>
+          <input type="text" placeholder="Qué se mide: % de …, número de …, hectáreas de …" value="${esc(x.nombre)}" oninput="F.ind[${i}].nombre=this.value;save();refreshSide()">
+          <div class="row two">
+            <input type="text" placeholder="Línea base 2027" value="${esc(x.base)}" oninput="F.ind[${i}].base=this.value;save();refreshSide()">
+            <input type="text" placeholder="Meta 2030" value="${esc(x.meta)}" oninput="F.ind[${i}].meta=this.value;save();refreshSide()">
+          </div>
+          <div class="row"><input type="text" placeholder="¿Quién lo mide y con qué dato?" value="${esc(x.fuente)}" oninput="F.ind[${i}].fuente=this.value;save();refreshSide()"></div>
+          <div class="chips"><span class="lbl">Rápido:</span><button class="chip" onclick="F.ind[${i}].base='A determinar en 2027';save();renderStep()">base «a determinar»</button><button class="chip" onclick="F.ind[${i}].fuente='Medición anual UAQ Campus Concá';save();renderStep()">lo mide la UAQ</button></div>
+        </div>`).join("")}
+      ${F.ind.length < 4 ? `<button class="b b-ghost b-sm" style="margin-top:.7rem" onclick="F.ind.push({nombre:'',base:'',meta:'',fuente:''});save();renderStep()">+ Agregar indicador</button>` : ""}`; },
+    checks: () => { const v = F.ind.filter(x => has(x.nombre)); return [[v.length >= 1, `Al menos un indicador (${v.length})`], [v.length > 0 && v.every(x => has(x.meta)), "Todos tienen meta 2030"], [v.length > 0 && v.every(x => has(x.base)), "Todos tienen línea base (o «a determinar»)"], [v.length > 0 && v.every(x => has(x.fuente)), "Todos dicen quién mide"]]; },
+    stop: () => !F.ind.some(x => has(x.nombre)) ? "Este campo es innegociable: sin al menos un indicador no podremos dar seguimiento público. Si lo necesitas, márcalo pendiente y lo construimos juntos." : "",
+    ex: () => T(EX).ind.join("\n\n"), preview: () => T(F).ind.join("\n") },
+
+  { key: "costo", short: "7 · Costo", title: "¿Cuánto cuesta y de dónde sale?", est: "5 min",
+    why: "No se pide precisión contable, sino orden de magnitud por componente y una posible fuente. Si algo cuesta $0 (porque usa lo que ya existe), dilo: es un gran argumento.",
+    render() { return `
+      ${F.costo.map((x, i) => `
+        <div class="item">
+          <button class="x" title="Quitar" onclick="F.costo.splice(${i},1);save();renderStep()">×</button>
+          <input type="text" placeholder="Componente: p. ej. capacitación, equipo, estudio…" value="${esc(x.comp)}" oninput="F.costo[${i}].comp=this.value;save();refreshSide()">
+          <div class="row two">
+            <input type="text" placeholder="Monto aproximado" value="${esc(x.monto)}" oninput="F.costo[${i}].monto=this.value;save();refreshSide()">
+            <input type="text" placeholder="Fuente de financiamiento" value="${esc(x.fuente)}" oninput="F.costo[${i}].fuente=this.value;save();refreshSide()">
+          </div>
+          <div class="chips"><span class="lbl">Monto:</span>${MONTOS.map(m => `<button class="chip" onclick="F.costo[${i}].monto='${m}';save();renderStep()">${m}</button>`).join("")}</div>
+          <div class="chips"><span class="lbl">Fuente:</span>${FONDOS.map(m => `<button class="chip" onclick="F.costo[${i}].fuente=[F.costo[${i}].fuente,'${m}'].filter(Boolean).join('; ');save();renderStep()">${m}</button>`).join("")}</div>
+        </div>`).join("")}
+      <button class="b b-ghost b-sm" style="margin-top:.7rem" onclick="F.costo.push({comp:'',monto:'',fuente:''});save();renderStep()">+ Agregar componente</button>
+      <div class="q"><label class="t" style="display:flex;gap:.5rem;align-items:center;cursor:pointer"><input type="checkbox" ${F.ingresos ? "checked" : ""} onchange="F.ingresos=this.checked;save();renderStep()"> ¿Genera ingresos o ahorros para el municipio?</label>
+      ${F.ingresos ? `<textarea rows="2" style="margin-top:.5rem" placeholder="¿Cómo? p. ej. cobro de derechos, ahorro en energía, multas…" oninput="set('ingresosTxt', this.value)">${esc(F.ingresosTxt)}</textarea>` : ""}</div>`; },
+    checks: () => { const v = F.costo.filter(x => has(x.comp)); return [[v.length >= 1, "Al menos un componente"], [v.length > 0 && v.every(x => has(x.monto)), "Todos tienen monto aproximado"], [v.length > 0 && v.every(x => has(x.fuente)), "Todos tienen posible fuente"]]; },
+    ex: () => T(EX).costo.join("\n"), preview: () => T(F).costo.join("\n") },
+
+  { key: "legal", short: "8 · Marco legal", title: "¿Qué le da piso legal?", est: "3 min",
+    why: "Solo la lista de leyes, normas o programas que facultan al municipio para actuar. Marca los que conozcas; la coordinación afinará artículos al integrar. No necesitas ser abogado.",
+    render() { return Object.entries(LEYES).map(([g, ls]) => `
+      <div class="q"><label class="t">${g}</label><div class="chips">${ls.map(l => chip("legal", l)).join("")}</div></div>`).join("") + qArea("legalOtro", "Otros instrumentos o artículos específicos", "Opcional. NOMs, programas, artículos que conozcas.", "LGEEPA Art. …; NOM-…", 2); },
+    checks: () => [[F.legal.length + (has(F.legalOtro) ? 1 : 0) >= 1, "Al menos un instrumento"]],
+    ex: () => T(EX).legal.join("\n"), preview: () => T(F).legal.join("\n") },
+
+  { key: "sem", short: "9 · Semáforo", title: "¿Qué tan lejos estamos hoy?", est: "3 min",
+    why: "Un color por componente de tu propuesta y una frase que lo justifique. Permite ver de un vistazo qué existe y qué falta. 🔴 no existe · 🟡 existe a medias · 🟢 funciona.",
+    render() { return `
+      ${F.acciones.some(a => has(a.t)) && !F.sem.some(s => has(s.comp)) ? `<div class="q" style="background:var(--amber-soft)"><b>Atajo:</b> ¿usamos tus acciones como componentes? <button class="b b-nav b-sm" onclick="semFromActions()">Sí, precárgalas</button></div>` : ""}
+      ${F.sem.map((s, i) => `
+        <div class="item">
+          <button class="x" title="Quitar" onclick="F.sem.splice(${i},1);save();renderStep()">×</button>
+          <div style="display:flex;gap:.5rem;align-items:center">
+            <div class="lights">${["r", "y", "g"].map(c => `<button class="${s.c === c ? "on" : ""}" title="${{ r: "No existe", y: "A medias", g: "Funciona" }[c]}" onclick="F.sem[${i}].c='${c}';save();renderStep()">${LIGHT[c]}</button>`).join("")}</div>
+            <input type="text" placeholder="Componente" value="${esc(s.comp)}" oninput="F.sem[${i}].comp=this.value;save();refreshSide()">
+          </div>
+          <div class="row"><input type="text" placeholder="¿Por qué ese color? Una frase." value="${esc(s.j)}" oninput="F.sem[${i}].j=this.value;save();refreshSide()"></div>
+        </div>`).join("")}
+      <button class="b b-ghost b-sm" style="margin-top:.7rem" onclick="F.sem.push({comp:'',c:'',j:''});save();renderStep()">+ Agregar componente</button>
+      ${qArea("refs", "Extra opcional: experiencias de referencia", "¿Hay otro municipio o programa donde algo así ya funcionó? Fortalece mucho la ficha.", "En … se logró …", 2)}`; },
+    checks: () => { const v = F.sem.filter(x => has(x.comp)); return [[v.length >= 1, "Al menos un componente"], [v.length > 0 && v.every(x => x.c), "Todos tienen color"], [v.length > 0 && v.every(x => has(x.j)), "Todos tienen justificación"]]; },
+    ex: () => T(EX).sem.map(s => LIGHT[s.c] + " " + s.t).join("\n"), preview: () => T(F).sem.map(s => LIGHT[s.c] + " " + s.t).join("\n") }
+];
+
+function pickColega(id) {
+  F.meta.colega = id;
+  const c = COLEGAS.find(x => x.id === id);
+  if (c) {
+    if (!has(F.meta.autor)) F.meta.autor = c.nombre;
+    if (!has(F.meta.acompanan)) F.meta.acompanan = c.nombre + (c.con ? " y " + c.con : "") + " (UAQ Campus Concá)";
+    if (!has(F.meta.tema) && c.tema) F.meta.tema = c.tema;
+    if (!has(F.meta.eje)) F.meta.eje = EJES[c.eje];
+  }
+  save(); renderStep(); ping();
+}
+
+/* ---- Kit de ideas por eje ---- */
+function kit() { const i = EJES.indexOf(F.meta.eje); return i >= 0 ? KIT[i] : null; }
+function kitPanel(key) {
+  const k = kit();
+  if (!k) return key === "meta" ? "" : `<div class="panel kit"><h4>💡 Ideas para tu eje</h4><p style="font-size:.88rem;color:var(--gray)">Elige tu eje en el <button class="b-link" onclick="goStep(0)">paso 0</button> y aquí aparecerán sugerencias específicas.</p></div>`;
+  const head = `<div class="panel kit"><h4>💡 Ideas para el eje ${esc(F.meta.eje.split(".")[0])}</h4>`;
+  const add = (path, v) => `<button class="chip" onclick='addTo(${JSON.stringify(path)}, ${JSON.stringify(v)})'>+ ${esc(v)}</button>`;
+  switch (key) {
+    case "titulo": case "meta": case "diag":
+      return head + `<p class="kl">Preguntas para pensar</p><ul class="kq">${k.preguntas.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+        <p class="kl">Fuentes que suelen servir</p><div class="chips">${k.fuentes.map(f => `<button class="chip" onclick='setIfEmpty("diag.fuente", ${JSON.stringify(f + " (año)")})'>${esc(f)}</button>`).join("")}</div></div>`;
+    case "obj": case "acciones":
+      return head + `<p class="kl">Preguntas para pensar</p><ul class="kq">${k.preguntas.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+        <p class="kl">Recuerda</p><ul class="kq"><li>Lo barato y posible, primero: socializar, capacitar o publicar lo que ya existe.</li><li>Lo que deba sobrevivir al trienio va en «Permanente».</li></ul></div>`;
+    case "resp":
+      return head + `<p class="kl">Áreas que suelen liderar</p><div class="chips">${k.areas.map(a => `<button class="chip" onclick='F.resp.lider=${JSON.stringify(a)};save();renderStep()'>${esc(a)}</button>`).join("")}</div>
+        <p class="kl">Dependencias frecuentes</p><div class="chips">${k.vinc.map(v => add("resp.vinc", v)).join("")}</div></div>`;
+    case "ind":
+      return head + `<p class="kl">Indicadores típicos (clic para usar)</p><div class="chips col">${k.indicadores.map(x => `<button class="chip" onclick='useInd(${JSON.stringify(x)})'>+ ${esc(x.nombre)}</button>`).join("")}</div></div>`;
+    case "costo":
+      return head + `<p class="kl">Fondos pertinentes para este eje</p><div class="chips">${k.fondos.map(f => `<span class="chip static">${esc(f)}</span>`).join("")}</div><p style="font-size:.84rem;color:var(--gray);margin-top:.4rem">Úsalos en el campo «Fuente» de cada componente.</p></div>`;
+    case "legal":
+      return head + `<p class="kl">Instrumentos más pertinentes</p><div class="chips">${k.leyes.map(l => add("legal", l)).join("")}</div></div>`;
+    default: return "";
+  }
+}
+function addTo(path, v) { const a = get(path); if (!a.includes(v)) a.push(v); save(); renderStep(); }
+function setIfEmpty(path, v) { if (!has(get(path))) { set(path, v); renderStep(); } else toast("Ya tienes una fuente escrita"); }
+function useInd(x) {
+  const empty = F.ind.find(i => !has(i.nombre));
+  if (empty) Object.assign(empty, { nombre: x.nombre, fuente: x.fuente }); else if (F.ind.length < 4) F.ind.push({ nombre: x.nombre, base: "", meta: "", fuente: x.fuente }); else return toast("Máximo cuatro indicadores");
+  save(); renderStep(); toast("Indicador agregado: ajusta línea base y meta");
+}
+
+/* =========================================================
+   Servicio central (Apps Script): progreso y envío
+   ========================================================= */
+async function callAPI(payload) {
+  if (!API) throw new Error("sin-servicio");
+  const r = await fetch(API, { method: "POST", body: JSON.stringify(payload) });
+  const j = await r.json();
+  if (!j.ok) throw new Error(j.error || "error");
+  return j;
+}
+function progress() { const done = STEPS.filter((s, i) => status(i) === "done").length; return Math.round(100 * done / STEPS.length); }
+function who() { return { colega: F.meta.colega === "otro" || !F.meta.colega ? slugify(F.meta.autor || "anonimo") : F.meta.colega, nombre: F.meta.autor, correo: F.meta.correo, eje: F.meta.eje, tema: F.meta.tema }; }
+function slugify(s) { return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40); }
+let lastPing = 0;
+function ping(force) {
+  if (!API || !(F.meta.colega || has(F.meta.autor))) return;
+  const now = Date.now(); if (!force && now - lastPing < 45000) return; lastPing = now;
+  const pend = STEPS.filter(s => F.pend[s.key]).map(s => s.short);
+  callAPI({ action: "progress", ...who(), titulo: F.titulo, avance: progress(), pendientes: pend.join(", ") }).catch(() => {});
+}
+
+/* =========================================================
+   Consejos y ejemplos preestablecidos por paso
+   ========================================================= */
+const TIPS = {
+  meta: {
+    tips: ["Pon nombres completos: «el campus» no acompaña, las personas sí.",
+      "Promete solo lo que cabe en tus horas reales. Cuatro horas al mes cumplidas valen más que veinte prometidas.",
+      "Si la recomendación necesita algo que tú no puedes dar, suma a un colega o a estudiantes.",
+      "Si compartes tema con alguien, llenen una sola ficha y aparezcan los dos como acompañantes."],
+    vs: [["Compromiso", "La UAQ dará seguimiento.", "Dra. [Nombre Apellido] y dos estudiantes de servicio social: capacitación a brigadas y medición anual del indicador (6 horas al mes)."]] },
+  titulo: {
+    tips: ["Usa la fórmula instrumento + para qué: «Programa municipal de … para …».",
+      "Evita lemas y nombres de campaña: el título describe, no vende.",
+      "Si necesitas una «y» para unir dos propuestas, quizá son dos fichas.",
+      "Léelo en voz alta a alguien ajeno al tema: ¿entiende qué se propone?"],
+    vs: [["Residuos", "Arroyo Seco limpio", "Servicio municipal de recolección y separación de residuos para las localidades sin cobertura"],
+      ["Protección civil", "Prevención de incendios", "Red de brigadas comunitarias equipadas para prevenir y combatir incendios forestales"]] },
+  diag: {
+    tips: ["Empieza por el hecho, no por la historia del problema.",
+      "Basta un dato fuerte. Si aún no lo tienes, escribe [dato] y di dónde se buscaría: la coordinación ayuda a conseguirlo.",
+      "Tu propia investigación es fuente válida: tesis, talleres, muestreos.",
+      "Quita adjetivos como grave, preocupante o alarmante. Ese trabajo lo hace el número.",
+      "La última frase dice qué se pierde y para cuándo."],
+    vs: [["Protección civil", "Los incendios forestales son un grave problema que afecta a nuestra región.", "Entre [año] y [año] se quemaron [X] hectáreas en el municipio ([fuente]). Hoy ninguna brigada comunitaria tiene equipo ni capacitación vigente. Si no se actúa antes de la próxima temporada de secas, …"],
+      ["Residuos", "La basura es un tema que preocupa a la población.", "[X] de las [N] localidades no tienen servicio de recolección y queman o tiran sus residuos en barrancas ([fuente], [año]). En cada temporada de lluvias esos residuos llegan a …"]] },
+  obj: {
+    tips: ["Un objetivo, un verbo. Si te salen dos, elige el que describe el cambio final.",
+      "Describe el cambio, no la actividad: capacitar es una acción; que las brigadas operen es un objetivo.",
+      "La meta debe poder comprobarse en 2030 con el indicador del paso 6.",
+      "Para un municipio pequeño, una meta alcanzable convence más que una total (100%, todos, erradicar)."],
+    vs: [["Residuos", "Promover el manejo adecuado de los residuos.", "Establecer un servicio de recolección que llegue a [N] localidades, con la meta de que al menos [X]% de los hogares separe sus residuos."],
+      ["Protección civil", "Fortalecer a las brigadas.", "Garantizar que cada delegación cuente con una brigada comunitaria equipada y capacitada antes de cada temporada de secas."]] },
+  acciones: {
+    tips: ["Haz la prueba del sí o no: ¿alguien podría comprobar que se hizo?",
+      "Empieza por lo que ya existe: publicar, convocar, firmar un convenio. Lo que cuesta poco va en los primeros 100 días.",
+      "Que sea competencia del municipio. Lo que toca al estado o a la federación se escribe como «gestionar ante …».",
+      "Entre cinco y diez acciones. Más de diez suele indicar que hay dos fichas.",
+      "Deja algo en «Permanente»: lo que debe seguir cuando cambie la administración."],
+    vs: [["Protección civil", "Fomentar la cultura de la prevención.", "Realizar un simulacro de incendio por delegación antes de marzo de cada año."],
+      ["Desarrollo económico", "Apoyar a los productores.", "Instalar un mercado mensual de productores en la cabecera, con reglamento y padrón de participantes."]] },
+  resp: {
+    tips: ["Una sola área lidera. Si pones tres, ninguna se hace cargo.",
+      "Nombra el área, no a la persona: los funcionarios cambian, las áreas permanecen.",
+      "Si no sabes qué áreas tiene el municipio, elige la más cercana de la lista; la coordinación lo verifica.",
+      "En «quién más coordina», di para qué: Tesorería cobra, Cabildo aprueba.",
+      "El campus acompaña, no ejecuta."],
+    vs: [["Protección civil", "El municipio, en coordinación con las dependencias correspondientes.", "Responsable principal: Protección Civil. Coordinación: delegaciones municipales (convocan a las brigadas); Tesorería (compra de equipo). Vinculación: CONAFOR; CONANP-RBSG."]] },
+  ind: {
+    tips: ["Mide el resultado, no la actividad: «talleres impartidos» dice que trabajaste; «% de hogares que separa» dice que funcionó.",
+      "Si no hay línea base, dilo y explica cómo se medirá en 2027.",
+      "Elige indicadores que alguien pueda medir con lo que ya tiene: un padrón, un registro, un recorrido anual.",
+      "Dos buenos indicadores bastan.",
+      "Ponle número a la meta, aunque sea conservador."],
+    vs: [["Residuos", "Número de talleres impartidos.", "% de hogares de la cabecera que separa sus residuos. Base 2027: a determinar con muestreo. Meta 2030: ≥ [X]%. Mide: recorrido anual de la UAQ."],
+      ["Protección civil", "Mayor preparación ante incendios.", "Número de delegaciones con brigada equipada y capacitada. Base 2027: [X] de [N]. Meta 2030: todas. Mide: Protección Civil, registro anual."]] },
+  costo: {
+    tips: ["Basta el orden de magnitud: los rangos de la lista sirven.",
+      "Separa por componente; así se ve qué puede arrancar sin dinero.",
+      "Lo que cuesta $0 también se anota: es el mejor argumento.",
+      "Si no sabes la fuente, piensa primero en recursos propios y en el convenio con la UAQ; los fondos de tu eje están en el panel de ideas.",
+      "Si genera ingresos o ahorros, dilo en una frase."],
+    vs: [["Protección civil", "Se requiere presupuesto suficiente.", "Equipo básico para [N] brigadas: $50–200 mil. Fuente: FORTAMUN; CONAFOR.\nCapacitación anual: $0. Fuente: convenio UAQ."]] },
+  legal: {
+    tips: ["Marca solo lo que faculta al municipio para actuar; no hace falta la lista completa.",
+      "Casi siempre aplican el Art. 115 constitucional y la Ley Orgánica Municipal: de ahí salen las facultades del ayuntamiento.",
+      "No escribas artículos de memoria: si no recuerdas el número, deja solo el nombre de la ley.",
+      "Si tu propuesta toca la Reserva, incluye el Programa de Manejo de la RBSG."] },
+  sem: {
+    tips: ["Un componente por renglón: cada pieza grande de tu propuesta.",
+      "Rojo no es regaño: es el punto de partida y justifica la recomendación.",
+      "Amarillo pide explicación: qué existe y qué le falta.",
+      "Verde solo si funciona hoy, no si está en un plan.",
+      "La frase dice el hecho, no la opinión."],
+    vs: [["Protección civil", "🔴 Brigadas — Falta mucho por hacer.", "🟡 Brigadas comunitarias — Existen en [X] delegaciones, sin equipo ni capacitación vigente."]] }
+};
+let tipsOpen = false;
+function tipsHTML(key) {
+  const t = TIPS[key]; if (!t) return "";
+  return `<details class="tips" ${tipsOpen ? "open" : ""} ontoggle="tipsOpen=this.open"><summary>💡 ¿Te atoras? Consejos y ejemplos para este campo</summary>
+    <ul>${t.tips.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+    ${(t.vs || []).map(([tema, no, si]) => `<p class="tema">Ejemplo · ${esc(tema)}</p><div class="vs"><div class="bad"><b>Así no</b>${esc(no)}</div><div class="good"><b>Así sí</b>${esc(si).replace(/\n/g, "<br>")}</div></div>`).join("")}</details>`;
+}
+
+/* ---- Revisión de coherencia, sin servicio externo ---- */
+function cohHTML() {
+  const acc = F.acciones.filter(a => has(a.t)), ind = F.ind.filter(i => has(i.nombre));
+  const auto = [
+    [has(F.resp.lider) && has(F.meta.acompanan) && ind.length > 0, "Los dos campos ★ están completos: área responsable con acompañamiento del campus, e indicador"],
+    [acc.some(a => (a.h ?? 0) === 0) && acc.some(a => a.h === 3), "Hay algo para los primeros 100 días y algo permanente"],
+    [ind.length > 0 && ind.every(i => has(i.meta) && has(i.fuente)), "Cada indicador tiene meta 2030 y quién lo mide"]
+  ];
+  const ask = ["¿Tus indicadores miden el objetivo, o solo que se hicieron actividades?",
+    "¿Cada acción importante tiene un área responsable y un costo o una fuente?",
+    "¿El diagnóstico sostiene lo que propones? El dato y el objetivo deben hablar del mismo problema."];
+  return `<ul class="checks">${auto.map(([ok, t]) => `<li class="${ok ? "ok" : "no"}">${esc(t)}</li>`).join("")}${ask.map(t => `<li class="ask">${esc(t)}</li>`).join("")}</ul>
+    <p class="len">Tu ficha tiene ${words(fichaText(F))} palabras. La ficha ejemplo tiene ${words(fichaText(EX))}: si la tuya es mucho más larga, recorta.</p>`;
+}
+async function submitFicha() {
+  const st = STEPS.map((s, i) => status(i));
+  if (!has(F.meta.autor)) { toast("Escribe tu nombre en el paso 0"); return goStep(0); }
+  if (!API) { toast("El envío central aún no está activo: descarga el Word y envíalo por correo"); return; }
+  const btn = document.getElementById("btnSend"); btn.disabled = true; btn.textContent = "Enviando…";
+  try {
+    await callAPI({ action: "submit", ...who(), titulo: F.titulo, avance: progress(), pendientes: STEPS.filter((s, i) => st[i] !== "done").map(s => s.short).join(", "), texto: fichaText(F), json: JSON.stringify(F) });
+    F.enviada = new Date().toISOString(); save(); renderFinal(); toast("¡Ficha enviada a la coordinación!");
+  } catch (e) { btn.disabled = false; btn.textContent = "📨 Enviar a coordinación"; toast("No se pudo enviar. Descarga el Word como respaldo e intenta de nuevo."); }
+}
+
+function semFromActions() {
+  F.sem = F.acciones.filter(a => has(a.t)).slice(0, 6).map(a => ({ comp: a.t.split(/[:,.;(]/)[0].replace(/^\s*\S+\s+/, "").slice(0, 60), c: "", j: "" }));
+  save(); renderStep();
+}
+
+/* ---- Componentes de formulario ---- */
+function qText(path, label, help, ph) { return `<div class="q"><label class="t">${label}</label><span class="h">${help}</span><input type="text" placeholder="${esc(ph)}" value="${esc(get(path))}" oninput="set('${path}', this.value)"></div>`; }
+function qArea(path, label, help, ph, rows) { return `<div class="q"><label class="t">${label}</label><span class="h">${help}</span><textarea rows="${rows || 3}" placeholder="${esc(ph)}" oninput="set('${path}', this.value)">${esc(get(path))}</textarea></div>`; }
+function chip(path, val, single) {
+  const cur = get(path); const on = single ? cur === val : (cur || []).includes(val);
+  return `<button class="chip ${on ? "on" : ""}" onclick='toggleChip(${JSON.stringify(path)}, ${JSON.stringify(val)}, ${!!single})'>${esc(val)}</button>`;
+}
+function toggleChip(path, val, single) {
+  if (single) set(path, get(path) === val ? "" : val);
+  else { const a = get(path) || []; const i = a.indexOf(val); i >= 0 ? a.splice(i, 1) : a.push(val); set(path, a); }
+  renderStep();
+}
+
+/* =========================================================
+   Render del taller
+   ========================================================= */
+function status(i) {
+  const s = STEPS[i]; const c = s.checks();
+  if (F.pend[s.key]) return "pend";
+  return c.every(x => x[0]) ? "done" : (c.some(x => x[0]) ? "part" : "none");
+}
+function renderDots() {
+  document.getElementById("dots").innerHTML = STEPS.map((s, i) => {
+    const st = status(i);
+    return `<span class="dot ${i === F.step ? "cur" : st === "done" ? "done" : st === "pend" ? "pend" : ""}" onclick="goStep(${i})">${st === "done" && i !== F.step ? "✓ " : ""}${s.short}</span>`;
+  }).join("") + `<span class="dot" onclick="go('final')">Revisar →</span><span class="saved" id="savedLbl"></span>`;
+}
+function renderStep() {
+  const i = F.step, s = STEPS[i];
+  const y = window.scrollY;
+  document.getElementById("stage").innerHTML = `
+    <div>
+      <div class="stepno">Paso ${i} de ${STEPS.length - 1}</div>
+      <h2>${s.title}${s.must ? ' <span class="star">★</span>' : ""}</h2>
+      <p class="why">${s.why}</p>
+      <span class="est">⏱ ${s.est}</span>
+      ${s.render()}
+      <div id="stopBox"></div>
+      ${tipsHTML(s.key)}
+      <label class="pendbox"><input type="checkbox" ${F.pend[s.key] ? "checked" : ""} onchange="F.pend['${s.key}']=this.checked;save();renderDots()"><span><b>Aún no lo tengo claro.</b> Márcalo como pendiente y sigue: la coordinación te ayuda a completarlo.</span></label>
+      <div class="navrow">
+        ${i > 0 ? `<button class="b b-ghost" onclick="goStep(${i - 1})">← Anterior</button>` : `<button class="b b-ghost" onclick="go('inicio')">← Inicio</button>`}
+        ${i < STEPS.length - 1 ? `<button class="b b-pri" onclick="goStep(${i + 1})">Siguiente →</button>` : `<button class="b b-pri" onclick="go('final')">Ver mi ficha completa →</button>`}
+      </div>
+    </div>
+    <aside class="side">
+      <div class="panel"><h4>Lista rápida</h4><ul class="checks" id="checks"></ul></div>
+      ${kitPanel(s.key)}
+      ${s.vs ? `<div class="panel"><h4>Así no / así sí</h4><div class="vs"><div class="bad"><b>Así no</b>${esc(s.vs[0])}</div><div class="good"><b>Así sí</b>${esc(s.vs[1])}</div></div></div>` : ""}
+      <details class="panel ex" ${innerWidth > 860 ? "open" : ""}><summary style="cursor:pointer"><h4 style="display:inline">Cómo quedó en la ficha ejemplo</h4></summary>
+        <div class="exbody" style="margin-top:.5rem">${esc(s.ex())}</div>
+        <div class="note">${esc(EXNOTES[Math.max(0, i - 1)][1])}</div></details>
+      <div class="panel"><h4>Así va quedando tu campo</h4><div class="preview-mini" id="pv"></div></div>
+    </aside>`;
+  renderDots(); refreshSide();
+  window.scrollTo(0, y);
+}
+function refreshSide() {
+  const s = STEPS[F.step]; if (!document.getElementById("checks")) return;
+  document.getElementById("checks").innerHTML = s.checks().map(([ok, t, warn]) => `<li class="${ok ? "ok" : warn ? "warn" : "no"}">${esc(t)}</li>`).join("");
+  const pv = s.preview(); document.getElementById("pv").textContent = has(pv) ? pv : "Aquí verás el texto armado conforme escribas.";
+  const st = s.stop ? s.stop() : ""; const sb = document.getElementById("stopBox"); if (sb) sb.innerHTML = st && !F.pend[s.key] ? `<div class="stopper">${st}</div>` : "";
+}
+function goStep(i) { F.step = i; save(); go("taller"); window.scrollTo(0, 0); ping(); }
+
+/* =========================================================
+   Ficha completa (vista, Word, texto)
+   ========================================================= */
+function fichaHTML(f, forWord) {
+  const t = T(f);
+  const ph = s => forWord ? `<span style="color:#b07f00;background:#f7edcd"><i>[${s}]</i></span>` : `<span class="ph">${s}</span>`;
+  const p = (txt, miss) => has(txt) ? esc(txt).replace(/\n/g, "<br>") : ph(miss || "por completar");
+  const list = arr => arr.length ? arr.map(x => `<div class="it" style="margin-bottom:4pt">${esc(x)}</div>`).join("") : ph("por completar");
+  const acc = t.ordered.filter(g => g.items.length).map(g => `<div class="hz" style="font-weight:bold;color:#223a5e;margin-top:4pt">${g.h}</div>` + g.items.map(i => `<div class="it" style="margin-bottom:3pt">${i.n}. ${esc(i.t)}</div>`).join("")).join("") || ph("por completar");
+  const sem = t.sem.length ? t.sem.map(s => `<div class="it" style="margin-bottom:3pt">${LIGHT[s.c]} ${esc(s.t)}</div>`).join("") : ph("por completar");
+  const rows = [
+    ["1. Título", p(t.titulo)], ["2. Diagnóstico", p(t.diag)], ["3. Objetivo", p(t.obj)], ["4. Acciones", acc],
+    ["5. Área responsable ★", list(t.resp)], ["6. Plazo", p(t.plazo)], ["7. Indicador ★", list(t.ind)],
+    ["8. Costo y financiamiento", list(t.costo)], ["9. Marco legal", list(t.legal)], ["10. Semáforo", sem]
+  ];
+  if (has(f.refs)) rows.push(["Experiencias de referencia", p(f.refs)]);
+  const k = forWord ? ' style="width:26%;background:#faf8f3;font-weight:bold;color:#16263e;vertical-align:top;padding:6pt;border:1px solid #d9d4c7;font-size:10pt"' : ' class="k"';
+  const v = forWord ? ' style="vertical-align:top;padding:6pt;border:1px solid #d9d4c7;font-size:10pt"' : "";
+  const head = `EJE ${esc((f.meta.eje || "—").split(".")[0])} · FICHA DE RECOMENDACIÓN`;
+  const by = has(f.meta.autor) ? " · " + esc(f.meta.autor) : "";
+  if (forWord) return `<table style="width:100%;border-collapse:collapse;font-family:Calibri,sans-serif">
+    <tr><td colspan="2" style="background:#16263e;color:#fff;padding:8pt;border:1px solid #16263e"><span style="color:#e8b35a;font-size:8pt;letter-spacing:2pt">${head}${by}</span><br><b style="font-size:13pt">${esc(t.titulo || "Título por definir")}</b></td></tr>
+    ${rows.map(r => `<tr><td${k}>${r[0]}</td><td${v}>${r[1]}</td></tr>`).join("")}</table>`;
+  return `<div class="ficha"><div class="fh"><small>${head}${by}</small><b>${esc(t.titulo || "Título por definir")}</b></div>
+    <table>${rows.map(r => `<tr><td${k}>${r[0].replace("★", '<span class="star">★</span>')}</td><td>${r[1]}</td></tr>`).join("")}</table></div>`;
+}
+function fichaText(f) {
+  const t = T(f);
+  const acc = t.ordered.filter(g => g.items.length).map(g => g.h + ":\n" + g.items.map(i => `  ${i.n}. ${i.t}`).join("\n")).join("\n");
+  return [`FICHA DE RECOMENDACIÓN · Eje ${f.meta.eje || "—"}${has(f.meta.autor) ? " · " + f.meta.autor : ""}`, "",
+    "1. TÍTULO\n" + t.titulo, "2. DIAGNÓSTICO\n" + t.diag, "3. OBJETIVO\n" + t.obj, "4. ACCIONES\n" + acc,
+    "5. ÁREA RESPONSABLE ★\n" + t.resp.join("\n"), "6. PLAZO\n" + t.plazo, "7. INDICADOR ★\n" + t.ind.join("\n"),
+    "8. COSTO Y FINANCIAMIENTO\n" + t.costo.join("\n"), "9. MARCO LEGAL\n" + t.legal.join("\n"),
+    "10. SEMÁFORO\n" + t.sem.map(s => LIGHT[s.c] + " " + s.t).join("\n"),
+    has(f.refs) ? "EXPERIENCIAS DE REFERENCIA\n" + f.refs : ""].filter(Boolean).join("\n\n");
+}
+function renderFinal() {
+  document.getElementById("summary").innerHTML = STEPS.map((s, i) => {
+    const st = status(i); const cls = st === "done" ? "" : (s.must || i === 0) && st !== "pend" && st !== "done" ? "r" : "p";
+    const lbl = st === "done" ? "Completo" : st === "pend" ? "Marcado como pendiente" : st === "part" ? "A medias" : "Sin llenar";
+    return `<div class="sumcard ${cls}" onclick="goStep(${i})"><b>${s.short}</b>${lbl}</div>`;
+  }).join("");
+  document.getElementById("finalFicha").innerHTML = fichaHTML(F);
+  document.getElementById("cohBox").innerHTML = cohHTML();
+  document.getElementById("sentBox").innerHTML = F.enviada ? `<div class="sent">✓ Enviaste esta ficha el ${new Date(F.enviada).toLocaleString("es-MX", { dateStyle: "long", timeStyle: "short" })} — si la editas, vuelve a enviarla: la coordinación conserva todas las versiones.</div>` : "";
+  const b = document.getElementById("btnSend"); b.disabled = false; b.textContent = F.enviada ? "📨 Enviar versión actualizada" : "📨 Enviar a coordinación";
+  if (!API) b.title = "El envío central se activa cuando la coordinación instale el servicio";
+  ping(true);
+}
+function slug() { return (F.titulo || "ficha").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "_").slice(0, 50).replace(/^_|_$/g, "") || "ficha"; }
+function dl(name, blob) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+function downloadDoc() {
+  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>Ficha</title>
+  <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
+  <style>@page{size:21.59cm 27.94cm;margin:1.8cm} body{font-family:Calibri,sans-serif;font-size:10pt}</style></head><body>
+  <p style="font-size:8pt;color:#8a8d91">CIDAF · UAQ Campus Concá · Recomendaciones de política pública para Arroyo Seco 2027–2030 · Borrador generado el ${new Date().toLocaleDateString("es-MX")}</p>
+  ${fichaHTML(F, true)}</body></html>`;
+  dl(`ficha_${slug()}.doc`, new Blob(["﻿", html], { type: "application/msword" }));
+  toast("Ficha descargada en Word");
+}
+function copyText() {
+  const txt = fichaText(F);
+  (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => toast("Texto copiado"), () => {
+    const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); toast("Texto copiado");
+  });
+}
+function exportJSON() { dl(`respaldo_${slug()}.json`, new Blob([JSON.stringify(F, null, 1)], { type: "application/json" })); toast("Respaldo descargado"); }
+function importJSON(inp) {
+  const f = inp.files[0]; if (!f) return;
+  f.text().then(s => { F = merge(JSON.parse(s)); save(); toast("Respaldo cargado"); go("taller"); }).catch(() => toast("No se pudo leer el archivo"));
+}
+function resetAll() { if (confirm("¿Borrar esta ficha y empezar de cero? Esta acción no se puede deshacer.")) { F = blank(); save(); go("inicio"); } }
+
+/* =========================================================
+   Ejemplo comentado
+   ========================================================= */
+function renderExample() {
+  document.getElementById("exFicha").innerHTML = fichaHTML(EX);
+  document.getElementById("exNotes").innerHTML = `<div class="anote" style="border-left-color:var(--amber)"><b>Antes de todo</b>Esta ficha existe porque dos personas del campus se comprometieron a acompañarla ~8 horas al mes. Ese es el paso 0 del taller.</div>` +
+    EXNOTES.map(n => `<div class="anote"><b>${n[0]}</b>${esc(n[1])}</div>`).join("");
+}
+
+/* =========================================================
+   Navegación
+   ========================================================= */
+function go(v) {
+  document.querySelectorAll(".view").forEach(el => el.classList.remove("on"));
+  document.getElementById("v-" + v).classList.add("on");
+  if (v === "taller") renderStep();
+  if (v === "final") renderFinal();
+  if (v === "ejemplo") renderExample();
+  if (location.hash !== "#" + v) history.replaceState(null, "", "#" + v);
+  if (v !== "taller") window.scrollTo(0, 0);
+}
+(function init() {
+  const started = STEPS.some((s, i) => status(i) !== "none");
+  if (started) document.getElementById("btnStart").textContent = "Continuar mi ficha";
+  const h = location.hash.slice(1);
+  go(["ejemplo", "taller", "final"].includes(h) ? h : "inicio");
+})();
+</script>
+</body>
+</html>

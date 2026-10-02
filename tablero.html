@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tablero de fichas — CIDAF</title>
+<meta name="description" content="Avance de las fichas de recomendación de política pública del CIDAF para Arroyo Seco 2027–2030.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+.tb-hero { background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%); color: #fff; padding: 2.8rem 0 2.4rem; }
+.tb-hero h1 { color: #fff; }
+.tb-hero h1 em { color: var(--amber); font-style: normal; }
+.tb-hero .kicker { color: #e8b35a; }
+.tb-hero .lead { color: #c9d2df; max-width: 60ch; margin-top: .8rem; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: .9rem; margin-top: -1.8rem; position: relative; }
+.kpi { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1rem 1.1rem; }
+.kpi .v { font-family: "Fraunces", serif; font-size: 2.1rem; color: var(--navy); line-height: 1.1; }
+.kpi .l { font-size: .85rem; color: var(--gray); font-weight: 600; }
+.bigbar { margin: 1.8rem 0 .6rem; }
+.bigbar .track { height: 14px; background: #e9e5da; border-radius: 999px; overflow: hidden; display: flex; }
+.bigbar .seg { height: 100%; }
+.legend { display: flex; flex-wrap: wrap; gap: 1rem; font-size: .85rem; color: #4a4f57; margin-top: .5rem; }
+.legend i { display: inline-block; width: .8rem; height: .8rem; border-radius: 3px; margin-right: .35rem; vertical-align: -1px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1.6rem 0 1rem; align-items: center; }
+.toolbar button { font: inherit; font-size: .85rem; font-weight: 600; border: 1.5px solid var(--gray-soft); background: #fff; color: var(--navy); border-radius: 999px; padding: .3rem .8rem; cursor: pointer; }
+.toolbar button.on { background: var(--navy); color: #fff; border-color: var(--navy); }
+.toolbar .upd { margin-left: auto; font-size: .82rem; color: var(--gray); }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1rem; }
+.fc { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1rem 1.1rem 1.1rem; border-top: 5px solid var(--gray-soft); display: flex; flex-direction: column; gap: .35rem; }
+.fc.borrador { border-top-color: var(--yellow); }
+.fc.enviada { border-top-color: var(--green); }
+.fc.ejemplo { border-top-color: var(--amber); }
+.fc .top { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
+.fc .eje { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; color: var(--gray); }
+.badge { font-size: .75rem; font-weight: 700; border-radius: 999px; padding: .12rem .6rem; white-space: nowrap; }
+.badge.sin { background: #eeeae0; color: var(--gray); }
+.badge.borrador { background: var(--yellow-soft); color: #8a6a00; }
+.badge.enviada { background: var(--green-soft); color: var(--green); }
+.badge.ejemplo { background: var(--amber-soft); color: #8a5a00; }
+.fc h3 { font-size: 1.02rem; margin: .1rem 0 0; }
+.fc .who { font-size: .9rem; color: var(--navy-2); font-weight: 600; }
+.fc .meta { font-size: .84rem; color: var(--gray); }
+.fc .bar { height: 8px; background: #eeeae0; border-radius: 999px; overflow: hidden; margin-top: .3rem; }
+.fc .bar span { display: block; height: 100%; background: var(--green); border-radius: 999px; }
+.fc.borrador .bar span { background: var(--yellow); }
+.fc .pend { font-size: .82rem; color: #8a6a00; background: var(--yellow-soft); border-radius: 8px; padding: .3rem .5rem; margin-top: .2rem; }
+.note { background: var(--amber-soft); color: var(--navy); border-radius: var(--radius); padding: .8rem 1rem; font-size: .93rem; margin-top: 1.4rem; }
+.ejes { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: .6rem; margin-top: 2rem; }
+.ej { background: #fff; border-radius: 12px; padding: .7rem .8rem; box-shadow: var(--shadow); font-size: .85rem; }
+.ej b { display: block; color: var(--navy); font-family: "Fraunces", serif; font-size: 1.15rem; }
+.dots { display: flex; gap: .25rem; margin-top: .35rem; flex-wrap: wrap; }
+.dots i { width: .75rem; height: .75rem; border-radius: 50%; background: #e2ded3; }
+.dots i.b { background: var(--yellow); }
+.dots i.e { background: var(--green); }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="assets/logo-blanco.svg" alt="" width="34" height="34">CIDAF</a>
+    <nav class="main">
+      <a href="index.html">Inicio</a>
+      <a href="centro.html">El Centro</a>
+      <a href="integrantes.html">Integrantes</a>
+      <a href="investigacion.html">Investigación</a>
+      <a href="politica-publica.html" class="active">Política pública</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="difusion.html">Difusión</a>
+      <a href="sala.html" class="lock">🔑 Sala de investigadores</a>
+    </nav>
+  </div>
+</header>
+
+<div class="tb-hero">
+  <div class="wrap">
+    <div class="kicker">Recomendaciones Arroyo Seco 2027–2030</div>
+    <h1>¿Cómo vamos con las <em>fichas</em>?</h1>
+    <p class="lead">Avance de cada integrante del CIDAF en su ficha de recomendación. Se actualiza solo conforme cada quien avanza en el <a href="fichas.html" style="color:#f4e3c2">taller de fichas</a>.</p>
+  </div>
+</div>
+
+<section class="block" style="padding-top:0">
+  <div class="wrap">
+    <div class="kpis" id="kpis"></div>
+    <div class="bigbar"><div class="track" id="track"></div>
+      <div class="legend"><span><i style="background:var(--green)"></i>Enviadas</span><span><i style="background:var(--yellow)"></i>En borrador</span><span><i style="background:#e2ded3"></i>Sin iniciar</span></div></div>
+    <div class="toolbar" id="toolbar"></div>
+    <div class="cards" id="cards"></div>
+    <h2 style="margin-top:2.4rem">Por eje temático</h2>
+    <p style="color:#4a4f57;font-size:.95rem">Cada punto es una ficha. Los ejes vacíos son oportunidades: ¿quién del campus podría aportar ahí?</p>
+    <div class="ejes" id="ejes"></div>
+    <div class="note" id="note"></div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap cols">
+    <div><strong style="color:#fff">CIDAF</strong><br>Centro de Investigación y Desarrollo Tecnológico en Materia<br>Agrícola, Pecuaria, Acuícola y Forestal</div>
+    <div>Universidad Autónoma de Querétaro · Campus Concá<br>Concá, Arroyo Seco, Querétaro</div>
+    <div><a href="fichas.html">Taller de fichas</a><br><a href="politica-publica.html">Política pública</a></div>
+  </div>
+</footer>
+
+<script src="assets/taller-config.js"></script>
+<script src="assets/taller-datos.js"></script>
+<script>
+const API = (window.TALLER_API_URL || "").trim();
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+let rows = [], filtro = "todas", live = false, stamp = null;
+
+function build(remote) {
+  const byId = {}; (remote || []).forEach(r => byId[r.colega] = r);
+  const list = COLEGAS.map(c => {
+    const r = byId[c.id]; delete byId[c.id];
+    if (c.ejemplo) return { nombre: c.nombre, tema: c.tema, titulo: "Sistema municipal para prevenir y dar seguimiento a los cambios irregulares de uso de suelo", eje: EJES[c.eje], avance: 100, estado: "ejemplo", pendientes: "", actualizado: r?.actualizado };
+    return { nombre: c.nombre, tema: c.tema, eje: r?.eje || EJES[c.eje], titulo: r?.titulo || "", avance: +(r?.avance || 0), estado: r?.estado || "sin", pendientes: r?.pendientes || "", actualizado: r?.actualizado, con: c.con };
+  });
+  Object.values(byId).forEach(r => list.push({ nombre: r.nombre || r.colega, tema: r.tema, eje: r.eje, titulo: r.titulo, avance: +(r.avance || 0), estado: r.estado || "borrador", pendientes: r.pendientes || "", actualizado: r.actualizado }));
+  return list;
+}
+const LBL = { sin: "Sin iniciar", borrador: "En borrador", enviada: "Enviada", ejemplo: "Ficha ejemplo" };
+function fecha(s) { if (!s) return ""; const d = new Date(s); return isNaN(d) ? "" : d.toLocaleDateString("es-MX", { day: "numeric", month: "short" }) + " · " + d.toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" }); }
+
+function render() {
+  const n = rows.length, env = rows.filter(r => r.estado === "enviada" || r.estado === "ejemplo").length, bor = rows.filter(r => r.estado === "borrador").length, sin = n - env - bor;
+  const prom = Math.round(rows.reduce((a, r) => a + r.avance, 0) / (n || 1));
+  document.getElementById("kpis").innerHTML = [[n, "fichas en el documento"], [env, "enviadas o listas"], [bor, "en borrador"], [prom + "%", "avance promedio"]].map(k => `<div class="kpi"><div class="v">${k[0]}</div><div class="l">${k[1]}</div></div>`).join("");
+  document.getElementById("track").innerHTML = `<div class="seg" style="width:${100 * env / n}%;background:var(--green)"></div><div class="seg" style="width:${100 * bor / n}%;background:var(--yellow)"></div>`;
+  const F = [["todas", "Todas"], ["sin", "Sin iniciar"], ["borrador", "En borrador"], ["enviada", "Enviadas"]];
+  document.getElementById("toolbar").innerHTML = F.map(f => `<button class="${filtro === f[0] ? "on" : ""}" onclick="filtro='${f[0]}';render()">${f[1]}</button>`).join("") + `<span class="upd">${live ? "En vivo · actualizado " + fecha(stamp) : "Vista sin conexión al servicio central"}</span>`;
+  const vis = rows.filter(r => filtro === "todas" || r.estado === filtro || (filtro === "enviada" && r.estado === "ejemplo"));
+  document.getElementById("cards").innerHTML = vis.map(r => `
+    <div class="fc ${r.estado}">
+      <div class="top"><span class="eje">Eje ${esc((r.eje || "—").split(".")[0])}</span><span class="badge ${r.estado}">${LBL[r.estado] || r.estado}</span></div>
+      <h3>${esc(r.titulo || r.tema || "Tema por definir")}</h3>
+      <div class="who">${esc(r.nombre)}${r.con ? ` <span style="font-weight:400;color:var(--gray)">con ${esc(r.con)}</span>` : ""}</div>
+      ${r.titulo && r.tema && r.titulo !== r.tema ? `<div class="meta">Tema: ${esc(r.tema)}</div>` : ""}
+      <div class="bar"><span style="width:${r.avance}%"></span></div>
+      <div class="meta">${r.avance}% completo${r.actualizado ? " · " + fecha(r.actualizado) : ""}</div>
+      ${r.pendientes && r.estado !== "sin" ? `<div class="pend">Pendiente: ${esc(r.pendientes)}</div>` : ""}
+    </div>`).join("") || `<p style="color:var(--gray)">Nada en este filtro.</p>`;
+  document.getElementById("ejes").innerHTML = EJES.map(e => {
+    const f = rows.filter(r => r.eje === e);
+    return `<div class="ej"><b>${e.split(".")[0]}</b>${esc(e.split(". ")[1])}<div class="dots">${f.map(r => `<i class="${r.estado === "enviada" || r.estado === "ejemplo" ? "e" : r.estado === "borrador" ? "b" : ""}" title="${esc(r.nombre)}"></i>`).join("") || `<span style="color:var(--red);font-size:.8rem">sin fichas</span>`}</div></div>`;
+  }).join("");
+  document.getElementById("note").innerHTML = live
+    ? `¿Tu ficha no aparece como esperas? El avance se registra cuando eliges tu nombre en el paso 0 del <a href="fichas.html">taller</a>. Al enviar tu ficha pasa a «Enviada».`
+    : `El tablero muestra la lista de integrantes; el avance en vivo aparecerá cuando la coordinación active el servicio central (<code>apps-script/INSTALACION.md</code>).`;
+}
+
+async function load() {
+  if (API) {
+    try {
+      const r = await fetch(API + (API.includes("?") ? "&" : "?") + "action=board");
+      const j = await r.json();
+      if (j.ok) { rows = build(j.items); live = true; stamp = new Date().toISOString(); return render(); }
+    } catch (e) {}
+  }
+  rows = build([]); render();
+}
+load();
+if (API) setInterval(load, 120000);
+</script>
+</body>
+</html>
