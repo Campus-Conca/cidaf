@@ -23,4 +23,4 @@ Sitio estático sin dependencias. Estilos en `assets/styles.css`; identidad: azu
 
 ## Taller de fichas
 
-`fichas.html` y `tablero.html` usan `assets/taller-datos.js` (colegas, ejes y kit de ideas) y `assets/taller-config.js` (URL del servicio central). El servicio central es un Google Apps Script: código en `apps-script/Code.gs` e instalación en `apps-script/INSTALACION.md`.
+`fichas.html` y `tablero.html` usan `assets/taller-datos.js` (colegas, ejes y sugerencias por línea de trabajo) y `assets/taller-config.js` (URL del servicio central). El servicio central es un Google Apps Script: código en `apps-script/Code.gs` e instalación en `apps-script/INSTALACION.md`.
