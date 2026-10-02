@@ -7,4 +7,4 @@
    en vivo.
    Guía: apps-script/INSTALACION.md
    ============================================================ */
-window.TALLER_API_URL = "";
+window.TALLER_API_URL = "https://script.google.com/macros/s/AKfycbzoCFLRVhpWNi67EaJwgdoFTglEPzy-H85LHDZZ2SG2nQ-m_7TXadoDvn4VRAJ2N6RLKA/exec";
