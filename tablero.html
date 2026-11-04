@@ -116,7 +116,7 @@ function build(remote) {
   const byId = {}; (remote || []).forEach(r => byId[r.colega] = r);
   const list = COLEGAS.map(c => {
     const r = byId[c.id]; delete byId[c.id];
-    if (c.ejemplo) return { nombre: c.nombre, tema: c.tema, titulo: "Sistema municipal para prevenir y dar seguimiento a los cambios irregulares de uso de suelo", eje: EJES[c.eje], avance: 100, estado: "ejemplo", pendientes: "", actualizado: r?.actualizado };
+    if (c.ejemplo) return { nombre: c.nombre, tema: c.tema, titulo: "Sistema municipal de licencias, reporte y respuesta ante los cambios irregulares de uso de suelo en el valle de Concá", eje: EJES[c.eje], avance: 100, estado: "ejemplo", pendientes: "", actualizado: r?.actualizado };
     return { nombre: c.nombre, tema: c.tema, eje: r?.eje || EJES[c.eje], titulo: r?.titulo || "", avance: +(r?.avance || 0), estado: r?.estado || "sin", pendientes: r?.pendientes || "", actualizado: r?.actualizado, con: c.con };
   });
   Object.values(byId).forEach(r => list.push({ nombre: r.nombre || r.colega, tema: r.tema, eje: r.eje, titulo: r.titulo, avance: +(r.avance || 0), estado: r.estado || "borrador", pendientes: r.pendientes || "", actualizado: r.actualizado }));
