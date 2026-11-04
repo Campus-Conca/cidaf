@@ -177,10 +177,12 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
 .ficha .it { margin-bottom: .35rem; }
 @media (max-width: 600px) { .ficha td { display: block; width: 100% !important; } .ficha td.k { border-top: 1px solid #ece8de; padding-bottom: .2rem; } .ficha td:not(.k) { border-top: 0; } }
 
-.annot { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 1.4rem; align-items: start; }
-@media (max-width: 860px) { .annot { grid-template-columns: 1fr; } }
-.anote { background: #fff; border-radius: 12px; box-shadow: var(--shadow); padding: .8rem 1rem; font-size: .9rem; border-left: 4px solid var(--green); margin-bottom: .7rem; }
-.anote b { color: var(--navy); display: block; font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; }
+.tf-hero .lead a { color: var(--amber); }
+.exhead { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.exhead p { font-size: .95rem; color: #4a4f57; flex: 1 1 22ch; }
+.ficha .fnote { display: none; margin-top: .55rem; background: var(--amber-soft); border-radius: 8px; padding: .45rem .7rem; font-size: .86rem; color: var(--navy); line-height: 1.45; }
+.ficha .fnote b { display: block; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .1rem; }
+.ficha.notes .fnote { display: block; }
 
 .summary { display: grid; gap: .6rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 1rem 0 1.4rem; }
 .sumcard { background: #fff; border-radius: 12px; padding: .75rem .9rem; box-shadow: var(--shadow); font-size: .9rem; border-left: 5px solid var(--green); cursor: pointer; }
@@ -252,7 +254,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
         <div class="stop a">
           <span class="n">1</span><span class="time">5 minutos</span>
           <h3>Mira una ficha terminada</h3>
-          <p>La del sistema municipal contra los cambios irregulares de uso de suelo, con notas de por qué cada campo funciona.</p>
+          <p>La del sistema municipal de licencias, reporte y respuesta a los cambios irregulares de uso de suelo en el valle de Concá. Léela de corrido y, si quieres, enciende las notas de por qué funciona cada campo.</p>
           <div><button class="b b-ghost" onclick="go('ejemplo')">Ver el ejemplo</button></div>
         </div>
         <div class="stop">
@@ -281,15 +283,12 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
     <div class="wrap">
       <div class="kicker">Ficha ejemplo · Eje III</div>
       <h1>Así se ve una ficha <em>encarnada</em></h1>
-      <p class="lead">Recomendación de Eduardo Luna y Miguel Bartorila, ajustada a los acuerdos de la reunión interinstitucional del 17 de julio de 2026 con CONANP, SEDESU y el municipio. A la derecha: por qué funciona cada campo.</p>
+      <p class="lead">Recomendación de Eduardo Luna y Miguel Bartorila, alineada a la <a href="https://eduardolusan-source.github.io/ecotonos-teoria-del-cambio/" target="_blank" rel="noopener">teoría del cambio del proyecto Ecotonos</a> (2026–2028): lo que el municipio tiene que sostener para que brincarse las reglas del valle de Concá deje de salir gratis.</p>
     </div>
   </div>
   <section class="block">
     <div class="wrap">
-      <div class="annot">
-        <div id="exFicha"></div>
-        <div id="exNotes"></div>
-      </div>
+      <div id="exFicha"></div>
       <div class="navrow no-print">
         <button class="b b-ghost" onclick="go('inicio')">← Inicio</button>
         <button class="b b-pri" onclick="go('taller')">Ahora, mi ficha →</button>
@@ -314,7 +313,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
         <div class="tabs" id="ftabs"></div>
       </div>
       <div class="fpane no-print" id="fp-revisa">
-        <p class="why">Revisa el estado de cada campo; da clic en uno para volver a él. Los amarillos puedes enviarlos así: la coordinación te ayuda a completarlos. Lo único que no puede faltar son los dos campos ★.</p>
+        <p class="why">Aquí aparece solo lo que falta o quedó a medias; da clic en uno para volver a él. Los amarillos puedes enviarlos así: la coordinación te ayuda a completarlos. Lo único que no puede faltar son los dos campos ★.</p>
         <div class="summary" id="summary"></div>
         <div class="coh-wrap">
           <h3>Antes de enviar: ¿todo embona?</h3>
@@ -399,71 +398,73 @@ const LEYES = {
 };
 
 /* =========================================================
-   Ficha ejemplo — III.1, actualizada al 17 jul 2026
+   Ficha ejemplo — III.1, actualizada al 4 nov 2026 con la teoría del cambio
+   del proyecto Ecotonos (eduardolusan-source.github.io/ecotonos-teoria-del-cambio)
    ========================================================= */
 const EX = {
-  meta: { autor: "Dr. Eduardo Luna Sánchez", eje: "III. Ordenamiento territorial", tema: "Mecanismo para detener cambios irregulares de uso de suelo", acompanan: "Dr. Eduardo Luna Sánchez y Dr. Miguel Bartorila (UAQ Campus Concá)", roles: ["Asesoría técnica a funcionarios", "Capacitación", "Medición del indicador", "Vincular con dependencias"], horas: "8 horas al mes" },
-  titulo: "Sistema municipal para prevenir y dar seguimiento a los cambios irregulares de uso de suelo",
+  meta: { autor: "Dr. Eduardo Luna Sánchez", eje: "III. Ordenamiento territorial", tema: "Mecanismo para detener cambios irregulares de uso de suelo", acompanan: "Dr. Eduardo Luna Sánchez y Dr. Miguel Bartorila (UAQ Campus Concá), con el equipo del proyecto Ecotonos", roles: ["Asesoría técnica a funcionarios", "Capacitación", "Medición del indicador", "Vincular con dependencias"], horas: "8 horas al mes, y la minuta de la mesa del valle cada cuatro meses" },
+  titulo: "Sistema municipal de licencias, reporte y respuesta ante los cambios irregulares de uso de suelo en el valle de Concá",
   diag: {
-    problema: "Arroyo Seco cuenta con un Programa Municipal de Desarrollo Urbano (PMDU) con dictamen de congruencia aprobado, pero carece de los instrumentos que lo hagan exigible: no hay reglamento de construcción aplicado, padrón de licencias ni un canal ciudadano para reportar obras irregulares.",
-    dato: "En zonas como Las Trancas el suelo alcanza $1,000/m², lo que impulsa la lotificación de tierras agrícolas y de conservación, la invasión de márgenes de ríos y construcciones —financiadas por turismo y remesas— que no pasan por licencia.",
-    fuente: "Talleres participativos EDVAC-UAQ (2025); reunión interinstitucional CONANP–SEDESU–Municipio–UAQ (17 de julio de 2026).",
-    consecuencia: "Cada mes sin control se pierde suelo agrícola y zonas de recarga de forma prácticamente irreversible, y el municipio deja de recaudar ingresos propios."
+    problema: "Arroyo Seco ya tiene un PMDU que dice qué se puede construir en cada parte del valle de Concá y qué no, pero brincarse la regla sale gratis: las licencias no se cobran, nadie verifica y un reporte no tiene a dónde llegar.",
+    dato: "Los talleres de Ecotonos marcaron 455 hectáreas de riego, en cinco distritos, como las que hay que cuidar; en Las Trancas el suelo ya se vende a $1,000/m² y las parcelas se lotifican barda por barda.",
+    fuente: "Proyecto Ecotonos urbanos y rurales, UAQ (FONFIVE FI-2024-18, 2024–2026); reunión CONANP–SEDESU–Municipio–UAQ (17 de julio de 2026).",
+    consecuencia: "Cada parcela lotificada se pierde con su acequia y su borde, y el municipio deja de cobrar licencias y predial. Para cuando hay techo, ya es tarde."
   },
-  obj: { verbo: "Establecer", que: "un sistema municipal de control territorial que haga exigible el PMDU en todo el municipio, genere ingresos propios por licencias y canalice los reportes ciudadanos a la autoridad competente", meta: "que al menos 80% de los reportes ciudadanos completos reciba respuesta documental en máximo 30 días" },
+  obj: { verbo: "Establecer", que: "un sistema municipal que haga exigible el PMDU en el valle de Concá: licencias que se cobran, una verificadora nombrada por el cabildo, un reporte ciudadano con folio que recibe respuesta y una ventanilla para ponerse en regla", meta: "que todo reporte tenga acuse en 24 horas y visita en 15 días hábiles, y que no se lotifique ninguna hectárea nueva dentro del polígono agrícola de 455 ha" },
   acciones: [
-    { t: "Socializar el PMDU: publicar el mapa de zonificación consultable en línea y en cada delegación, con la ruta de trámites y las consecuencias de construir sin licencia.", h: 0 },
-    { t: "Capacitar al personal de Desarrollo Urbano y a delegados en la operación del PMDU, en su vía técnica y jurídica, con SEDESU, CONANP y UAQ.", h: 0 },
-    { t: "Aprobar en cabildo el Reglamento Municipal de Construcción y Uso del Suelo, alineado al PMDU y al Programa de Manejo de la RBSG, con licencia obligatoria, multas escalonadas y criterios de eficiencia hídrica y energética.", h: 1 },
-    { t: "Implementar el padrón digital de licencias de construcción, vinculado al predial y actualizado cada mes.", h: 1 },
-    { t: "Habilitar un canal de reporte ciudadano anclado al municipio (formulario web y WhatsApp) con foto y ubicación obligatorias: el municipio recibe, verifica en campo y canaliza a PROFEPA, CONAGUA o CONANP por los conductos oficiales.", h: 1 },
-    { t: "Suscribir convenio con la UAQ Campus Concá para acompañamiento técnico y resguardo de un repositorio de capacitación que sobreviva a los cambios de administración.", h: 1 },
-    { t: "Informar cada semestre sobre los reportes recibidos ante el Consejo Asesor de la RBSG, con notificación parcial a CONANP y participación de los comités de vigilancia ambiental.", h: 2 },
-    { t: "Diseñar una estrategia de difusión dirigida a compradores migrantes (temporadas de retorno) y a agentes inmobiliarios.", h: 2 },
-    { t: "Crear una contribución por incremento de valor del suelo (captura de plusvalía) que alimente un Fondo Municipal de Conservación Territorial.", h: 2 },
-    { t: "Aplicar sanciones progresivas: notificación, multa, suspensión y demolición con restauración del predio.", h: 3 }
+    { t: "Ratificar en cabildo a la verificadora municipal y el protocolo del reporte ciudadano: acuse en 24 horas, visita en 15 días hábiles, aviso a quien reportó e informe cada tres meses.", h: 0 },
+    { t: "Recibir la carpeta de entrega de la mesa del valle (junio de 2027) y sostener la ventanilla semanal en la delegación de Concá, con el mapa de «dónde sí» se puede construir.", h: 0 },
+    { t: "Mantener en la Ley de Ingresos 2028 el tabulador de licencias y multas y el descuento al predial para las parcelas que siguen produciendo dentro del polígono.", h: 0 },
+    { t: "Firmar con el ejido las seis mojoneras con el texto de la zonificación en los bordes del valle, y reponer las marcas con QR que llevan al formulario de reporte.", h: 1 },
+    { t: "Sentarse en la mesa del valle cada cuatro meses, con dependencias, ejidos, comunidad y UAQ, y dar una silla en el Consejo Municipal a la red de vigías.", h: 1 },
+    { t: "Publicar el informe trimestral de reportes (recibidos, atendidos, improcedentes y turnados a PROFEPA, SEDESU o CONANP) y pegarlo en los diez puntos del valle.", h: 1 },
+    { t: "Integrar los polígonos del Plan Guía 2045 en la actualización del programa de centro de población de Concá.", h: 2 },
+    { t: "Asumir la custodia de lo que deja el proyecto en marzo de 2028 (formulario, WhatsApp, padrón, marcas y apps) con partida en el presupuesto 2028.", h: 2 },
+    { t: "Aplicar las sanciones progresivas del tabulador (acta, apercibimiento, suspensión y restauración del predio) y cobrar toda licencia de construcción.", h: 3 },
+    { t: "Resguardar la identidad de quien reporta con un aviso de privacidad y un dictamen de la Unidad de Transparencia.", h: 3 }
   ],
-  hitos: "Mapa de zonificación publicado en todas las delegaciones (100 días). Reglamento aprobado y padrón operando (año 1). Primer informe ante el Consejo Asesor de la RBSG (año 2).",
-  resp: { lider: "Obras Públicas y Desarrollo Urbano", coord: "Tesorería (licencias y multas); Sindicatura (seguimiento legal); Cabildo (reglamento y contribución); delegaciones municipales (primer punto de contacto ciudadano).", vinc: ["CONANP-RBSG", "SEDESU Qro.", "PROFEPA", "CONAGUA", "SEMARNAT", "Procuraduría Estatal de Protección al Ambiente"], vincOtro: "" },
+  hitos: "Verificadora ratificada y tabulador en la Ley de Ingresos 2028 (100 días). Seis mojoneras firmadas y primer informe trimestral pegado en el valle (año 1). Custodia del sistema con partida propia tras el cierre del FONFIVE en marzo de 2028 (años 2–3).",
+  resp: { lider: "Obras Públicas y Desarrollo Urbano", coord: "Tesorería (tabulador, licencias y descuento al predial); Cabildo (nombramiento de la verificadora y Ley de Ingresos); Sindicatura (actas y seguimiento legal); Delegación de Concá (ventanilla semanal); Unidad de Transparencia (resguardo de quien reporta).", vinc: ["CONANP-RBSG", "SEDESU Qro.", "PROFEPA", "Ejidos y comunidades", "Comités de vigilancia ambiental"], vincOtro: "Registro Agrario Nacional (reglamentos internos de Concá y El Salitrillo); Legislatura del Estado (Ley de Ingresos)" },
   ind: [
-    { nombre: "% de obras en construcción con licencia vigente en el padrón", base: "< 10% (a verificar)", meta: "≥ 60% en localidades de más de 200 hab.", fuente: "Padrón municipal; recorrido anual UAQ" },
-    { nombre: "% de reportes ciudadanos completos con respuesta documental en ≤ 30 días", base: "0% (no existe el canal)", meta: "≥ 80%", fuente: "Registro de folios; informe al Consejo Asesor RBSG" },
-    { nombre: "Hectáreas del polígono agrícola y de conservación con cambio de uso no autorizado", base: "A determinar con imagen satelital 2027", meta: "0 ha nuevas", fuente: "Imagen satelital anual (UAQ)" },
-    { nombre: "Recaudación anual por licencias de construcción", base: "A determinar (cuenta pública 2027)", meta: "Incremento sostenido año con año", fuente: "Estado financiero municipal" }
+    { nombre: "% de reportes ciudadanos con acuse en 24 horas y visita en 15 días hábiles", base: "0% (el canal arranca en marzo de 2027)", meta: "≥ 80%", fuente: "Registro de folios; informe trimestral de la mesa del valle" },
+    { nombre: "Hectáreas nuevas lotificadas dentro del polígono agrícola de 455 ha", base: "Línea base satelital 2020–2025 (UAQ)", meta: "0 ha nuevas por año", fuente: "Imagen satelital anual (UAQ Campus Concá)" },
+    { nombre: "Recaudación anual por licencias de construcción", base: "$0: hoy no se cobran (2026)", meta: "Toda obra con licencia pagada; recaudación creciente año con año", fuente: "Cuenta pública municipal; padrón de licencias" },
+    { nombre: "Parcelas del padrón que siguen en producción", base: "Padrón por distrito de riego, febrero de 2027", meta: "Ninguna parcela del padrón sale de producción", fuente: "Padrón de Desarrollo Agropecuario; conteo semestral de anuncios de venta (UAQ)" }
   ],
   costo: [
-    { comp: "Socialización del PMDU y capacitación", monto: "$50–200 mil", fuente: "Convenio UAQ; SEDESU Qro.; recursos propios" },
-    { comp: "Reglamento y padrón digital de licencias", monto: "≈ $120,000", fuente: "Recursos propios" },
-    { comp: "Canal de reporte ciudadano", monto: "$0", fuente: "WhatsApp Business + formulario web" },
-    { comp: "Rendición de cuentas ante el Consejo Asesor", monto: "$0", fuente: "Órgano ya constituido" }
+    { comp: "Verificadora municipal (sueldo, traslados y formatos)", monto: "$200 mil–1 millón", fuente: "Recursos propios: la pagan las licencias y multas del tabulador" },
+    { comp: "Ventanilla semanal y mapa de «dónde sí»", monto: "< $50 mil", fuente: "Recursos propios; el mapa lo entrega la UAQ" },
+    { comp: "Formulario, WhatsApp, protocolo y capacitación", monto: "$0", fuente: "Lo deja instalado el proyecto Ecotonos (FONFIVE 2026–2028)" },
+    { comp: "Marcas y mojoneras en los bordes del valle", monto: "$0 para el municipio", fuente: "FONFIVE 2026–2028; reposición futura con recursos propios" },
+    { comp: "Descuento al predial a parcelas productivas", monto: "Por estimar con Tesorería", fuente: "Ley de Ingresos 2028" }
   ],
   ingresos: true,
-  ingresosTxt: "El cobro de licencias, las multas y la contribución por plusvalía convierten el sistema en ingreso propio: se paga a sí mismo.",
-  legal: ["LGAHOTDU", "Código Urbano del Estado de Querétaro", "PMDU de Arroyo Seco", "LGEEPA", "Ley de Aguas Nacionales", "Programa de Manejo de la RBSG (1999)", "Ley Orgánica Municipal del Estado de Querétaro"],
-  legalOtro: "LGAHOTDU Arts. 11 y 59 (licencias y control del uso del suelo); LGEEPA Art. 189 (denuncia popular); LAN Art. 113 (zona federal de cauces); Ley General de Protección de Datos Personales en Posesión de Sujetos Obligados.",
+  ingresosTxt: "Las licencias y multas que hoy no se cobran pagan a la verificadora: el sistema se paga a sí mismo. Lo que se deja de cobrar en predial es menos que lo que el valle pierde con cada parcela lotificada.",
+  legal: ["LGAHOTDU", "Código Urbano del Estado de Querétaro", "PMDU de Arroyo Seco", "Ley Orgánica Municipal del Estado de Querétaro", "Programa de Manejo de la RBSG (1999)", "Ley Agraria", "LGEEPA"],
+  legalOtro: "Ley de Ingresos del Municipio de Arroyo Seco 2027 y 2028 (tabulador de licencias y multas, descuento al predial); Ley Agraria Arts. 10 y 80 (reglamento interno y derecho del tanto); LGEEPA Art. 189 (denuncia popular); Ley General de Protección de Datos Personales en Posesión de Sujetos Obligados; Plan Guía 2045.",
   sem: [
-    { comp: "PMDU", c: "y", j: "Dictamen de congruencia aprobado; falta inscripción en el Registro Público y difusión." },
-    { comp: "Reglamento de construcción", c: "r", j: "No existe uno vigente y aplicado." },
-    { comp: "Padrón de licencias", c: "r", j: "Inexistente." },
-    { comp: "Reporte ciudadano municipal", c: "r", j: "No existe canal municipal; solo denuncias sueltas ante dependencias." },
-    { comp: "Rendición de cuentas", c: "y", j: "El Consejo Asesor de la RBSG existe, pero no recibe informes de uso de suelo." },
-    { comp: "Captura de plusvalía", c: "r", j: "Inexistente." }
+    { comp: "PMDU y zonificación del valle", c: "y", j: "Aprobado y con dictamen de congruencia, pero la gente no lo conoce: la campaña y las marcas arrancan en 2027." },
+    { comp: "Reglamentos internos del ejido con candados a la lotificación", c: "r", j: "No existen; asambleas de Concá y El Salitrillo en febrero y marzo de 2027, registro en el RAN antes de junio." },
+    { comp: "Tabulador y cobro de licencias", c: "y", j: "Propuesta en camino a la Ley de Ingresos 2027 (plazo: 30 de noviembre de 2026); hoy las licencias no se cobran." },
+    { comp: "Reporte con folio, verificadora y vigías", c: "r", j: "No hay canal municipal; protocolo, verificadora y red de vigías arrancan en marzo de 2027." },
+    { comp: "Descuento al predial y mercado para la parcela", c: "r", j: "No existen; van en la misma Ley de Ingresos y el mercado mensual arranca en junio de 2027." },
+    { comp: "Mesa del valle y custodia después de 2028", c: "y", j: "La mesa que abrió el EURC ya se reúne; faltan el plan de custodia y la partida 2028." }
   ],
-  refs: "Observatorio Ciudadano de Valle de Bravo (municipio con ANP); clausuras de PROFEPA por denuncia popular en el Corredor Chichinautzin; captura de plusvalía en Guadalajara (ICUS) y Zapopan.",
+  refs: "Observatorio Ciudadano de Valle de Bravo (municipio con ANP); clausuras de PROFEPA por denuncia popular en el Corredor Chichinautzin; la mesa interinstitucional del valle de Concá que abrió el proyecto Ecotonos (2024–2026).",
   pend: {}
 };
 
 const EXNOTES = [
-  ["Título", "Nombra el instrumento (un sistema) y el problema. Se entiende sin leer nada más."],
-  ["Diagnóstico", "Cuatro piezas: problema, dato duro, fuente con año y consecuencia de no actuar. Menos de 120 palabras: se lee en 60 segundos."],
-  ["Objetivo", "Verbo en infinitivo + qué se instala + una meta con número. Se puede verificar en 2030."],
-  ["Acciones", "Cada una empieza con verbo y es verificable (¿se aprobó el reglamento? sí/no). Arranca con lo barato y posible: socializar lo que ya existe."],
-  ["Responsable ★", "Un área municipal lidera; la UAQ acompaña con nombre y apellido. Esto es lo que vuelve encarnada la recomendación."],
-  ["Plazo", "Se arma solo a partir de las acciones. Los hitos dicen qué podrá mostrar el gobierno en cada momento."],
-  ["Indicador ★", "Cuando no hay línea base se dice «a determinar» y cómo se medirá. Es honesto y sigue siendo medible."],
-  ["Costo", "Orden de magnitud, no contabilidad. Señalar que genera ingresos propios es el mejor argumento político."],
+  ["Título", "Nombra el instrumento (un sistema) y sus tres piezas: licencias, reporte y respuesta. Se entiende sin leer nada más."],
+  ["Diagnóstico", "Cuatro piezas: el problema, un dato duro (455 ha, $1,000/m²), la fuente con año y qué se pierde si no se actúa. Cabe en 60 segundos de lectura."],
+  ["Objetivo", "Verbo en infinitivo + lo que queda instalado + una meta con números (24 horas, 15 días, cero hectáreas). Se puede verificar en 2030."],
+  ["Acciones", "Cada una empieza con verbo y se puede comprobar (¿se ratificó a la verificadora? sí o no). Arranca con lo que ya existe: ratificar y sostener lo que el proyecto deja listo."],
+  ["Responsable ★", "Un área municipal lidera y las demás saben para qué están. La UAQ acompaña con nombre y horas: aquí, dos personas y 8 horas al mes. Esto es lo que vuelve encarnada la recomendación."],
+  ["Plazo", "Se arma solo a partir de las acciones. Los hitos dicen qué podrá mostrar el gobierno a los 100 días, al año y al cierre."],
+  ["Indicador ★", "Miden el resultado, no la actividad. Cuando no hay línea base se dice de dónde saldrá (imagen satelital, padrón). Es honesto y sigue siendo medible."],
+  ["Costo", "Orden de magnitud, no contabilidad. Decir qué cuesta $0 porque ya lo deja el proyecto, y que las licencias pagan a la verificadora, es el mejor argumento político."],
   ["Marco legal", "Una lista de piso legal, no un ensayo. La coordinación afina artículos."],
-  ["Semáforo", "Un color por componente y una frase de por qué. Se ve de golpe qué tan lejos estamos."]
+  ["Semáforo", "Un color por componente y una frase con fecha. Se ve de golpe qué existe, qué viene en 2027 y qué le toca sostener al gobierno que entra."]
 ];
 
 /* =========================================================
@@ -641,8 +642,8 @@ const STEPS = [
       { t: "El área que lidera", render() { return `
         <div class="q"><label class="t">Área municipal que lidera <span class="must">innegociable</span></label><span class="h">Elige una o escribe otra.</span>
           ${kitAreas()}
-          <div class="chips">${AREAS.map(a => chip("resp.lider", a, true)).join("")}</div>
-          <input type="text" style="margin-top:.6rem" placeholder="Otra área" value="${esc(AREAS.includes(F.resp.lider) ? "" : F.resp.lider)}" oninput="set('resp.lider', this.value)"></div>
+          ${det("areas", "＋ Ver todas las áreas del municipio, o escribir otra", `<div class="chips">${AREAS.map(a => chip("resp.lider", a, true)).join("")}</div>
+          <input type="text" style="margin-top:.6rem" placeholder="Otra área" value="${esc(AREAS.includes(F.resp.lider) ? "" : F.resp.lider)}" oninput="set('resp.lider', this.value)">`)}</div>
         ${qArea("resp.coord", "Quién más coordina, y para qué", "Opcional. Tesorería cobra, Cabildo aprueba, delegaciones difunden…", "Tesorería (…); Cabildo (…)", 2)}`; } },
       { t: "Acompañamiento y vinculación", render() { return `
         <div class="q"><label class="t">Acompañamiento del campus</label><span class="h">Se toma de tu paso 0.</span>
@@ -650,8 +651,8 @@ const STEPS = [
           <button class="b-link" onclick="goStep(0, true)">Editar</button></div>
         <div class="q"><label class="t">Vinculación institucional</label><span class="h">Dependencias con las que hay que coordinarse.</span>
           ${kitVinc()}
-          <div class="chips">${VINC.map(v => chip("resp.vinc", v)).join("")}</div>
-          <input type="text" style="margin-top:.6rem" placeholder="Otras" value="${esc(F.resp.vincOtro)}" oninput="set('resp.vincOtro', this.value)"></div>`; } }
+          ${det("vinc", "＋ Ver todas las dependencias, o escribir otras", `<div class="chips">${VINC.map(v => chip("resp.vinc", v)).join("")}</div>
+          <input type="text" style="margin-top:.6rem" placeholder="Otras" value="${esc(F.resp.vincOtro)}" oninput="set('resp.vincOtro', this.value)">`)}</div>`; } }
     ],
     checks: () => [[has(F.resp.lider), "Área municipal líder (★)"], [has(F.meta.acompanan), "Acompañamiento UAQ con nombre (★)"], [F.resp.vinc.length > 0 || has(F.resp.vincOtro), "Vinculación institucional"]],
     stop: () => !has(F.resp.lider) ? "Este campo es innegociable: sin un área municipal responsable, la recomendación no entra. Si no sabes cuál, márcalo como pendiente y lo resolvemos juntos." : "",
@@ -687,12 +688,12 @@ const STEPS = [
           <button class="x" title="Quitar" onclick="F.costo.splice(${i},1);save();renderStep()">×</button>
           <input type="text" placeholder="Componente: p. ej. capacitación, equipo, estudio…" value="${esc(x.comp)}" oninput="F.costo[${i}].comp=this.value;save();refreshSide()">
           <div class="row two">
-            <input type="text" placeholder="Monto aproximado" value="${esc(x.monto)}" oninput="F.costo[${i}].monto=this.value;save();refreshSide()">
+            <input type="text" list="montos" placeholder="Monto aproximado (toca para ver rangos)" value="${esc(x.monto)}" oninput="F.costo[${i}].monto=this.value;save();refreshSide()">
             <input type="text" placeholder="Fuente de financiamiento" value="${esc(x.fuente)}" oninput="F.costo[${i}].fuente=this.value;save();refreshSide()">
           </div>
-          <div class="chips"><span class="lbl">Monto:</span>${MONTOS.map(m => `<button class="chip" onclick="F.costo[${i}].monto='${m}';save();renderStep()">${m}</button>`).join("")}</div>
           ${det("fz" + i, "＋ Sugerir fuentes de financiamiento", `<div class="chips">${fondosList().map(m => `<button class="chip" onclick='addFondo(${i}, ${JSON.stringify(m)})'>${esc(m)}</button>`).join("")}</div>`)}
         </div>`).join("")}
+      <datalist id="montos">${MONTOS.map(m => `<option value="${m}">`).join("")}</datalist>
       <button class="b b-ghost b-sm" style="margin-top:.7rem" onclick="F.costo.push({comp:'',monto:'',fuente:''});save();renderStep()">+ Agregar componente</button>
       <div class="q"><label class="t" style="display:flex;gap:.5rem;align-items:center;cursor:pointer"><input type="checkbox" ${F.ingresos ? "checked" : ""} onchange="F.ingresos=this.checked;save();renderStep()"> ¿Genera ingresos o ahorros para el municipio?</label>
       ${F.ingresos ? `<textarea rows="2" style="margin-top:.5rem" placeholder="¿Cómo? p. ej. cobro de derechos, ahorro en energía, multas…" oninput="set('ingresosTxt', this.value)">${esc(F.ingresosTxt)}</textarea>` : ""}</div>`; },
@@ -757,8 +758,9 @@ function kitBox(title, body) {
     <div class="subtabs">${LINEAS.map((l, i) => `<button class="${i === kitL ? "on" : ""}" onclick="kitL=${i};renderStep()">${esc(l.nombre)}</button>`).join("")}</div>${body}</div>`;
 }
 function kitFuentes() { const k = linea(); return kitBox("Fuentes que suelen servir", `<div class="chips">${k.fuentes.map(f => `<button class="chip" onclick='setIfEmpty("diag.fuente", ${JSON.stringify(f + " (año)")})'>${esc(f)}</button>`).join("")}</div>`); }
-function kitAreas() { const k = linea(); return kitBox("Áreas que suelen liderar", `<div class="chips">${k.areas.map(a => chip("resp.lider", a, true)).join("")}</div>`); }
-function kitVinc() { const k = linea(); return kitBox("Dependencias frecuentes", `<div class="chips">${k.vinc.map(v => chip("resp.vinc", v)).join("")}</div>`); }
+/* Las sugerencias por línea muestran también lo ya elegido, aunque venga de la lista completa. */
+function kitAreas() { const k = linea(); const extra = has(F.resp.lider) && !k.areas.includes(F.resp.lider) ? [F.resp.lider] : []; return kitBox("Áreas que suelen liderar", `<div class="chips">${[...k.areas, ...extra].map(a => chip("resp.lider", a, true)).join("")}</div>`); }
+function kitVinc() { const k = linea(); const extra = F.resp.vinc.filter(v => !k.vinc.includes(v)); return kitBox("Dependencias frecuentes", `<div class="chips">${[...k.vinc, ...extra].map(v => chip("resp.vinc", v)).join("")}</div>`); }
 function kitInd() { const k = linea(); return kitBox("Indicadores típicos, clic para usar", `<div class="chips col">${k.indicadores.map(x => `<button class="chip" onclick='useInd(${JSON.stringify(x)})'>+ ${esc(x.nombre)}</button>`).join("")}</div>`); }
 function kitQs(key) {
   if (!["meta", "titulo", "diag", "obj", "acciones"].includes(key)) return "";
@@ -877,7 +879,7 @@ const TIPS = {
 /* ---- Contenido de cada pestaña del paso ---- */
 const ICONS = { meta: "🤝", titulo: "🏷️", diag: "🔎", obj: "🎯", acciones: "🛠️", resp: "🏛️", ind: "📈", costo: "💰", legal: "⚖️", sem: "🚦" };
 /* Nota de la ficha ejemplo que corresponde a cada paso (índice en EXNOTES). */
-const EXNOTE = { meta: "Esta ficha existe porque dos personas del campus se comprometieron a acompañarla unas 8 horas al mes.", titulo: 0, diag: 1, obj: 2, acciones: 3, resp: 4, ind: 6, costo: 7, legal: 8, sem: 9 };
+const EXNOTE = { meta: "Esta ficha existe porque dos personas del campus se comprometieron a acompañarla unas 8 horas al mes y a llevar la minuta de la mesa del valle.", titulo: 0, diag: 1, obj: 2, acciones: 3, resp: 4, ind: 6, costo: 7, legal: 8, sem: 9 };
 let tab = "form", part = 0, legalG = 0;
 
 function paneForm(s) {
@@ -890,8 +892,10 @@ function paneForm(s) {
 function paneTips(s) {
   const t = TIPS[s.key] || { tips: [] };
   const pairs = [...(s.vs ? [["Agua", s.vs[0], s.vs[1]]] : []), ...(t.vs || [])];
+  const pair = ([tema, no, si]) => `<p class="tema">Ejemplo · ${esc(tema)}</p><div class="vs"><div class="bad"><b>Así no</b>${esc(no)}</div><div class="good"><b>Así sí</b>${esc(si).replace(/\n/g, "<br>")}</div></div>`;
+  const [first, ...rest] = pairs;
   return `<ol class="tiplist">${t.tips.map(x => `<li>${esc(x)}</li>`).join("")}</ol>
-    ${pairs.length ? `<h4 class="sub">Así no / así sí</h4>` + pairs.map(([tema, no, si]) => `<p class="tema">Ejemplo · ${esc(tema)}</p><div class="vs"><div class="bad"><b>Así no</b>${esc(no)}</div><div class="good"><b>Así sí</b>${esc(si).replace(/\n/g, "<br>")}</div></div>`).join("") : ""}
+    ${first ? `<h4 class="sub">Así no / así sí</h4>` + pair(first) + (rest.length ? det("vs-" + s.key, `＋ Otro${rest.length > 1 ? "s " + rest.length + " ejemplos" : " ejemplo"}`, rest.map(pair).join("")) : "") : ""}
     ${kitQs(s.key)}`;
 }
 function paneEx(s) {
@@ -908,7 +912,13 @@ function paneEx(s) {
 }
 /* Deja el formulario del ejemplo solo para leer: mismos campos y opciones, sin los botones que agregan o quitan. */
 function tidyExample(root) {
-  root.querySelectorAll(".kitbox, .more, .x, .b-link, .b-ghost").forEach(e => e.remove());
+  const seen = new Set();
+  root.querySelectorAll(".kitbox, .more").forEach(e => {        // de las cajas de ayuda solo queda lo elegido, una vez
+    const on = [...e.querySelectorAll(".chip.on")].filter(c => !seen.has(c.textContent) && seen.add(c.textContent));
+    if (!on.length) return e.remove();
+    const d = document.createElement("div"); d.className = "chips"; on.forEach(c => d.appendChild(c)); e.replaceWith(d);
+  });
+  root.querySelectorAll(".x, .b-link, .b-ghost").forEach(e => e.remove());
   root.querySelectorAll(".lbl").forEach(e => e.parentElement.remove());
   root.querySelectorAll(".subtabs").forEach(e => (e.closest(".q") || e).remove());
   root.querySelectorAll("button").forEach(b => { b.disabled = true; b.removeAttribute("onclick"); b.textContent = b.textContent.replace(/ ×$/, ""); });
@@ -1026,7 +1036,7 @@ function goStep(i, last) { F.step = i; tab = "form"; part = last && STEPS[i].par
 /* =========================================================
    Ficha completa (vista, Word, texto)
    ========================================================= */
-function fichaHTML(f, forWord) {
+function fichaHTML(f, forWord, notes) {
   const t = T(f);
   const ph = s => forWord ? `<span style="color:#b07f00;background:#f7edcd"><i>[${s}]</i></span>` : `<span class="ph">${s}</span>`;
   const p = (txt, miss) => has(txt) ? esc(txt).replace(/\n/g, "<br>") : ph(miss || "por completar");
@@ -1046,8 +1056,8 @@ function fichaHTML(f, forWord) {
   if (forWord) return `<table style="width:100%;border-collapse:collapse;font-family:Calibri,sans-serif">
     <tr><td colspan="2" style="background:#16263e;color:#fff;padding:8pt;border:1px solid #16263e"><span style="color:#e8b35a;font-size:8pt;letter-spacing:2pt">${head}${by}</span><br><b style="font-size:13pt">${esc(t.titulo || "Título por definir")}</b></td></tr>
     ${rows.map(r => `<tr><td${k}>${r[0]}</td><td${v}>${r[1]}</td></tr>`).join("")}</table>`;
-  return `<div class="ficha"><div class="fh"><small>${head}${by}</small><b>${esc(t.titulo || "Título por definir")}</b></div>
-    <table>${rows.map(r => `<tr><td${k}>${r[0].replace("★", '<span class="star">★</span>')}</td><td>${r[1]}</td></tr>`).join("")}</table></div>`;
+  return `<div class="ficha${notes ? " notes" : ""}"><div class="fh"><small>${head}${by}</small><b>${esc(t.titulo || "Título por definir")}</b></div>
+    <table>${rows.map((r, i) => `<tr><td${k}>${r[0].replace("★", '<span class="star">★</span>')}</td><td>${r[1]}${notes && notes[i] ? `<div class="fnote"><b>Por qué funciona</b>${esc(notes[i])}</div>` : ""}</td></tr>`).join("")}</table></div>`;
 }
 function fichaText(f) {
   const t = T(f);
@@ -1069,11 +1079,12 @@ function renderFinal(quiet) {
   document.getElementById("fnav").innerHTML = finalTab === "revisa" ? edit + `<button class="b b-pri" onclick="setFinalTab('ficha')">Ver mi ficha →</button>`
     : finalTab === "ficha" ? `<button class="b b-ghost" onclick="setFinalTab('revisa')">← Revisa</button><button class="b b-pri" onclick="setFinalTab('envia')">Descargar y enviar →</button>`
     : `<button class="b b-ghost" onclick="setFinalTab('ficha')">← Tu ficha</button>` + edit;
-  document.getElementById("summary").innerHTML = STEPS.map((s, i) => {
-    const st = status(i); const cls = st === "done" ? "" : (s.must || i === 0) && st !== "pend" && st !== "done" ? "r" : "p";
-    const lbl = st === "done" ? "Completo" : st === "pend" ? "Marcado como pendiente" : st === "part" ? "A medias" : "Sin llenar";
+  const faltan = STEPS.map((s, i) => ({ s, i, st: status(i) })).filter(x => x.st !== "done");
+  document.getElementById("summary").innerHTML = faltan.length ? faltan.map(({ s, i, st }) => {
+    const cls = (s.must || i === 0) && st !== "pend" ? "r" : "p";
+    const lbl = st === "pend" ? "Marcado como pendiente" : st === "part" ? "A medias" : "Sin llenar";
     return `<div class="sumcard ${cls}" onclick="goStep(${i})"><b>${s.short}</b>${lbl}</div>`;
-  }).join("");
+  }).join("") : `<div class="sent" style="margin:0;grid-column:1/-1">✓ Los diez pasos están completos.</div>`;
   document.getElementById("finalFicha").innerHTML = fichaHTML(F);
   document.getElementById("cohBox").innerHTML = cohHTML();
   document.getElementById("sentBox").innerHTML = F.enviada ? `<div class="sent">✓ Enviaste esta ficha el ${new Date(F.enviada).toLocaleString("es-MX", { dateStyle: "long", timeStyle: "short" })} — si la editas, vuelve a enviarla: la coordinación conserva todas las versiones.</div>` : "";
@@ -1108,10 +1119,11 @@ function resetAll() { if (confirm("¿Borrar esta ficha y empezar de cero? Esta a
 /* =========================================================
    Ejemplo comentado
    ========================================================= */
+let exNotesOn = false;
 function renderExample() {
-  document.getElementById("exFicha").innerHTML = fichaHTML(EX);
-  document.getElementById("exNotes").innerHTML = `<div class="anote" style="border-left-color:var(--amber)"><b>Antes de todo</b>Esta ficha existe porque dos personas del campus se comprometieron a acompañarla ~8 horas al mes. Ese es el paso 0 del taller.</div>` +
-    EXNOTES.map(n => `<div class="anote"><b>${n[0]}</b>${esc(n[1])}</div>`).join("");
+  document.getElementById("exFicha").innerHTML = `<div class="exhead"><p>${exNotesOn ? "Debajo de cada campo, en ámbar, por qué funciona." : "Léela de corrido, como la leería el municipio: cabe en una página."}</p>
+    <button class="b ${exNotesOn ? "b-ghost" : "b-nav"} b-sm" onclick="exNotesOn=!exNotesOn;renderExample()">${exNotesOn ? "Ocultar las notas" : "💡 Ver por qué funciona cada campo"}</button></div>` +
+    fichaHTML(EX, false, exNotesOn ? EXNOTES.map(n => n[1]) : null);
 }
 
 /* =========================================================
