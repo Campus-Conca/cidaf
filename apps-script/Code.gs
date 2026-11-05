@@ -16,6 +16,7 @@ const SHEET_ENVIOS = 'Envíos';       // una fila por cada envío (historial com
 function doGet(e) {
   const action = (e && e.parameter && e.parameter.action) || '';
   if (action === 'board') return json_({ ok: true, items: board_() });
+  if (action === 'draft') return json_(draft_(e.parameter.colega));
   return json_({ ok: true, servicio: 'Taller de fichas CIDAF', estado: 'activo' });
 }
 
@@ -44,12 +45,17 @@ function sheet_(name, headers) {
   if (!sh) {
     sh = ss.insertSheet(name);
     sh.appendRow(headers);
-    sh.getRange(1, 1, 1, headers.length).setFontWeight('bold').setBackground('#16263e').setFontColor('#ffffff');
     sh.setFrozenRows(1);
   }
+  // Una hoja creada con menos columnas recibe los encabezados que le falten (p. ej. «json» en Estado).
+  const have = sh.getLastColumn() ? sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].filter(String).length : 0;
+  if (have < headers.length) sh.getRange(1, have + 1, 1, headers.length - have).setValues([headers.slice(have)]);
+  sh.getRange(1, 1, 1, headers.length).setFontWeight('bold').setBackground('#16263e').setFontColor('#ffffff');
   return sh;
 }
-const ESTADO_COLS = ['colega', 'nombre', 'correo', 'eje', 'tema', 'titulo', 'avance', 'estado', 'pendientes', 'actualizado'];
+// «json» en Estado es el borrador completo más reciente de cada integrante: con él se recupera el
+// trabajo desde otra computadora o celular. Se reescribe en cada aviso de avance.
+const ESTADO_COLS = ['colega', 'nombre', 'correo', 'eje', 'tema', 'titulo', 'avance', 'estado', 'pendientes', 'actualizado', 'json'];
 const ENVIOS_COLS = ['fecha', 'colega', 'nombre', 'correo', 'eje', 'tema', 'titulo', 'avance', 'pendientes', 'texto', 'json'];
 
 function clip_(s, n) { s = String(s == null ? '' : s); return s.length > n ? s.slice(0, n) : s; }
@@ -73,8 +79,10 @@ function upsertEstado_(p, estado) {
     for (let i = 1; i < data.length; i++) if (data[i][0] === colega) { row = i + 1; break; }
     // Una ficha ya enviada sigue como «enviada» aunque su autor vuelva a editarla.
     if (row > 0 && estado === 'borrador' && data[row - 1][7] === 'enviada') estado = 'enviada';
+    // Si el navegador no mandó borrador (versión vieja de la página), se conserva el que había.
+    const json = p.json != null ? celda_(p.json, 45000) : (row > 0 ? data[row - 1][10] || '' : '');
     const vals = [colega, celda_(p.nombre, 120), celda_(p.correo, 120), celda_(p.eje, 80), celda_(p.tema, 300),
-                  celda_(p.titulo, 300), Number(p.avance) || 0, estado, celda_(p.pendientes, 300), new Date()];
+                  celda_(p.titulo, 300), Number(p.avance) || 0, estado, celda_(p.pendientes, 300), new Date(), json];
     if (row > 0) sh.getRange(row, 1, 1, vals.length).setValues([vals]); else sh.appendRow(vals);
   } finally { lock.releaseLock(); }
 }
@@ -85,6 +93,19 @@ function logEnvio_(p) {
   const sh = sheet_(SHEET_ENVIOS, ENVIOS_COLS);
   sh.appendRow([new Date(), colega, celda_(p.nombre, 120), celda_(p.correo, 120), celda_(p.eje, 80), celda_(p.tema, 300),
                 celda_(p.titulo, 300), Number(p.avance) || 0, celda_(p.pendientes, 300), celda_(p.texto, 45000), celda_(p.json, 45000)]);
+}
+
+// Borrador guardado de un integrante, para recuperarlo en otra computadora. Solo devuelve el de ese id.
+function draft_(colega) {
+  colega = id_(colega);
+  if (!colega) return { ok: false, error: 'sin colega' };
+  const data = sheet_(SHEET_ESTADO, ESTADO_COLS).getDataRange().getValues();
+  for (let i = 1; i < data.length; i++) if (data[i][0] === colega) {
+    const json = String(data[i][10] || '').replace(/^'/, '');
+    return { ok: true, found: !!json, json: json, avance: data[i][6], estado: data[i][7],
+             actualizado: data[i][9] instanceof Date ? data[i][9].toISOString() : data[i][9] };
+  }
+  return { ok: true, found: false };
 }
 
 function board_() {
