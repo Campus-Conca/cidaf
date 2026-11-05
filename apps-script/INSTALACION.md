@@ -51,7 +51,8 @@ Guarda y sube el cambio. En uno o dos minutos GitHub Pages lo publica. Comprueba
 ## Cómo se usa después
 
 - **Ver las fichas enviadas:** hoja `Envíos`. Cada fila es un envío con el texto completo (columna `texto`) y el respaldo (`json`). Para abrir una ficha en el taller, copia el `json` a un archivo `.json` y cárgalo con «cargar respaldo».
-- **Ver el avance:** hoja `Estado` o `tablero.html`.
+- **Ver el avance:** hoja `Estado` o `tablero.html`. La columna `json` de `Estado` guarda el borrador completo más reciente de cada integrante: así el taller lo recupera cuando alguien cambia de computadora o celular. Si la Hoja se creó antes de esta columna, el servicio agrega el encabezado solo la primera vez que escribe.
+- **Recuperar el borrador de alguien a mano:** copia el `json` de su fila en `Estado` (o del último envío en `Envíos`) a un archivo `.json` y cárgalo en `fichas.html` con «cargar respaldo».
 - **Si editas `Code.gs`:** *Implementar → Gestionar implementaciones → ✏️ → Versión: Nueva versión → Implementar*. La URL no cambia.
 - **Sumar o corregir colegas:** `assets/taller-datos.js`, lista `COLEGAS`.
 - **Cambiar los consejos y ejemplos de cada paso:** `fichas.html`, lista `TIPS`.
@@ -60,6 +61,7 @@ Guarda y sube el cambio. En uno o dos minutos GitHub Pages lo publica. Comprueba
 ## Privacidad
 
 - El tablero público muestra nombre, tema, título, eje, avance y pendientes. **No** muestra correos ni el contenido de las fichas.
+- La recuperación de borradores (`?action=draft&colega=…`) devuelve el borrador completo de un integrante a quien conozca su identificador (los ids están en `taller-datos.js`). Es el mismo nivel de apertura que el envío: las fichas son borradores de un documento público, y el servicio no pide iniciar sesión.
 - El contenido completo vive solo en tu Hoja de Google.
 - Lo que escribe cada persona se guarda en la Hoja como texto, nunca como fórmula, para que nadie pueda usar el tablero para leer otras celdas.
 - El servicio es abierto: no pide iniciar sesión. Cualquiera que conozca la dirección puede registrar avance con el nombre de otra persona, así que el tablero es una referencia de trabajo, no un registro oficial.

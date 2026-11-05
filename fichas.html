@@ -37,6 +37,14 @@ button, .b { font: inherit; cursor: pointer; border: 0; border-radius: 999px; pa
 .b-link { background: none; padding: .2rem 0; color: var(--navy-2); text-decoration: underline; border-radius: 0; font-weight: 600; }
 
 .promise { margin-top: 1.6rem; background: var(--amber-soft); border-radius: var(--radius); padding: 1rem 1.2rem; font-size: .98rem; color: var(--navy); }
+.savebox { margin-top: 1.2rem; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1rem 1.2rem; font-size: .93rem; color: #4a4f57; }
+.savebox > b { display: block; color: var(--navy); font-family: "Fraunces", serif; font-size: 1.05rem; margin-bottom: .4rem; }
+.savebox ul { padding-left: 1.1rem; }
+.savebox li { margin: .25rem 0; }
+.savebox p { margin-top: .6rem; font-size: .88rem; color: var(--gray); }
+.draftbox { margin-top: 1rem; background: var(--green-soft); border-left: 4px solid var(--green); border-radius: 12px; padding: .8rem 1rem; font-size: .93rem; color: #245a3c; }
+.draftbox b { color: var(--navy); }
+.draftbox .row { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .6rem; }
 
 /* ---- Barra de progreso ---- */
 .steps { position: sticky; top: 54px; z-index: 30; background: rgba(247, 245, 240, .95); backdrop-filter: blur(6px); border-bottom: 1px solid #e4e0d6; }
@@ -260,7 +268,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
         <div class="stop">
           <span class="n">2</span><span class="time">≈ 45 minutos, en una o varias sentadas</span>
           <h3>Responde, paso a paso</h3>
-          <p>Diez pasos cortos. Lo que aún no sepas, márcalo como pendiente y sigue. Todo se guarda solo en este navegador.</p>
+          <p>Diez pasos cortos. Lo que aún no sepas, márcalo como pendiente y sigue. Se guarda solo, aquí y en la coordinación.</p>
           <div><button class="b b-pri" id="btnStart" onclick="go('taller')">Empezar mi ficha</button></div>
         </div>
         <div class="stop g">
@@ -272,7 +280,15 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
       </div>
       <div class="promise"><strong>La regla de oro:</strong> solo proponemos lo que estamos dispuestos a acompañar. Por eso el primer paso no es escribir, sino decir quién del campus sostendrá la recomendación durante el trienio.</div>
       <p style="margin-top:1rem;font-size:.95rem">📊 ¿Cómo vamos como equipo? Mira el <a href="tablero.html">tablero de avance de las fichas</a>.</p>
-      <p style="margin-top:.4rem;font-size:.9rem;color:var(--gray)">¿Trabajas en otra computadora? Descarga el respaldo (.json) al final y cárgalo aquí: <label class="b-link" style="cursor:pointer">cargar respaldo<input type="file" accept=".json" hidden onchange="importJSON(this)"></label></p>
+      <div class="savebox">
+        <b>Cómo se guarda tu ficha</b>
+        <ul>
+          <li><b>En este navegador</b>, en cuanto escribes. Al volver a abrir la página en esta misma computadora, ahí está.</li>
+          <li><b>En la coordinación</b>, un momento después de cada cambio, desde que eliges tu nombre en el paso 0. Si sigues en otra computadora o en el celular, elige tu nombre y te ofrecemos recuperar tu borrador.</li>
+          <li><b>Lo que no funciona:</b> una ventana de incógnito o borrar los datos del navegador se llevan la copia local; la de la coordinación sigue ahí.</li>
+        </ul>
+        <p>Por si acaso, al final también puedes descargar un respaldo (.json) y cargarlo aquí: <label class="b-link" style="cursor:pointer">cargar respaldo<input type="file" accept=".json" hidden onchange="importJSON(this)"></label></p>
+      </div>
     </div>
   </section>
 </main>
@@ -488,6 +504,7 @@ function blank() {
     refs: "",
     pend: {},
     enviada: "",
+    actualizado: "",
     step: 0
   };
 }
@@ -497,14 +514,21 @@ function load() {
   return blank();
 }
 function merge(o) { const b = blank(); const r = Object.assign(b, o); r.meta = Object.assign(blank().meta, o.meta || {}); return r; }
-let saveT;
+let saveT, syncT;
 function save() {
   clearTimeout(saveT);
+  F.actualizado = new Date().toISOString();
   saveT = setTimeout(() => {
     try { localStorage.setItem(KEY, JSON.stringify(F)); } catch (e) {}
-    const el = document.getElementById("savedLbl"); if (el) el.textContent = "✓ Guardado " + new Date().toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" });
+    const el = document.getElementById("savedLbl"); if (el) el.textContent = "✓ Guardado " + hora(F.actualizado);
   }, 350);
+  // La copia en la coordinación se manda unos segundos después del último cambio, no en cada tecla.
+  clearTimeout(syncT); syncT = setTimeout(() => ping(true), 8000);
 }
+const hora = iso => new Date(iso).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" });
+const fechaHora = iso => new Date(iso).toLocaleString("es-MX", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" });
+// Si cierran la pestaña antes de que pase ese tiempo, se manda de inmediato.
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && syncT) { clearTimeout(syncT); syncT = null; ping(true); } });
 
 /* =========================================================
    Utilidades
@@ -563,7 +587,8 @@ const STEPS = [
       { t: "¿Quién eres?", render() { const c = COLEGAS.find(x => x.id === F.meta.colega); return `
         <div class="q"><label class="t">Elige tu nombre</label><span class="h">Precargamos lo que ya platicamos en la reunión del 6 de agosto.</span>
           <div class="chips">${COLEGAS.filter(x => !x.ejemplo).map(x => `<button class="chip ${F.meta.colega === x.id ? "on" : ""}" onclick="pickColega('${x.id}')">${esc(x.nombre)}</button>`).join("")}<button class="chip ${F.meta.colega === "otro" ? "on" : ""}" onclick="pickColega('otro')">No estoy en la lista</button></div>
-          ${c ? `<div class="colega-card"><b>${esc(c.nombre)}</b>${c.linea ? `<span>Línea: ${esc(c.linea)}</span>` : ""}<span>Tema tentativo: ${esc(c.tema || "por definir, a partir de tu línea de investigación")}</span>${c.con ? `<span>Compartes el tema con ${esc(c.con)}: pónganse de acuerdo para que solo una persona llene la ficha.</span>` : ""}</div>` : ""}</div>
+          ${c ? `<div class="colega-card"><b>${esc(c.nombre)}</b>${c.linea ? `<span>Línea: ${esc(c.linea)}</span>` : ""}<span>Tema tentativo: ${esc(c.tema || "por definir, a partir de tu línea de investigación")}</span>${c.con ? `<span>Compartes el tema con ${esc(c.con)}: pónganse de acuerdo para que solo una persona llene la ficha.</span>` : ""}</div>` : ""}
+          ${draftBox()}</div>
         ${qText("meta.autor", "Tu nombre, como aparecerá en la ficha", "Con grado, si lo deseas.", "Dra. Nombre Apellido")}
         ${qText("meta.correo", "Tu correo", "Solo para que la coordinación pueda escribirte.", "nombre@uaq.mx")}`; } },
       { t: "Tu tema", render() { const c = COLEGAS.find(x => x.id === F.meta.colega); return `
@@ -743,7 +768,9 @@ function pickColega(id) {
     if (!has(F.meta.tema) && c.tema) F.meta.tema = c.tema;
     if (!has(F.meta.eje)) F.meta.eje = EJES[c.eje];
   }
-  save(); renderStep(); ping();
+  save(); renderStep();
+  if (id === "otro") return;      // sin nombre aún: se busca cuando lo escriba (ver goPart / goStep)
+  buscarBorrador();
 }
 
 /* ---- Sugerencias por línea de trabajo ---- */
@@ -784,7 +811,7 @@ function useInd(x) {
    ========================================================= */
 async function callAPI(payload) {
   if (!API) throw new Error("sin-servicio");
-  const r = await fetch(API, { method: "POST", body: JSON.stringify(payload) });
+  const r = await fetch(API, { method: "POST", body: JSON.stringify(payload), keepalive: true });
   const j = await r.json();
   if (!j.ok) throw new Error(j.error || "error");
   return j;
@@ -796,8 +823,45 @@ let lastPing = 0;
 function ping(force) {
   if (!API || !(F.meta.colega || has(F.meta.autor))) return;
   const now = Date.now(); if (!force && now - lastPing < 45000) return; lastPing = now;
+  clearTimeout(syncT); syncT = null;
   const pend = STEPS.filter(s => F.pend[s.key]).map(s => s.short);
-  callAPI({ action: "progress", ...who(), titulo: F.titulo, avance: progress(), pendientes: pend.join(", ") }).catch(() => {});
+  // Va el borrador completo: con él se recupera la ficha desde otra computadora.
+  callAPI({ action: "progress", ...who(), titulo: F.titulo, avance: progress(), pendientes: pend.join(", "), json: JSON.stringify(F) })
+    .then(() => { const el = document.getElementById("savedLbl"); if (el && F.actualizado) el.textContent = "✓ Guardado " + hora(F.actualizado) + " · copia en la coordinación"; })
+    .catch(() => {});
+}
+
+/* ---- Recuperar el borrador guardado en la coordinación (otra computadora, otro celular) ---- */
+let remoteDraft = null, draftLookedUp = "";
+// «Vacía» ignora lo que el paso 0 precarga al elegir el nombre (acompañamiento, tema).
+function localVacia() { return !has(F.titulo) && !has(F.resp.lider) && STEPS.every((s, i) => i === 0 || s.key === "resp" || status(i) === "none"); }
+async function buscarBorrador() {
+  if (!API) return;
+  const id = who().colega; if (!id || id === "anonimo" || id === draftLookedUp) return;
+  draftLookedUp = id;
+  try {
+    const r = await fetch(API + (API.includes("?") ? "&" : "?") + "action=draft&colega=" + encodeURIComponent(id));
+    const j = await r.json();
+    if (!j.ok || !j.found || !j.json) return;
+    const f = merge(JSON.parse(j.json));
+    const cuando = f.actualizado || j.actualizado || "";
+    if (cuando && cuando === F.ignorarBorrador) return;                 // ya dijo que no, para esta versión
+    if (!localVacia() && F.actualizado && cuando && cuando <= F.actualizado) return;   // la de aquí es igual o más nueva
+    if (localVacia()) { F = f; save(); toast("Recuperamos tu borrador del " + fechaHora(cuando)); renderStep(); return; }
+    remoteDraft = { f, cuando, avance: j.avance };
+    if (F.step !== 0) toast("Hay un borrador más nuevo en la coordinación: en el paso 0 puedes recuperarlo");
+    renderStep();
+  } catch (e) {}
+}
+function usarBorrador(si) {
+  if (si && remoteDraft) { F = remoteDraft.f; save(); toast("Borrador recuperado"); }
+  else if (remoteDraft) { F.ignorarBorrador = remoteDraft.cuando; save(); }
+  remoteDraft = null; renderStep();
+}
+function draftBox() {
+  if (!remoteDraft) return "";
+  return `<div class="draftbox">📥 <b>Hay un borrador tuyo más nuevo en la coordinación</b>, guardado el ${esc(fechaHora(remoteDraft.cuando))} (${esc(remoteDraft.avance)}% de avance), seguramente desde otra computadora o celular. ¿Lo traemos aquí? Reemplaza lo que hay en este navegador.
+    <div class="row"><button class="b b-pri b-sm" onclick="usarBorrador(true)">Sí, recuperarlo</button><button class="b b-ghost b-sm" onclick="usarBorrador(false)">No, seguir con el de aquí</button></div></div>`;
 }
 
 /* =========================================================
@@ -1023,7 +1087,7 @@ function renderStep() {
   window.scrollTo(0, y);
 }
 function setTab(t) { tab = t; renderStep(); }
-function goPart(k) { part = k; tab = "form"; renderStep(); window.scrollTo(0, 0); }
+function goPart(k) { if (F.step === 0 && part === 0) buscarBorrador(); part = k; tab = "form"; renderStep(); window.scrollTo(0, 0); }
 function refreshSide() {
   const s = STEPS[F.step], c = s.checks();
   const tc = document.getElementById("tabCount"); if (tc) tc.textContent = c.filter(x => x[0]).length + "/" + c.length;
@@ -1031,7 +1095,7 @@ function refreshSide() {
   const pv = document.getElementById("pv"); if (pv) { const txt = s.preview(); pv.textContent = has(txt) ? txt : "Aquí verás el texto armado conforme escribas."; }
   const st = s.stop ? s.stop() : ""; const sb = document.getElementById("stopBox"); if (sb) sb.innerHTML = st && !F.pend[s.key] ? `<div class="stopper">${st}</div>` : "";
 }
-function goStep(i, last) { F.step = i; tab = "form"; part = last && STEPS[i].parts ? STEPS[i].parts.length - 1 : 0; save(); go("taller"); window.scrollTo(0, 0); ping(); }
+function goStep(i, last) { if (F.step === 0) buscarBorrador(); F.step = i; tab = "form"; part = last && STEPS[i].parts ? STEPS[i].parts.length - 1 : 0; save(); go("taller"); window.scrollTo(0, 0); ping(); }
 
 /* =========================================================
    Ficha completa (vista, Word, texto)
@@ -1143,6 +1207,7 @@ function go(v) {
   if (started) document.getElementById("btnStart").textContent = "Continuar mi ficha";
   const h = location.hash.slice(1);
   go(["ejemplo", "taller", "final"].includes(h) ? h : "inicio");
+  if (F.meta.colega || has(F.meta.autor)) buscarBorrador();
 })();
 </script>
 </body>
