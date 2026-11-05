@@ -839,10 +839,12 @@ async function buscarBorrador() {
   if (!API) return;
   const id = who().colega; if (!id || id === "anonimo" || id === draftLookedUp) return;
   draftLookedUp = id;
+  const vacia = localVacia();
+  if (vacia) toast("Buscando si hay un borrador tuyo en la coordinación…");   // el servicio tarda dos o tres segundos
   try {
     const r = await fetch(API + (API.includes("?") ? "&" : "?") + "action=draft&colega=" + encodeURIComponent(id));
     const j = await r.json();
-    if (!j.ok || !j.found || !j.json) return;
+    if (!j.ok || !j.found || !j.json) { if (vacia && j.ok) toast("No hay borrador guardado con tu nombre: empiezas aquí"); return; }
     const f = merge(JSON.parse(j.json));
     const cuando = f.actualizado || j.actualizado || "";
     if (cuando && cuando === F.ignorarBorrador) return;                 // ya dijo que no, para esta versión
