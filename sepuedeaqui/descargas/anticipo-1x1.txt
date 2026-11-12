@@ -1,0 +1,8 @@
+¿Esto se puede aquí? · anticipo-1x1.png
+
+TEXTO ALTERNATIVO (para quien usa lector de pantalla; pégalo en la opción «texto alternativo» de Facebook o Instagram):
+Imagen de «¿Esto se puede aquí?». Dice: Antes del anticipo, pregunta. 1, ¿en qué zona está? 2, ¿con qué papeles se vende? 3, ¿tiene agua, drenaje y luz? Búscalo en el mapa.
+
+MENSAJE SUGERIDO para acompañarla (de textos-de-campana.txt):
+Ojo con los lotes baratos. Un contrato privado no cambia la zona: si el terreno está en campo o monte, no habrá licencia ni servicios en regla. Búscalo aquí antes de dar un anticipo:
+https://campus-conca.github.io/cidaf/sepuedeaqui/

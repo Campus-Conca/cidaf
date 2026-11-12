@@ -1,0 +1,8 @@
+¿Esto se puede aquí? · consulta-9x16.png
+
+TEXTO ALTERNATIVO (para quien usa lector de pantalla; pégalo en la opción «texto alternativo» de Facebook o Instagram):
+Imagen de «¿Esto se puede aquí?» con el mapa del municipio de Arroyo Seco y sus localidades principales en ámbar. Dice: Antes de construir o de comprar un terreno, consulta tu zona. Toma un minuto. Es gratis.
+
+MENSAJE SUGERIDO para acompañarla (de textos-de-campana.txt):
+¿Vas a construir o a comprar un terreno en Arroyo Seco? Antes, busca tu zona en este mapa. Te dice qué sí y qué no se puede. Toma un minuto y es gratis:
+https://campus-conca.github.io/cidaf/sepuedeaqui/

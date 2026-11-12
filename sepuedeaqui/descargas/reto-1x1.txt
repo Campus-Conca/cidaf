@@ -1,0 +1,8 @@
+¿Esto se puede aquí? · reto-1x1.png
+
+TEXTO ALTERNATIVO (para quien usa lector de pantalla; pégalo en la opción «texto alternativo» de Facebook o Instagram):
+Tarjeta de juego. Dice: ¿Se puede o no se puede? Don Chuy quiere partir su parcela del valle en veinte lotes. Opciones: sí o no. Responde los ocho casos.
+
+MENSAJE SUGERIDO para acompañarla (de textos-de-campana.txt):
+¿Se puede o no se puede? Ocho casos de Arroyo Seco. A ver cuántos atinas:
+https://campus-conca.github.io/cidaf/sepuedeaqui/reto.html

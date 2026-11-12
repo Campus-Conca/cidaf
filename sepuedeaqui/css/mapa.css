@@ -1,0 +1,152 @@
+/* Visor de zonificación: mapa a pantalla completa en celular, panel lateral en computadora */
+body.mapa-app{height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column;padding-bottom:0}
+body.mapa-app main{flex:1;min-height:0;position:relative;margin-bottom:calc(var(--tab-h) + 1px + env(safe-area-inset-bottom,0px))}
+@media(max-width:899px){.leaflet-control-zoom{display:none}}
+.visor{position:absolute;inset:0;display:flex;flex-direction:column}
+.visor-mapa{flex:1;min-height:0;position:relative}
+#mapa{position:absolute;inset:0;background:#E9E4D4;z-index:1;font-family:var(--texto)}
+.leaflet-container{font-family:var(--texto)}
+.leaflet-control-attribution{font-size:10px;background:rgba(255,253,248,.8)!important}
+.leaflet-bar a{color:var(--tinta)}
+
+.ctrl-sup{position:absolute;z-index:500;top:10px;left:10px;right:10px;display:flex;gap:8px;align-items:flex-start;pointer-events:none}
+.ctrl-sup>*{pointer-events:auto}
+.ir-a{flex:1;min-width:0;max-width:340px;position:relative}
+.ir-a select{width:100%;appearance:none;-webkit-appearance:none;background:var(--carta);border:1.5px solid var(--borde);border-radius:99px;padding:11px 40px 11px 42px;font:600 .95rem var(--texto);color:var(--tinta);box-shadow:var(--sombra);min-height:46px;text-overflow:ellipsis}
+.ir-a svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;stroke:var(--verde);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.ir-a::after{content:'';position:absolute;right:18px;top:50%;width:8px;height:8px;border-right:2.2px solid var(--tinta-2);border-bottom:2.2px solid var(--tinta-2);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.modo{display:flex;background:var(--carta);border:1.5px solid var(--borde);border-radius:99px;padding:3px;box-shadow:var(--sombra);margin-left:auto}
+.modo button{border:0;background:transparent;border-radius:99px;padding:8px 13px;font:600 .82rem var(--texto);color:var(--tinta-2);cursor:pointer;min-height:38px}
+.modo button[aria-pressed="true"]{background:var(--verde);color:#fff}
+.ctrl-lat{position:absolute;z-index:500;right:10px;top:68px;display:grid;gap:8px}
+.fab{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--borde);background:var(--carta);box-shadow:var(--sombra);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tinta)}
+.fab svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.fab.act{background:var(--verde);color:#fff;border-color:var(--verde)}
+.fab-txt{font:700 .62rem var(--texto);letter-spacing:.04em;text-transform:uppercase}
+
+/* Etiquetas de localidades */
+.lug{background:none;border:0}
+.lug span{position:absolute;left:0;top:0;transform:translate(-50%,-50%);white-space:nowrap;font:700 12px var(--texto);color:#fff;text-shadow:0 0 3px #073B2E,0 0 3px #073B2E,0 0 6px #073B2E;padding:2px 4px;cursor:pointer}
+.lug.izq span{transform:translate(-100%,-50%)}
+.lug.der span{transform:translate(0,-50%)}
+.lug.sec span{font-weight:600;font-size:11px;opacity:.95}
+.base-esquema .lug span{color:var(--verde-osc);text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 5px #fff}
+.yo{width:18px;height:18px;border-radius:50%;background:#1A73E8;border:3px solid #fff;box-shadow:0 0 0 6px rgba(26,115,232,.25)}
+
+/* Panel de ficha */
+.panel-f{background:var(--carta);border-top:1px solid var(--borde);border-radius:22px 22px 0 0;box-shadow:0 -10px 30px rgba(30,42,36,.16);z-index:600;display:flex;flex-direction:column;max-height:68%;position:absolute;left:0;right:0;bottom:0;transition:transform .22s ease}
+.panel-f .asa{flex:none;border:0;background:transparent;width:100%;padding:9px 0 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px}
+.panel-f .asa i{width:44px;height:5px;border-radius:99px;background:var(--borde);display:block}
+.panel-f .asa span{font:600 .84rem var(--texto);color:var(--tinta-2)}
+.panel-f .cuerpo{overflow-y:auto;padding:4px 18px 22px;-webkit-overflow-scrolling:touch;display:grid;gap:14px;align-content:start;grid-auto-rows:max-content;flex:1;min-height:0}
+.panel-f.min .cuerpo{display:none}
+.panel-f.min{max-height:none}
+@media(min-width:900px){
+  .visor{flex-direction:row}
+  .panel-f{position:relative;order:-1;width:420px;flex:none;max-height:none;height:100%;border-radius:0;border-top:0;border-right:1px solid var(--borde);box-shadow:none}
+  .panel-f .asa{display:none}
+  .panel-f.min .cuerpo{display:grid}
+  .panel-f .cuerpo{padding-top:22px}
+  body.mapa-app main{margin-bottom:0}
+}
+
+.f-cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.f-clave{font:700 .95rem var(--texto);letter-spacing:.03em;padding:5px 12px;border-radius:8px;border:1.5px solid rgba(0,0,0,.3);color:#1E2A24}
+.f-tit{font-size:1.5rem;line-height:1.1}
+.f-q{color:var(--tinta-2);font-size:.98rem}
+.f-reglas{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.f-reglas div{background:var(--papel);border-radius:12px;padding:10px 12px}
+.f-reglas b{font-family:var(--display);font-weight:600;font-size:1.3rem;color:var(--verde);display:block;line-height:1.05}
+.f-reglas span{font-size:.76rem;color:var(--tinta-2);line-height:1.3;display:block;margin-top:3px}
+.f-tram{background:var(--menta);border-radius:12px;padding:12px 14px;font-size:.93rem;color:#0B4435}
+.f-lugar{border:1px solid var(--borde);border-radius:14px;padding:12px 14px;display:grid;gap:8px}
+.f-lugar b{font-size:.98rem}
+.f-lugar small{color:var(--tinta-3);font-size:.8rem}
+.f-area{font-size:.88rem;color:var(--tinta-2);padding-left:12px;border-left:3px solid var(--ambar)}
+.f-area strong{color:var(--tinta);display:block}
+.f-vacio{display:grid;gap:14px}
+.f-vacio h2{font-size:1.45rem}
+.ley{display:grid;gap:6px}
+.ley button{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;text-align:left;border:1.5px solid var(--borde);background:var(--carta);border-radius:12px;padding:9px 12px;font:500 .92rem var(--texto);color:var(--tinta);cursor:pointer;min-height:46px}
+.ley button[aria-pressed="true"]{border-color:var(--verde);background:var(--menta)}
+.ley .sws{display:flex;gap:2px}
+.ley .sws i{width:12px;height:18px;border:1px solid rgba(0,0,0,.25);display:block}
+.ley .sws i:first-child{border-radius:4px 0 0 4px}.ley .sws i:last-child{border-radius:0 4px 4px 0}
+.ley .sws i:only-child{border-radius:4px;width:18px}
+.ley small{color:var(--tinta-3);font-size:.76rem}
+.ley-simple{display:grid;gap:8px}
+.ley-simple div{display:flex;gap:10px;align-items:center;font-size:.92rem}
+.ley-simple i{width:18px;height:18px;border-radius:4px;border:1px solid rgba(0,0,0,.25);flex:none}
+
+/* Ventana del valle: mapa dentro de la página */
+.visor-pag{position:relative;height:72vh;min-height:440px;max-height:760px;border-radius:22px;overflow:hidden;border:1px solid var(--borde);display:flex;flex-direction:column}
+.visor-pag .visor-mapa{flex:1}
+@media(min-width:900px){.visor-pag{flex-direction:row}}
+
+/* Veredicto de la ficha */
+.f-ver{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;border-radius:16px;padding:14px 16px}
+.f-ver svg{width:44px;height:44px;border-radius:50%;padding:9px;stroke:#fff;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.f-ver b{font-family:var(--display);font-weight:600;font-size:1.28rem;line-height:1.15}
+.f-si{background:#E8F6EE;color:#0A4A38}.f-si svg{background:#1F8A63}
+.f-cond{background:var(--ambar-claro);color:#5A3A0C}.f-cond svg{background:#C98522}
+.f-no{background:var(--teja-claro);color:#6E2413}.f-no svg{background:var(--teja)}
+.f-nom{font-size:.92rem;color:var(--tinta-2);font-weight:500}
+.f-regla{font-weight:600;color:var(--verde);font-size:.95rem}
+.f-plazo{background:#FFF1B8;color:#5A4700}
+.ley-claves{display:grid;gap:8px}
+.ley-claves div{display:flex;gap:10px;align-items:center;font-size:.88rem}
+.ley-claves .sws{display:flex;gap:2px}
+.ley-claves .sws i{width:11px;height:16px;border:1px solid rgba(0,0,0,.25);display:block}
+
+/* Ficha compacta: el «sí» y el «no» lado a lado, para que todo quepa sin deslizar en el celular */
+.f-sino{grid-template-columns:1fr 1fr;gap:8px}
+.f-sino .si,.f-sino .no{padding:9px 10px;border-radius:12px}
+.f-sino h3{margin:0 0 6px;font:700 .7rem var(--texto);letter-spacing:.08em;text-transform:uppercase}
+.f-sino .si h3{color:#0A5743}.f-sino .no h3{color:#8A2F1B}
+.f-sino ul{padding-left:1em;margin:0;font-size:.86rem;line-height:1.3;display:grid;gap:3px}
+.panel-f .cuerpo{gap:10px}
+.f-ver{grid-template-columns:38px 1fr;gap:10px;padding:10px 12px}
+.f-ver svg{width:38px;height:38px;padding:8px}
+.f-ver b{font-size:1.02rem;line-height:1.2}
+.f-tram{padding:9px 12px;font-size:.88rem;line-height:1.35}
+.f-sino ul{font-size:.84rem;line-height:1.27}
+details.acc.f-mas summary{padding-top:12px;padding-bottom:12px}
+@media(max-width:899px){.panel-f.con-ficha{max-height:80%}.panel-f .asa{padding:7px 0 8px;gap:4px}.panel-f .cuerpo{padding-bottom:12px}}
+.f-ver b{display:block}
+.f-crece{display:block;margin-top:5px;font:500 .84rem/1.3 var(--texto);color:#5A4700;background:#FFF1B8;border-radius:8px;padding:5px 8px}
+
+/* Sin señal: una línea */
+.sin-red{position:absolute;z-index:550;left:10px;top:64px;max-width:calc(100% - 80px);margin:0;background:var(--verde-osc);color:#fff;border-radius:99px;padding:6px 14px;font:600 .82rem var(--texto);box-shadow:var(--sombra)}
+
+/* Pegar una ubicación */
+.ctrl-sup{flex-wrap:wrap}
+.pegar{flex:1 1 100%;max-width:420px;margin-right:58px;background:var(--carta);border:1.5px solid var(--borde);border-radius:16px;padding:10px 12px;box-shadow:var(--sombra);display:grid;gap:6px}
+.pegar[hidden]{display:none}
+.pegar label{font-size:.8rem;color:var(--tinta-2);font-weight:600;line-height:1.3}
+.pegar div{display:flex;gap:6px}
+.pegar input{flex:1;min-width:0;border:1.5px solid var(--borde);border-radius:10px;padding:8px 10px;font:500 .95rem var(--texto);color:var(--tinta);background:#fff}
+.pegar-msg{margin:0;font-size:.82rem;color:#6E2413;line-height:1.35}
+.pegar-msg:empty{display:none}
+.yo.pegado{background:var(--ambar);box-shadow:0 0 0 6px rgba(232,168,90,.3)}
+@media(min-width:900px){.pegar{margin-right:0}}
+
+/* Lista sin mapa y enlaces discretos */
+button.enlace{background:none;border:0;padding:0;font:600 .88rem var(--texto);color:var(--verde);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.f-otros{font-size:.88rem;color:var(--tinta-3);line-height:1.6}
+.f-etq{font-size:.85rem;font-weight:600;color:var(--tinta-2)}
+.f-sel{width:100%;border:1.5px solid var(--borde);border-radius:12px;padding:10px 12px;font:600 .95rem var(--texto);color:var(--tinta);background:var(--carta)}
+.f-lista{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:8px}
+.f-lista li{border-radius:12px;padding:10px 12px;display:grid;gap:2px;font-size:.92rem;line-height:1.35}
+.f-lista li b{font-size:.98rem}
+.f-lista li small{font-size:.8rem;opacity:.8}
+#resLista h3{font-size:1.1rem}
+#resLista h3 small{font:500 .85rem var(--texto);color:var(--tinta-3)}
+
+/* Capa de referencia (solo en el esquema) */
+.ref-nom{background:none;border:0}
+.ref-nom span{position:absolute;left:0;top:0;transform:translate(-50%,-50%);white-space:nowrap;font:700 11px var(--texto);color:#5A4127;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 4px #fff}
+.ref-rio span,.ref-arroyo span{color:#1F5F8F;font-style:italic;font-weight:600}
+
+/* Salto al mapa en lista, visible solo con teclado */
+.salto{position:absolute;left:-9999px;top:10px;z-index:1200}
+.salto:focus{left:10px;background:var(--verde-osc);color:#fff;padding:10px 14px;border-radius:12px;font:600 .9rem var(--texto)}

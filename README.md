@@ -24,3 +24,10 @@ Sitio estático sin dependencias. Estilos en `assets/styles.css`; identidad: azu
 ## Taller de fichas
 
 `fichas.html` y `tablero.html` usan `assets/taller-datos.js` (colegas, ejes y sugerencias por línea de trabajo) y `assets/taller-config.js` (URL del servicio central). El servicio central es un Google Apps Script: código en `apps-script/Code.gs` e instalación en `apps-script/INSTALACION.md`.
+
+## ¿Esto se puede aquí? (`sepuedeaqui/`)
+
+Sitio para dar a conocer el Programa Municipal de Desarrollo Urbano de Arroyo Seco: https://campus-conca.github.io/cidaf/sepuedeaqui/
+
+- **No se mueve ni se renombra.** Su dirección va impresa en los códigos QR de carteles, lonas y volantes.
+- **No se edita aquí.** Se genera en el proyecto `arroyo-seco-difusion` y se reemplaza la carpeta completa con su `sitio/` (ver el `LEEME.md` de ese proyecto).

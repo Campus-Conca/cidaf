@@ -1,0 +1,8 @@
+¿Esto se puede aquí? · local-la-florida-4x5.png
+
+TEXTO ALTERNATIVO (para quien usa lector de pantalla; pégalo en la opción «texto alternativo» de Facebook o Instagram):
+Mapa de las zonas de La Florida, en Arroyo Seco, con caminos, ríos y localidades. Amarillo: sí se construye. Azul: servicios a la comunidad. Azul claro: agua, no se construye. Verde: campo y monte, no se urbaniza.
+
+MENSAJE SUGERIDO para acompañarla (de textos-de-campana.txt):
+Así quedaron las zonas de La Florida en el Programa de Desarrollo Urbano. Antes de construir o comprar, busca tu terreno en el mapa:
+https://campus-conca.github.io/cidaf/sepuedeaqui/mapa.html#la-florida

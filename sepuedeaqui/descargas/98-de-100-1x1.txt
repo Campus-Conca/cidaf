@@ -1,0 +1,8 @@
+¿Esto se puede aquí? · 98-de-100-1x1.png
+
+TEXTO ALTERNATIVO (para quien usa lector de pantalla; pégalo en la opción «texto alternativo» de Facebook o Instagram):
+Cuadrícula de cien cuadros: 98 verdes y 2 ámbar. Dice: 98 de cada 100 hectáreas son campo y monte. Lo ámbar es donde sí se construye. Ve de qué color es tu terreno.
+
+MENSAJE SUGERIDO para acompañarla (de textos-de-campana.txt):
+De cada 100 hectáreas de Arroyo Seco, 98 son campo y monte: ahí se siembra y se cuida, y no se urbaniza. ¿De qué color es tu terreno? Búscalo en el mapa:
+https://campus-conca.github.io/cidaf/sepuedeaqui/mapa.html

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El valle agrícola de Concá · ¿Esto se puede aquí?</title>
+<meta name="description" content="Mapa y reglas para el plan de Concá: parcelas, acequias y los bordes entre el pueblo y la tierra de riego.">
+<meta property="og:site_name" content="¿Esto se puede aquí?">
+<meta property="og:locale" content="es_MX">
+<meta property="og:type" content="website">
+<meta property="og:title" content="El valle agrícola de Concá · ¿Esto se puede aquí?">
+<meta property="og:description" content="Mapa y reglas para el plan de Concá: parcelas, acequias y los bordes entre el pueblo y la tierra de riego.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://campus-conca.github.io/cidaf/sepuedeaqui/conca.html">
+<meta property="og:url" content="https://campus-conca.github.io/cidaf/sepuedeaqui/conca.html">
+<meta property="og:image" content="https://campus-conca.github.io/cidaf/sepuedeaqui/img/compartir.png">
+<meta property="og:image:secure_url" content="https://campus-conca.github.io/cidaf/sepuedeaqui/img/compartir.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mapa del municipio de Arroyo Seco con la pregunta «¿Esto se puede aquí?»: consulta tu zona antes de construir o comprar.">
+<meta name="twitter:image" content="https://campus-conca.github.io/cidaf/sepuedeaqui/img/compartir.png">
+<meta name="theme-color" content="#073B2E">
+<link rel="icon" href="img/icono.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/site.css">
+<link rel="preconnect" href="https://server.arcgisonline.com"><link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/mapa.css">
+</head>
+<body class="">
+<header class="topbar"><div class="wrap">
+<a class="marca" href="index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#E8A85A"/><path d="M16 25s7-6.300 7-11.800A7 7 0 009 13.200C9 18.700 16 25 16 25z" fill="#073B2E"/><path d="M12.600 13.400l2.400 2.400 4.400-4.600" fill="none" stroke="#E8A85A" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"/></svg><span>¿Esto se puede aquí?<small>Desarrollo urbano de Arroyo Seco</small></span></a>
+<nav class="topnav" aria-label="Secciones"><a href="index.html">Inicio</a><a href="programa.html">El Programa</a><a href="mapa.html">Mapa</a><a href="guia.html">Guía</a><a href="kit.html">Materiales</a><a href="conca.html" aria-current="page">Valle de Concá</a><a href="reto.html">Reto</a></nav>
+</div></header>
+<main>
+<section class="hero hero-chico">
+  <svg class="contornos" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><polygon points="253,140 250,144 248,148 247,153 246,157 243,162 238,165 232,167 226,168 220,169 214,169 207,168 202,165 198,161 197,155 196,151 195,147 191,144 187,140 184,135 184,129 187,125 192,121 197,118 202,116 208,113 214,112 220,113 225,115 230,118 235,119 240,121 247,122 252,125 256,130 256,135 253,140" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="287,140 281,149 276,156 274,165 271,175 266,184 256,190 245,194 232,196 220,197 207,198 194,196 184,191 177,181 174,171 173,162 170,155 163,148 154,140 148,130 147,119 153,109 163,102 174,96 185,91 196,87 208,85 220,86 231,90 240,95 250,99 261,101 273,104 285,110 292,119 292,130 287,140" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="320,140 311,153 305,165 301,178 297,192 288,205 274,215 257,221 238,224 220,226 201,227 182,224 165,216 155,202 151,186 149,173 145,162 134,152 121,140 111,125 111,108 120,94 135,83 151,74 167,67 184,60 202,57 220,59 236,65 251,73 265,78 281,82 300,86 317,95 327,109 327,125 320,140" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="353,140 341,157 333,173 328,190 323,209 311,227 292,240 269,248 245,252 220,255 194,256 169,252 147,241 133,223 128,202 126,184 119,169 105,156 88,140 75,120 75,98 87,78 106,64 128,52 150,42 172,34 196,30 220,32 242,40 261,50 279,58 301,62 326,69 350,80 363,98 363,120 353,140" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="387,140 372,161 361,181 356,203 349,226 334,249 310,265 281,275 251,280 220,283 188,285 156,280 129,266 112,243 105,217 102,194 94,177 77,160 55,140 39,114 38,87 53,63 78,45 105,30 132,18 160,7 190,2 220,5 247,15 271,28 294,37 322,43 353,51 382,65 399,88 399,115 387,140" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="420,140 402,166 389,189 383,215 374,244 357,271 329,290 294,302 257,308 220,312 182,314 143,309 111,292 90,264 82,233 79,205 69,184 48,164 22,140 3,109 2,76 20,48 50,26 82,9 114,-6 148,-19 183,-26 220,-22 253,-10 281,5 309,16 342,24 380,33 414,50 435,77 435,110 420,140" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="453,140 432,170 418,198 410,228 400,261 380,292 347,315 306,329 263,336 220,341 175,343 131,337 92,317 68,284 59,248 55,216 44,191 19,168 -12,140 -34,104 -35,66 -13,32 21,6 59,-13 97,-31 136,-46 177,-53 220,-49 258,-35 292,-17 324,-4 362,4 406,15 447,35 470,67 471,105 453,140" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="487,140 462,174 446,206 437,240 426,278 403,314 365,341 318,356 269,364 220,369 169,372 118,365 74,342 47,305 36,263 32,227 19,199 -9,172 -45,140 -70,99 -71,55 -47,17 -7,-13 36,-35 79,-55 123,-72 171,-81 220,-76 264,-60 302,-40 339,-25 383,-15 433,-3 479,20 506,57 507,100 487,140" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="520,140 493,178 474,214 464,253 452,296 425,336 383,366 330,383 275,392 220,398 163,401 105,393 56,367 25,326 13,279 8,238 -6,206 -38,176 -78,140 -106,94 -107,45 -80,1 -36,-32 13,-57 62,-80 111,-99 165,-108 220,-103 269,-85 312,-62 354,-45 403,-34 460,-21 512,5 542,46 542,95 520,140" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="1014,420 1011,424 1009,428 1008,433 1006,437 1003,442 998,444 992,446 986,446 980,447 974,447 968,447 963,444 959,440 957,435 955,431 952,428 948,425 943,420 941,414 942,409 946,405 952,402 958,399 964,397 969,396 974,395 980,395 985,397 990,398 995,399 1001,400 1008,401 1014,404 1017,409 1017,415 1014,420" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="1048,420 1042,429 1038,437 1035,446 1032,455 1025,463 1015,469 1003,471 992,473 980,474 968,475 956,473 945,468 938,460 934,451 930,443 924,436 915,429 906,420 901,409 904,398 913,389 925,383 937,379 947,375 958,371 969,370 980,370 990,373 1000,376 1010,378 1023,379 1037,382 1049,388 1055,398 1054,410 1048,420" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="1082,420 1073,433 1067,445 1063,458 1058,472 1048,485 1033,493 1015,497 997,499 980,501 962,502 944,500 928,492 917,480 911,466 905,454 896,444 883,434 869,420 862,403 866,387 879,374 897,365 915,358 931,352 947,347 963,344 980,345 996,350 1010,354 1026,357 1044,359 1065,363 1083,372 1092,387 1091,404 1082,420" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="1117,420 1104,438 1096,454 1091,471 1084,490 1070,506 1050,517 1027,523 1003,526 980,528 956,530 931,527 910,517 896,500 888,482 881,466 868,452 850,438 832,420 823,398 828,376 846,358 870,346 894,338 915,330 936,323 958,319 980,321 1001,326 1020,332 1041,336 1066,338 1094,344 1117,357 1130,376 1128,399 1117,420" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="1151,420 1135,442 1125,462 1119,484 1110,507 1093,528 1068,542 1039,549 1009,552 980,555 950,557 919,553 893,541 875,520 865,497 856,477 841,461 818,443 795,420 784,392 790,365 812,343 842,328 872,317 899,307 925,299 952,294 980,296 1006,303 1030,310 1056,315 1087,318 1122,325 1152,341 1167,366 1165,394 1151,420" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="1185,420 1166,446 1154,471 1146,497 1136,525 1116,549 1085,566 1050,574 1015,579 980,582 944,585 907,580 875,565 854,540 842,513 831,489 813,469 786,447 758,420 744,387 752,354 779,327 815,309 850,296 882,285 914,274 947,269 980,271 1011,279 1040,288 1071,294 1109,297 1150,306 1186,325 1205,355 1202,389 1185,420" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="1219,420 1197,451 1183,479 1174,510 1162,542 1138,571 1103,590 1062,600 1021,605 980,609 938,612 895,607 858,589 833,560 819,528 806,500 785,477 753,452 721,420 705,381 714,343 745,312 787,291 829,276 866,262 903,250 941,244 980,246 1016,256 1050,266 1086,272 1130,277 1179,286 1221,309 1242,344 1239,383 1219,420" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="1253,420 1228,455 1212,487 1202,522 1188,560 1161,592 1120,615 1074,626 1027,631 980,636 932,639 883,633 841,613 812,580 795,544 781,512 757,485 721,457 684,420 666,376 676,331 712,296 760,272 807,255 850,240 892,226 936,218 980,221 1021,232 1060,244 1102,251 1152,256 1207,267 1255,293 1279,333 1276,378 1253,420" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="1287,420 1259,459 1241,496 1230,535 1214,577 1183,614 1138,639 1085,651 1032,658 980,663 926,667 871,660 823,637 791,600 772,559 756,523 729,493 688,461 647,420 626,370 638,320 678,281 732,254 785,235 834,217 881,202 930,193 980,196 1027,209 1070,222 1117,230 1173,236 1236,248 1289,277 1317,322 1313,373 1287,420" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="1322,420 1290,464 1270,504 1257,548 1240,595 1206,636 1156,663 1097,677 1038,684 980,690 920,694 859,687 806,661 770,620 749,575 731,535 701,501 656,466 610,420 587,365 600,309 645,265 705,235 764,214 817,195 870,177 924,168 980,171 1032,185 1080,200 1132,209 1195,215 1264,229 1324,261 1354,311 1350,368 1322,420" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="1356,420 1321,468 1299,513 1285,561 1266,612 1229,657 1173,688 1109,703 1044,711 980,717 914,722 846,714 788,686 749,640 726,590 707,546 673,509 623,470 573,420 548,359 562,298 611,250 677,217 742,193 801,172 859,153 919,143 980,147 1037,162 1090,178 1147,188 1216,195 1293,210 1358,245 1392,300 1387,363 1356,420" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="730,60 731,64 731,69 731,74 728,79 723,82 718,85 712,86 706,88 700,89 694,88 689,85 685,81 682,77 679,74 675,72 669,69 663,65 660,60 661,54 664,50 669,46 674,42 678,39 683,36 689,35 694,35 700,36 705,37 711,37 717,36 724,37 729,40 732,45 732,51 731,56 730,60" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="760,60 761,69 763,78 762,89 756,98 747,105 736,109 724,113 712,116 700,118 688,116 677,110 670,102 664,94 658,88 649,83 638,78 626,70 621,60 622,49 629,39 638,31 647,25 656,18 666,13 677,10 689,10 700,12 710,13 721,13 734,13 748,14 759,21 765,30 765,41 762,51 760,60" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="791,60 792,73 794,87 793,103 784,117 770,127 753,134 736,139 718,144 700,146 681,144 666,136 654,123 646,111 638,102 624,95 606,87 590,76 581,60 583,43 593,29 607,17 621,7 634,-3 649,-11 666,-15 683,-15 700,-12 715,-10 732,-10 751,-11 772,-8 788,1 797,15 797,32 793,47 791,60" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="821,60 822,77 826,97 824,117 812,136 794,149 771,158 748,166 725,172 700,175 675,172 654,161 639,144 629,128 617,116 599,107 575,96 553,81 541,60 544,38 558,19 576,3 595,-11 612,-23 632,-34 655,-40 678,-40 700,-36 721,-34 743,-34 768,-35 795,-31 818,-19 829,0 829,22 824,43 821,60" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="851,60 853,82 857,106 854,131 841,154 817,172 789,183 760,192 731,200 700,204 669,200 643,186 624,165 611,145 596,130 573,118 544,105 516,86 501,60 505,32 522,8 545,-11 568,-28 591,-44 615,-58 643,-65 672,-65 700,-60 726,-57 753,-57 785,-58 819,-54 847,-39 861,-15 862,13 855,38 851,60" fill="none" stroke="#E1F5EE" stroke-width="1.2"/><polygon points="881,60 884,86 888,115 885,146 869,173 840,194 807,208 772,218 737,228 700,233 663,228 631,211 609,187 593,162 575,144 548,130 513,115 479,91 462,60 466,27 486,-2 514,-26 542,-46 569,-65 598,-81 632,-90 667,-90 700,-84 731,-80 764,-81 803,-82 843,-77 877,-58 894,-29 894,4 886,34 881,60" fill="none" stroke="#E1F5EE" stroke-width="1.2"/></svg>
+  <div class="wrap">
+    <span class="eyebrow" style="color:var(--ambar);margin:0">Ventana del valle · Concá</span>
+    <h1>El plan, <em style="font-style:italic;color:var(--ambar);font-weight:500">parcela por parcela</em></h1>
+    <span class="hilo"></span>
+    <p class="lead">Regadíos, acequias, guamúchiles y naranja. El Programa reconoce el valle como tierra que debe seguir produciendo.</p>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:26px">
+  <div class="wrap">
+    <div class="visor-pag">
+      <div class="visor-mapa">
+        <div id="mapa" role="application" aria-label="Mapa de zonificación del valle de Concá"></div>
+        <div class="ctrl-sup">
+          <label class="ir-a"><span class="oculto">Ir a una localidad</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" ><path d="M12 21s7-6.2 7-11.5A7 7 0 005 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><select id="irA"></select></label>
+        </div>
+        <div class="ctrl-lat">
+          <button class="fab" id="btnGps" title="¿Dónde estoy?" aria-label="¿Dónde estoy? Ver la zona de mi ubicación"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></button>
+          <button class="fab" id="btnBase" title="Cambiar fondo" aria-label="Cambiar el fondo del mapa: foto, zonas o calles"><span class="fab-txt" id="btnBaseTxt">Foto</span></button>
+          <button class="fab" id="btnLey" title="Leyenda" aria-label="Ver la leyenda"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" ><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></button>
+        </div>
+      </div>
+      <aside class="panel-f" id="panel" aria-label="Ficha de la zona y leyenda">
+        <button class="asa" id="asa" aria-expanded="false"><i></i><span id="asaTxt">Leyenda</span><span class="oculto"> · abrir o cerrar el panel</span></button>
+        <div class="cuerpo" id="ficha"></div>
+      </aside>
+    </div>
+    <p class="fuente" style="margin-top:10px">¿Otra comunidad? El <a href="mapa.html">mapa municipal</a> cubre todo Arroyo Seco.</p>
+  </div>
+</section>
+
+<section class="sec cerrada">
+  <div class="wrap">
+    <div class="sec-cab">
+      <span class="eyebrow">Lo que el Programa dice del valle</span>
+      <h2>Tres decisiones</h2>
+    </div>
+    <div class="tres">
+      <div class="t t-verde"><h3>La parcela sigue siendo parcela</h3><p>El valle y la ribera del río Santa María son área de conservación. Se siembra, no se lotifica.</p></div>
+      <div class="t t-ambar"><h3>El borde se cuida</h3><p>Donde el pueblo toca la parcela, el borde puede volverse espacio de recreación sin perder la producción ni los árboles.</p></div>
+      <div class="t t-agua"><h3>La acequia madre se regenera</h3><p>Su ribera está entre las intervenciones estratégicas del Programa.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-menta">
+  <div class="wrap">
+    <div class="mas-cab">
+      <span class="eyebrow">Si quieres más detalle</span>
+      <h2>Abre solo lo que necesites</h2>
+    </div>
+    <details class="acc"><summary>Construir cerca del río, un arroyo o un bordo</summary><div class="resp">
+      <p>La licencia pide primero un estudio hidrológico validado por la CEI, la CEA o la CONAGUA.</p>
+      <p><strong>30 m</strong> libres a cada lado de los cauces principales. <strong>25 m</strong> en afluentes y cauces que cruzan el pueblo. <strong>30 m</strong> alrededor de bordos.</p>
+      <p class="fuente">Norma 8 de la Memoria Técnica del Programa. La franja exacta la fija el estudio.</p>
+    </div></details>
+    <details class="acc"><summary>Construir cerca de la misión</summary><div class="resp">
+      <p>Dentro del Polígono de Protección de Concá las obras necesitan autorización del INAH. Sin pronunciamiento, el tope es un nivel o 3 metros.</p>
+    </div></details>
+    <details class="acc"><summary>Las Trancas, El Salitrillo, La Huastequita y Crucero del Sabinito</summary><div class="resp">
+      <p>Son áreas de mejoramiento urbano: tienen prioridad para calles, redes, vivienda y equipamiento. Concá es el centro de servicios de la delegación.</p>
+      <p>Las manchas urbanas sueltas sobre la carretera 69 no pueden extenderse.</p>
+    </div></details>
+    <div class="grid g2" style="margin-top:22px">
+      <a class="card" data-href="urlComic" href="#" target="_blank" rel="noopener"><h3>Mientras el campo viva</h3><p>El cómic del valle, en diez páginas.</p><span class="ir">Leerlo →</span></a>
+      <a class="card" data-href="urlEcotonos" href="#" target="_blank" rel="noopener"><h3>Ecotonos del valle</h3><p>Las propuestas para los bordes, hechas en talleres con la comunidad.</p><span class="ir">Ver el proyecto →</span></a>
+    </div>
+    <p style="font-family:var(--display);font-style:italic;font-size:1.8rem;line-height:1.15;margin-top:34px;color:var(--verde-osc)">El valle es de quien lo cuida.</p>
+  </div>
+</section>
+
+</main>
+<footer class="pie-sitio"><div class="wrap">
+<span class="hilo"></span>
+<p class="lema">Arroyo Seco es de quien lo cuida.</p>
+<p style="max-width:44em">Este sitio orienta; el dictamen de uso de suelo lo emite el Municipio. Fuente: Programa Municipal de Desarrollo Urbano de Arroyo Seco, Periódico Oficial «La Sombra de Arteaga», 18 de febrero de 2026. Mapa con corte al 1 de diciembre de 2025.</p>
+<p style="margin-top:14px;font-size:.8rem;opacity:.8">Municipio de Arroyo Seco · CONANP · PROFEPA · SEDESU · Universidad Autónoma de Querétaro, Campus Concá</p>
+</div></footer>
+<div class="toast" id="toast" role="status"></div>
+<script defer src="js/site.js"></script><nav class="tabbar" aria-label="Secciones"><a href="index.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" ><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Inicio</a><a href="programa.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" ><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2V5z"/><path d="M4 19a2 2 0 012-2h13"/></svg>El Programa</a><a class="principal" href="mapa.html"><span class="burb"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" ><path d="M9 4L3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4z"/><path d="M9 4v13M15 6.5v13"/></svg></span>Mapa</a><a href="guia.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" ><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Guía</a><a href="kit.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" ><path d="M3 8l9-5 9 5v8l-9 5-9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>Materiales</a></nav><script defer src="js/leaflet.js"></script><script defer src="js/pmdu-data.js"></script><script defer src="data/lugares.js"></script><script>window.MAPA_CFG={pagina:'conca.html',vista:[[21.404,-99.656],[21.467,-99.592]],limites:[[21.385,-99.69],[21.485,-99.565]],minZoom:12,soloValle:true,todoTxt:'Todo el valle',eyebrow:'Ventana del valle',titulo:'Toca tu parcela o tu solar',intro:'Lo verde es campo y monte: ahí no se urbaniza. Los demás colores son el pueblo.'};</script><script defer src="js/ubicacion.js"></script><script defer src="js/mapa.js"></script>
+</body>
+</html>
