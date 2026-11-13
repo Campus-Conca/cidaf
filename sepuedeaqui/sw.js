@@ -7,12 +7,12 @@
    Puede vivir en una carpeta de un sitio más grande (la página del CIDAF): solo atiende lo que está en su carpeta y
    solo toca sus propias cachés, que llevan el nombre de esa carpeta. */
 'use strict';
-var VERSION = '2026-11-13';
+var VERSION = '2026-11-13b';
 var PREFIJO = 'esto-se-puede-aqui ' + self.registration.scope + ' ';
 var SITIO = PREFIJO + 'sitio-' + VERSION, TESELAS = PREFIJO + 'teselas-1', MAX_TESELAS = 600;
 var BASICOS = ['index.html', 'mapa.html', 'conca.html', 'programa.html', 'guia.html', 'reto.html', 'kit.html',
   'css/site.css', 'css/mapa.css', 'css/leaflet.css', 'js/site.js', 'js/leaflet.js', 'js/pmdu-data.js', 'js/mapa.js',
-  'js/ubicacion.js', 'js/guia.js', 'js/reto.js', 'js/programa.js', 'data/zonas.js', 'data/lugares.js', 'data/referencia.js',
+  'js/ubicacion.js', 'js/guia.js', 'js/reto.js', 'js/programa.js', 'js/kit.js', 'data/zonas.js', 'data/lugares.js', 'data/referencia.js',
   'fonts/fraunces.woff2', 'fonts/fraunces-italic.woff2', 'fonts/instrument-sans.woff2', 'img/icono.svg'];
 
 self.addEventListener('install', function (e) {
