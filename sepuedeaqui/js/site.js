@@ -44,6 +44,27 @@
       cont.querySelectorAll('.panel').forEach(function(p){p.hidden=p.id!==t.getAttribute('data-tab')});
     }
   });
+  // Filtros [data-filtros="#zona"]: cada botón [data-filtro] deja ver solo lo que lleva ese tema en data-temas.
+  // Sin JavaScript se ve todo. kit.html#conca abre ya filtrado.
+  var barra=document.querySelector('[data-filtros]');
+  if(barra){
+    var zona=document.querySelector(barra.getAttribute('data-filtros')),cuenta=barra.querySelector('[data-cuenta]');
+    var filtra=function(tema,guarda){
+      var n=0;
+      zona.querySelectorAll('[data-temas]').forEach(function(p){
+        var si=tema==='todo'||(' '+p.getAttribute('data-temas')+' ').indexOf(' '+tema+' ')>=0;
+        p.hidden=!si;if(si)n++;
+      });
+      zona.querySelectorAll('[data-grupo]').forEach(function(g){g.hidden=!g.querySelector('[data-temas]:not([hidden])')});
+      barra.querySelectorAll('[data-filtro]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-filtro')===tema?'true':'false')});
+      if(cuenta)cuenta.textContent=n===1?'1 material':n+' materiales';
+      if(guarda)try{history.replaceState(null,'',tema==='todo'?location.pathname+location.search:'#'+tema)}catch(e){}
+    };
+    barra.hidden=false;
+    barra.addEventListener('click',function(ev){var b=ev.target.closest('[data-filtro]');if(b)filtra(b.getAttribute('data-filtro'),true)});
+    var pedido=location.hash.slice(1);
+    filtra(barra.querySelector('[data-filtro="'+pedido+'"]')?pedido:'todo',false);
+  }
   // Datos de contacto desde la configuración
   var c=window.PMDU_CFG;
   if(c){

@@ -1,0 +1,8 @@
+¿Esto se puede aquí? · hay-lugar-1x1.png
+
+TEXTO ALTERNATIVO (para quien usa lector de pantalla; pégalo en la opción «texto alternativo» de Facebook o Instagram):
+Dos barras a escala: una corta, de 22.5 hectáreas, lo que falta hasta 2050, y una larga, de 149.59 hectáreas, lo ya reservado para crecer. Dice: Hay lugar para crecer sin lotificar el campo. Búscalo en el mapa.
+
+MENSAJE SUGERIDO para acompañarla (de textos-de-campana.txt):
+Para crecer hasta 2050, Arroyo Seco necesita 22.5 hectáreas más, y el Programa ya reservó 149.59 para eso. Hay lugar para crecer sin lotificar el campo. Mira dónde, en el mapa:
+https://campus-conca.github.io/cidaf/sepuedeaqui/mapa.html

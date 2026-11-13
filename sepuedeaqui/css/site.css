@@ -268,6 +268,9 @@ details.acc .resp{padding:0 18px 18px;color:var(--tinta-2);font-size:.97rem;disp
 .pieza span{font-size:.78rem;color:var(--tinta-3)}
 .pieza a{font-size:.84rem;font-weight:600}
 .pieza .bajar{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0}
+.pieza[hidden],[data-grupo][hidden],.filtros[hidden]{display:none}
+.filtros{display:grid;gap:10px}
+.filtros .fuente{margin:0}
 .copia{background:var(--carta);border:1px solid var(--borde);border-radius:14px;padding:16px;display:grid;gap:10px}
 .copia pre{margin:0;white-space:pre-wrap;font:400 .97rem/1.5 var(--texto);color:var(--tinta)}
 .copia .cab{display:flex;justify-content:space-between;align-items:center;gap:10px}
