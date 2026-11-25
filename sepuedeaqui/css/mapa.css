@@ -150,3 +150,39 @@ button.enlace{background:none;border:0;padding:0;font:600 .88rem var(--texto);co
 /* Salto al mapa en lista, visible solo con teclado */
 .salto{position:absolute;left:-9999px;top:10px;z-index:1200}
 .salto:focus{left:10px;background:var(--verde-osc);color:#fff;padding:10px 14px;border-radius:12px;font:600 .9rem var(--texto)}
+
+/* --- Giros: buscador y listas de la Tabla de compatibilidad --- */
+.giros{border:1.5px solid var(--borde);border-radius:16px;padding:14px;display:grid;gap:10px;background:var(--carta)}
+.giros h3{font:600 1.12rem/1.2 var(--display);margin:0;color:var(--tinta)}
+.g-in{width:100%;border:1.5px solid var(--borde);border-radius:12px;padding:11px 12px;font:500 1rem var(--texto);color:var(--tinta);background:#fff;-webkit-appearance:none;appearance:none}
+.g-in:focus{outline:3px solid var(--menta-2);border-color:var(--verde)}
+.g-ej{display:flex;flex-wrap:wrap;gap:6px}
+.g-ej button{border:1px solid var(--borde);background:var(--papel);border-radius:99px;padding:6px 12px;font:500 .84rem var(--texto);color:var(--tinta-2);cursor:pointer;min-height:34px}
+.g-ej button:hover{border-color:var(--verde);color:var(--verde)}
+#gRes:empty{display:none}
+.g-lista{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.g-it{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;border-radius:12px;padding:10px 12px;background:var(--papel);font-size:.9rem;line-height:1.35}
+.g-it:not(.g-si):not(.g-no):not(.g-na){grid-template-columns:1fr}
+.g-it svg{width:28px;height:28px;border-radius:50%;padding:6px;stroke:#fff;fill:none;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.g-it div{display:grid;gap:2px;min-width:0}
+.g-it b{font:700 .74rem var(--texto);letter-spacing:.07em;text-transform:uppercase}
+.g-it .g-t{color:var(--tinta);font-weight:500}
+.g-it small{font-size:.78rem;color:var(--tinta-3)}
+.g-it .g-donde{color:var(--tinta-2)}
+.g-it .g-ver{justify-self:start;margin-top:4px;font-size:.84rem}
+.g-si{background:#E8F6EE}.g-si svg{background:#1F8A63}.g-si b{color:#0A5743}
+.g-no{background:var(--teja-claro)}.g-no svg{background:var(--teja)}.g-no b{color:#8A2F1B}
+.g-na{background:var(--ambar-claro)}.g-na svg{background:#C98522}.g-na b{color:#6B430C}
+.g-nada,.g-nota{background:var(--ambar-claro);color:#5A3A0C;border-radius:12px;padding:10px 12px;font-size:.88rem;line-height:1.4;margin:0}
+.g-mas{font-size:.82rem;color:var(--tinta-3);margin:6px 0 0}
+.g-acc summary{padding:12px 44px 12px 14px;font-size:.92rem}
+.g-acc summary small{font-weight:500;color:var(--tinta-3)}
+.g-acc .resp{padding:0 12px 12px;gap:6px}
+.g-uso{border-top:1px solid var(--borde)}
+.g-uso summary{cursor:pointer;padding:10px 2px;font:600 .9rem var(--texto);color:var(--tinta);list-style:none;display:flex;justify-content:space-between;gap:10px}
+.g-uso summary::-webkit-details-marker{display:none}
+.g-uso summary small{background:var(--papel);border-radius:99px;padding:1px 9px;font-weight:600;color:var(--tinta-2)}
+.g-uso[open] summary{color:var(--verde)}
+.g-uso h4{margin:8px 0 4px;font:700 .7rem var(--texto);letter-spacing:.08em;text-transform:uppercase;color:var(--ambar-osc)}
+.g-uso ul{margin:0 0 6px;padding-left:1.1em;font-size:.86rem;line-height:1.35;display:grid;gap:3px;color:var(--tinta-2)}
+.g-filtro{background:var(--menta);color:#0B4435;border-radius:12px;padding:9px 12px;font-size:.88rem;line-height:1.35;margin:0}
