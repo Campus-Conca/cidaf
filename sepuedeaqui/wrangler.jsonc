@@ -1,0 +1,10 @@
+{
+  // Sitio estático: Cloudflare sirve esta carpeta tal cual, sin build.
+  // El Worker «sepuedeaqui» se despliega desde aquí en cada push a main.
+  "name": "sepuedeaqui",
+  "compatibility_date": "2026-11-25",
+  "assets": {
+    "directory": "./",
+    "not_found_handling": "single-page-application"
+  }
+}
