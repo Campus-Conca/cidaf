@@ -7,7 +7,7 @@
    Puede vivir en una carpeta de un sitio más grande (la página del CIDAF): solo atiende lo que está en su carpeta y
    solo toca sus propias cachés, que llevan el nombre de esa carpeta. */
 'use strict';
-var VERSION = '2026-11-25b';
+var VERSION = '2026-11-25c';
 var PREFIJO = 'esto-se-puede-aqui ' + self.registration.scope + ' ';
 var SITIO = PREFIJO + 'sitio-' + VERSION, TESELAS = PREFIJO + 'teselas-1', MAX_TESELAS = 600;
 var BASICOS = ['index.html', 'mapa.html', 'conca.html', 'programa.html', 'guia.html', 'reto.html', 'kit.html',

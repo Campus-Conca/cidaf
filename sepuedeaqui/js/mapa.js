@@ -430,6 +430,7 @@
     var h='<h2 class="oculto" id="fichaTit" tabindex="-1">'+esc(nombreCorto(fam))+'</h2>';
     var crece=p.p==='Z'?'<small class="f-crece">Zona de crecimiento: se aprovecha cuando tenga agua, drenaje, luz y calle.</small>':'';
     h+='<div class="f-ver f-'+F.vs+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+ICO_V[F.vs]+'</svg><div><b>'+esc(F.v)+'</b>'+crece+'</div></div>';
+    h+='<button class="btn btn-verde btn-chico f-abre" id="btnAbre">Ver qué sí y qué no se puede</button>';
     h+='<div class="sino f-sino"><div class="si"><h3>Sí se puede</h3>'+lista(F.si)+'</div><div class="no"><h3>No se puede</h3>'+lista(F.no)+'</div></div>';
     h+='<p class="f-tram">'+esc(F.tram)+'</p>';
     h+=contacto();
@@ -464,6 +465,9 @@
     gActiva(fam);
     cuerpo.scrollTop=0;
     abre(true);
+    // En celular la ficha entra en resumen (solo el veredicto) para que el mapa siga a la vista; se abre completa con un toque.
+    panel.classList.toggle('peek',CEL());
+    $('btnAbre').onclick=function(){panel.classList.remove('peek');cuerpo.scrollTop=0;var t=$('fichaTit');if(t)t.focus({preventScroll:true})};
     asaTxt.textContent=nombreCorto(fam);
     anunciar(nombreCorto(fam)+'. '+(PMDU_FAM[fam]||{}).v);
     if(desdeTeclado){var t=$('fichaTit');if(t)t.focus({preventScroll:true})}
@@ -477,12 +481,26 @@
     var b=$('btnComp');
     if(b)b.onclick=function(){compartir('¿Esto se puede aquí?','Consulta qué se puede hacer en tu terreno en Arroyo Seco:',urlSitio(CFG.pagina||'mapa.html'))};
   }
+  function CEL(){return window.matchMedia('(max-width:899px)').matches}
   function abre(si){panel.classList.toggle('min',!si);$('asa').setAttribute('aria-expanded',si?'true':'false')}
-  $('asa').addEventListener('click',function(){abre(panel.classList.contains('min'))});
+  $('asa').addEventListener('click',function(){
+    // Con una ficha abierta, la pestaña alterna entre el resumen y la ficha completa.
+    if(vista==='ficha'&&!panel.classList.contains('min')){panel.classList.toggle('peek');cuerpo.scrollTop=0;return}
+    abre(panel.classList.contains('min'));
+  });
+  // Tache: cierra la ficha y regresa al mapa.
+  var bX=document.createElement('button');bX.className='f-x';bX.id='btnX';bX.type='button';bX.setAttribute('aria-label','Cerrar la ficha y volver al mapa');
+  bX.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  panel.appendChild(bX);
+  bX.addEventListener('click',function(){
+    if(selCapa){map.removeLayer(selCapa);selCapa=null}
+    leyenda();
+    if(CEL())abre(false);
+  });
 
   /* --- Leyenda: cinco grupos; las claves completas quedan plegadas --- */
   function leyenda(){
-    vista='leyenda';panel.classList.remove('con-ficha');
+    vista='leyenda';panel.classList.remove('con-ficha','peek');
     var h='<div class="f-vacio"><div><span class="eyebrow">'+(CFG.eyebrow||'Mapa de zonificación')+'</span><h2>'+(CFG.titulo||'Toca tu terreno en el mapa')+'</h2></div>';
     h+='<p class="f-q">'+(CFG.intro||'Cada color tiene sus reglas. Toca un punto y ve qué se puede hacer ahí.')+'</p>';
     h+='<div class="fila-btn f-ubica"><button class="btn btn-verde btn-chico" id="btnAqui">Usar mi ubicación</button>'+($('irA')?'<button class="btn btn-linea btn-chico" id="btnLoc">Ir a mi localidad</button>':'')+'</div>';
@@ -528,7 +546,7 @@
 
   /* --- Sin mapa: al elegir una localidad, la lista en palabras de sus zonas y su veredicto --- */
   function listaZonas(enfocar,idx){
-    vista='lista';panel.classList.remove('con-ficha');
+    vista='lista';panel.classList.remove('con-ficha','peek');
     var h='<div class="f-vacio"><div><span class="eyebrow">Sin mapa</span><h2 id="listaTit" tabindex="-1">Las zonas de cada localidad</h2></div>';
     h+='<label class="f-etq" for="selLista">Elige una localidad</label><select class="f-sel" id="selLista">'+opciones(false)+'</select>';
     h+='<div id="resLista"></div><p><button class="enlace" id="btnVolver">Volver a la leyenda</button></p></div>';
@@ -637,7 +655,7 @@
   var DL=leeDL();
   function ponGiro(g){
     var inp=$('gBusca');if(!inp)return;
-    abre(true);
+    abre(true);panel.classList.remove('peek');
     var pl=inp.closest('details');if(pl)pl.open=true;
     setTimeout(function(){
       if($('gBusca')!==inp)return;
