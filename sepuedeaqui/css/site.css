@@ -70,6 +70,9 @@ p{margin:0}
 .btn-claro{border-color:rgba(225,245,238,.55);color:var(--menta);background:transparent}
 .btn-claro:hover{background:rgba(255,255,255,.1)}
 .btn-chico{min-height:40px;padding:8px 16px;font-size:.9rem}
+.que-hacer{display:grid;gap:10px;max-width:400px}
+.que-hacer .btn{justify-content:flex-start;width:100%;min-height:56px;font-size:1.05rem}
+.pie-dif{margin-top:14px;font-size:.84rem}
 .fila-btn{display:flex;flex-wrap:wrap;gap:12px}
 .chip{display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--borde);background:var(--carta);color:var(--tinta);border-radius:99px;padding:8px 15px;font:500 .9rem var(--texto);cursor:pointer;min-height:42px;text-decoration:none}
 .chip[aria-pressed="true"],.chip.on{background:var(--verde);border-color:var(--verde);color:#fff}

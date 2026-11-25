@@ -59,6 +59,11 @@
     capa=L.geoJSON(ZONAS,{style:estilo,onEachFeature:function(f,l){l.on('click',function(e){L.DomEvent.stopPropagation(e);selecciona(f,e.latlng)})}}).addTo(map);
     if(selCapa)selCapa.bringToFront();
     if(window.__mapa)window.__mapa.zonasListas=true;
+    if(DL&&DL.p){
+      var ll=L.latLng(DL.p[0],DL.p[1]),fz=MUN.contains(ll)?zonaDe(ll.lng,ll.lat):null;
+      if(fz){map.setView(ll,16);selecciona(fz,ll)}
+      ponGiro(DL.g);DL=null;
+    }
     setTimeout(function(){conGiros(function(){})},400);
   }
   map.on('zoomend',function(){if(capa)capa.setStyle(estilo);estiloReferencia()});
@@ -198,7 +203,7 @@
   /* --- Giros: la Tabla de compatibilidad del Programa (Anexo 3.1), zona por zona.
          Pesa 24 KB y se pide después de las zonas. La tabla no asigna giros a ZAM ni a ZN. --- */
   var GIROS=window.PMDU_GIROS||null, GITEMS=null, girosEsperan=[], girosPidio=false, filtroGiro='';
-  var G_VACIAS={de:1,del:1,la:1,las:1,el:1,los:1,y:1,o:1,u:1,en:1,con:1,sin:1,para:1,por:1,un:1,una:1,unos:1,unas:1,a:1,al:1,mi:1,se:1,que:1,quiero:1,poner:1,abrir:1,puedo:1,puede:1,negocio:1,local:1};
+  var G_VACIAS={de:1,del:1,la:1,las:1,el:1,los:1,y:1,o:1,u:1,en:1,con:1,sin:1,para:1,por:1,un:1,una:1,unos:1,unas:1,a:1,al:1,mi:1,se:1,que:1,quiero:1,poner:1,abrir:1,puedo:1,puede:1,negocio:1,local:1,vender:1,vendo:1,rentar:1,hacer:1,construir:1,tener:1,montar:1,instalar:1,aqui:1,donde:1,se:1,lo:1};
   var G_ALIAS={casa:['vivienda'],cuartos:['vivienda','huespedes'],departamentos:['vivienda'],tiendita:['miscelaneas','abarrotes'],tienda:['tiendas','miscelaneas'],
     airbnb:['cabanas','huespedes'],hospedaje:['hoteles','cabanas'],posada:['hoteles'],hotel:['hoteles'],ganado:['potreros','cria'],vacas:['potreros'],chivas:['potreros','cria'],borregos:['potreros','cria'],
     cerdos:['cria'],puercos:['cria'],pollos:['cria','pollerias'],gallinas:['cria'],establo:['establos'],corral:['corrales'],milpa:['cultivos'],siembra:['cultivos'],sembrar:['cultivos'],parcela:['cultivos'],
@@ -206,7 +211,7 @@
     cerveza:['bebidas','cervecerias'],deposito:['deposito','depositos'],licoreria:['vinaterias'],iglesia:['templos'],capilla:['templos'],kinder:['jardines'],primaria:['primarias'],secundaria:['secundarias'],prepa:['preparatorias'],
     doctor:['consultorios'],medico:['consultorios'],dentista:['odontologos'],veterinaria:['veterinarios'],panteon:['cementerios'],funeraria:['funerarias'],purificadora:['purificada','purificacion'],
     ladrillera:['tabiqueras'],tabiquera:['tabiqueras'],grava:['petreos','grava'],banco:['bancos','petreos'],mina:['mineria'],gasolinera:['gasolina'],gas:['gas'],antena:['antenas'],
-    taqueria:['taquerias'],comida:['restaurantes','comida'],fonda:['fondas'],cantina:['cantinas'],bar:['bares'],antro:['antros'],salon:['salones'],fiestas:['fiestas'],jardin:['jardines'],
+    taqueria:['taquerias'],tacos:['taquerias'],taco:['taquerias'],rancho:['potreros','establos','cria'],granja:['cria','establos'],comida:['restaurantes','comida'],fonda:['fondas'],cantina:['cantinas'],bar:['bares'],antro:['antros'],salon:['salones'],fiestas:['fiestas'],jardin:['jardines'],
     balneario:['balnearios'],alberca:['alberca','balnearios'],campamento:['campismo'],acampar:['campismo'],temazcal:['spa'],sendero:['senderos'],mirador:['miradores'],
     bodega:['bodegas'],herreria:['forjados'],carpinteria:['carpinteria'],mecanico:['mecanico'],autolavado:['lavado'],carwash:['lavado'],cancha:['canchas'],gimnasio:['gimnasios'],
     farmacia:['farmacias'],papeleria:['papelerias'],ferreteria:['ferreterias'],tortilleria:['tortilleria'],carniceria:['carnicerias'],panaderia:['panaderias'],fruteria:['fruteria'],
@@ -234,59 +239,103 @@
     document.head.appendChild(s);
   }
   function gCasa(q,w){   // 2 = coincide; 1 = se parece (mismas cuatro letras iniciales)
+    if(q.length<4)return w===q?2:0;   // «bar» no es «barrio»
     if(w.indexOf(q)===0||(w.length>=4&&q.indexOf(w)===0))return 2;
     if(q.length<5||w.length<5)return 0;
     var n=0;while(n<q.length&&n<w.length&&q.charAt(n)===w.charAt(n))n++;
     return n>=4?1+Math.min(n-4,9)/10:0;
   }
+  var gAlts=[];   // raíces de la última búsqueda, para resaltar la palabra que coincidió
+  function gPunto(alt,it){
+    var mejor=0;
+    for(var a=0;a<alt.length&&mejor<4;a++){
+      for(var k=0;k<it.w.length;k++){var c=gCasa(alt[a],it.w[k])*2;if(c>mejor)mejor=c}
+      for(var j=0;j<it.wg.length;j++){var d=gCasa(alt[a],it.wg[j]);if(d>mejor)mejor=d}
+    }
+    return mejor;
+  }
   function buscaGiros(texto){
     var qs=gNorm(texto).split(' ').filter(function(w){return w&&!G_VACIAS[w]});
+    gAlts=[];
     if(!qs.length||!GITEMS)return [];
-    var res=[];
-    GITEMS.forEach(function(it){
-      var total=0;
-      for(var i=0;i<qs.length;i++){
-        var alt=[gRaiz(qs[i])].concat((G_ALIAS[qs[i]]||G_ALIAS[gRaiz(qs[i])]||[]).map(gRaiz)),mejor=0;
-        for(var a=0;a<alt.length&&mejor<4;a++){
-          for(var k=0;k<it.w.length;k++){var c=gCasa(alt[a],it.w[k])*2;if(c>mejor)mejor=c}
-          for(var j=0;j<it.wg.length;j++){var d=gCasa(alt[a],it.wg[j]);if(d>mejor)mejor=d}
-        }
-        if(!mejor)return;
-        total+=mejor;
-      }
-      res.push({it:it,p:total/qs.length});
-    });
+    // Una palabra que no está en la tabla («vender tacos», «renta de cuartos») se ignora en vez de anular la búsqueda.
+    var alts=qs.map(function(q){return [gRaiz(q)].concat((G_ALIAS[q]||G_ALIAS[gRaiz(q)]||[]).map(gRaiz))})
+      .filter(function(alt){return GITEMS.some(function(it){return gPunto(alt,it)>0})});
+    if(!alts.length)return [];
+    alts.forEach(function(alt){gAlts=gAlts.concat(alt)});
+    function junta(todas){
+      var res=[];
+      GITEMS.forEach(function(it){
+        var total=0,n=0;
+        for(var i=0;i<alts.length;i++){var p=gPunto(alts[i],it);if(p){total+=p;n++}else if(todas)return}
+        if(n)res.push({it:it,p:total/alts.length});
+      });
+      return res;
+    }
+    var res=junta(true);
+    if(!res.length)res=junta(false);   // ningún giro tiene todas las palabras: valen los que tienen alguna
     var tope=res.reduce(function(m,r){return Math.max(m,r.p)},0);
     return res.filter(function(r){return r.p>=(tope>=4?3:tope-.35)}).sort(function(a,b){return b.p-a.p||a.it.t.length-b.it.t.length}).map(function(r){return r.it});
   }
+  // Resalta en el texto del giro la palabra que coincidió; en las filas largas esa palabra pasa a ser el título.
+  function gTit(it){
+    var primera='',h=String(it.t).split(/([A-Za-z\u00C0-\u024F0-9]+)/).map(function(p,i){
+      if(i%2===0)return esc(p);
+      var w=gRaiz(gNorm(p)),si=w&&gAlts.some(function(q){return gCasa(q,w)>=2});
+      if(si&&!primera)primera=p;
+      return si?'<mark>'+esc(p)+'</mark>':esc(p);
+    }).join('');
+    it.corto=primera&&it.t.length>70?primera.charAt(0).toUpperCase()+primera.slice(1):'';
+    return it.corto?'<span class="g-t">'+esc(it.corto)+'</span><details class="g-ofi"><summary>Ver el texto oficial</summary><small class="g-todo">'+h+'</small></details>':'<span class="g-t">'+h+'</span>';
+  }
+  // Lotificar, fraccionar o subdividir no son giros: la tabla no los trae, pero la ficha de la zona sí dice qué se puede.
+  var G_LOTE=/^(lotific|lotea|lotes?$|fraccion|subdivi)/;
+  function gNota(fam,texto){
+    if(!gNorm(texto).split(' ').some(function(w){return G_LOTE.test(w)}))return '';
+    var F=fam?PMDU_FAM[fam]:null,re=/lot|subdivi|fraccion/i;
+    function de(l){return (l||[]).filter(function(x){return re.test(x)}).map(function(x){return esc(x.charAt(0).toLowerCase()+x.slice(1))})}
+    var si=F?de(F.si):[],no=F?de(F.no):[],h='<p class="g-nota"><b>Lotificar o subdividir no es un negocio</b>, por eso no viene en la tabla. ';
+    if(si.length)h+='En esta zona sí se permite: '+si.join('; ')+'. ';
+    if(no.length)h+='En esta zona no se permite: '+no.join('; ')+'. ';
+    if(!si.length&&!no.length)h+='En campo y monte no se urbaniza ni se lotifica; donde ya hay pueblo, depende de la zona: toca tu terreno en el mapa. ';
+    if(no.length&&!si.length)return h+'</p>';
+    return h+'El permiso de subdivisión se tramita en Desarrollo Urbano, antes de vender. <a href="guia.html#comprar">Ver los pasos</a></p>';
+  }
   function gFams(m){var o=[];GIROS.cols.forEach(function(c,i){if(m.charAt(i)==='1')o.push(c)});return o}
+  function zonaLlana(k){var F=PMDU_FAM[k]||{};return (F.corto||F.t||k).toLowerCase()+' ('+k+')'}
   function gDonde(m){
     var f=gFams(m);
-    return f.length?'Se permite en: '+f.map(function(k){return esc(PMDU_FAM[k].t)+' ('+k+')'}).join(', ')+'.':'No está permitido en ninguna de las zonas que regula la tabla. En campo y monte decide el Programa de Manejo de la Reserva.';
+    return f.length?'Se permite en zonas de: '+f.map(function(k){return esc(zonaLlana(k))}).join(', ')+'.':'No está permitido en ninguna de las zonas que regula la tabla. En campo y monte decide el Programa de Manejo de la Reserva.';
   }
   var G_ICO={si:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',no:'<path d="M6.500 6.500l11 11M17.500 6.500l-11 11"/>',na:'<path d="M12 7v6M12 16.500v.010"/>'};
+  function gComp(it,v){
+    return '<button class="enlace g-comp" data-v="'+v+'" data-m="'+it.m+'" data-n="'+esc(it.corto||it.t).replace(/"/g,'&quot;')+'">Compartir este resultado</button>';
+  }
   function gItem(it,fam){
     var i=fam?GIROS.cols.indexOf(fam):-2, v=i===-2?'':i<0?'na':it.m.charAt(i)==='1'?'si':'no', h;
     if(!fam){
       var fs=gFams(it.m);
-      h='<li class="g-it"><div><span class="g-t">'+esc(it.t)+'</span><small>'+esc(it.g)+'</small><small class="g-donde">'+gDonde(it.m)+'</small>'+
-        (fs.length?'<button class="enlace g-ver" data-f="'+fs.join(' ')+'" data-n="'+esc(it.t).replace(/"/g,'&quot;')+'">Resaltar esas zonas en el mapa</button>':'')+'</div></li>';
+      h='<li class="g-it"><div>'+gTit(it)+'<small>'+esc(it.g)+'</small><small class="g-donde">'+gDonde(it.m)+'</small>'+
+        (fs.length?'<button class="enlace g-ver" data-f="'+fs.join(' ')+'" data-n="'+esc(it.t).replace(/"/g,'&quot;')+'">Resaltar esas zonas en el mapa</button>':'')+gComp(it,'')+'</div></li>';
       return h;
     }
-    h='<li class="g-it g-'+v+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+G_ICO[v]+'</svg><div><b>'+(v==='si'?'Permitido aquí':v==='no'?'Prohibido aquí':'Aquí no lo decide esta tabla')+'</b><span class="g-t">'+esc(it.t)+'</span><small>'+esc(it.g)+'</small>';
+    h='<li class="g-it g-'+v+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+G_ICO[v]+'</svg><div><b>'+(v==='si'?'Permitido aquí':v==='no'?'Prohibido aquí':'Aquí no lo decide esta tabla')+'</b>'+gTit(it)+'<small>'+esc(it.g)+'</small>';
     if(v!=='si')h+='<small class="g-donde">'+gDonde(it.m)+'</small>';
-    return h+'</div></li>';
+    return h+(v==='na'?'':gComp(it,v))+'</div></li>';
   }
   function gPinta(fam,texto){
     var r=$('gRes');if(!r)return;
     if(!gNorm(texto)){r.innerHTML='';return}
-    var hall=buscaGiros(texto),MAX=8;
+    var hall=buscaGiros(texto),MAX=8,nota=gNota(fam,texto);
+    if(!hall.length&&nota){r.innerHTML=nota;anunciar('Lotificar o subdividir no viene en la tabla.');return}
     if(!hall.length){
-      r.innerHTML='<p class="g-nada"><b>«'+esc(texto)+'» no aparece en la tabla.</b> Cuando un giro no está, lo evalúa Desarrollo Urbano del Municipio. Prueba con otra palabra o pregunta en ventanilla.</p>';
+      r.innerHTML='<p class="g-nada"><b>«'+esc(texto)+'» no aparece en la tabla.</b> Cuando un negocio o un uso no está, lo evalúa Desarrollo Urbano del Municipio. Prueba con otra palabra o pregunta en ventanilla.</p>';
       anunciar('Sin resultados para '+texto);return;
     }
-    r.innerHTML='<ul class="g-lista">'+hall.slice(0,MAX).map(function(it){return gItem(it,fam)}).join('')+'</ul>'+
-      (hall.length>MAX?'<p class="g-mas">Hay '+(hall.length-MAX)+' más: escribe otra palabra para afinar.</p>':'');
+    var its=hall.slice(0,MAX).map(function(it){return gItem(it,fam)}),VER=3,resto=its.length-VER;
+    r.innerHTML=nota+'<ul class="g-lista">'+its.slice(0,VER).join('')+'</ul>'+
+      (resto>0?'<details class="g-otros"><summary>Ver '+resto+(resto===1?' parecido más':' parecidos más')+'</summary><ul class="g-lista">'+its.slice(VER).join('')+'</ul>'+
+        (hall.length>MAX?'<p class="g-mas">Hay '+(hall.length-MAX)+' más: escribe otra palabra para afinar.</p>':'')+'</details>':'');
     var pr=hall[0],i=fam?GIROS.cols.indexOf(fam):-2;
     anunciar(hall.length+(hall.length===1?' resultado. ':' resultados. ')+pr.t+(i>=0?(pr.m.charAt(i)==='1'?': permitido aquí.':': prohibido aquí.'):'.'));
   }
@@ -311,7 +360,7 @@
   function gBloque(fam){   // fam vacío = desde la leyenda: dice en qué zonas se permite cada giro
     var sinTabla=fam==='ZAM'||fam==='ZN';
     var h='<section class="giros" aria-labelledby="gTit"><h3 id="gTit">'+(fam?'¿Qué quieres poner aquí?':'¿Dónde se puede poner un negocio?')+'</h3>';
-    if(sinTabla)h+='<p class="g-nota">La Tabla de compatibilidad no asigna giros a esta zona: la regulan el Decreto y el Programa de Manejo de la Reserva de la Biosfera Sierra Gorda. Lo que se quiera hacer aquí se consulta con CONANP y SEMARNAT. El buscador dice en qué zonas sí está permitido cada giro.</p>';
+    if(sinTabla)h+='<p class="g-nota">La Tabla de compatibilidad no dice qué negocios se permiten en esta zona: la regulan el Decreto y el Programa de Manejo de la Reserva de la Biosfera Sierra Gorda. Lo que se quiera hacer aquí se consulta con CONANP y SEMARNAT. El buscador dice en qué zonas sí está permitido cada negocio.</p>';
     h+='<label class="f-etq" for="gBusca">'+(fam?'Escribe el negocio o el uso y ve si la tabla lo permite':'Escribe un negocio o un uso y ve en qué zonas se permite')+'</label>'+
        '<input class="g-in" id="gBusca" type="search" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="Ej. tortillería, cabañas, taller">'+
        '<div id="gRes"></div>'+
@@ -320,7 +369,8 @@
       h+='<details class="acc g-acc" id="gSi"><summary>Todo lo que la tabla permite aquí<small id="gSiN"></small></summary><div class="resp"></div></details>'+
          '<details class="acc g-acc" id="gNo"><summary>Lo que la tabla prohíbe aquí<small id="gNoN"></small></summary><div class="resp"></div></details>';
     }
-    h+='<p class="fuente">Fuente: Tabla de compatibilidad de uso de suelo del Programa (Anexo 3.1). Un giro permitido también necesita dictamen de uso de suelo; la factibilidad de giro pide además las autorizaciones ambientales y de protección civil. Los usos condicionados y los giros que no aparecen los evalúa Desarrollo Urbano.</p></section>';
+    h+='<p class="fuente">Aunque esté permitido, antes de abrir necesitas el dictamen de uso de suelo.</p>'+
+       '<details class="g-letra"><summary>Fuente y letra chica</summary><p class="fuente">Fuente: Tabla de compatibilidad de uso de suelo del Programa (Anexo 3.1). La factibilidad de giro pide además las autorizaciones ambientales y de protección civil. Los usos condicionados y los negocios que no aparecen los evalúa Desarrollo Urbano.</p></details></section>';
     return h;
   }
   function gActiva(fam){
@@ -336,6 +386,14 @@
     inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();clearTimeout(t);va();inp.blur()}});
     $('gEj').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;inp.value=b.textContent;va()});
     $('gRes').addEventListener('click',function(e){
+      var c=e.target.closest('.g-comp');
+      if(c){
+        var n=c.getAttribute('data-n'),v=c.getAttribute('data-v'),fs=gFams(c.getAttribute('data-m')).map(zonaLlana);
+        var txt=v?'«'+n+'»: '+(v==='si'?'permitido':'prohibido')+' en la zona de '+zonaLlana(fam):'«'+n+'»: '+(fs.length?'se permite en zonas de '+fs.join(', '):'no está permitido en ninguna de las zonas que regula la tabla');
+        compartir('¿Esto se puede aquí?',txt+', según la Tabla de compatibilidad del Programa de Desarrollo Urbano de Arroyo Seco. Consulta tu terreno:',
+          urlSitio(CFG.pagina||'mapa.html')+'#g='+encodeURIComponent(inp.value.trim())+(v&&selLL?'&p='+selLL.lat.toFixed(5)+','+selLL.lng.toFixed(5):''));
+        return;
+      }
       var b=e.target.closest('.g-ver');if(!b)return;
       filtro=b.getAttribute('data-f').split(' ');filtroGiro=b.getAttribute('data-n');
       if(capa)capa.setStyle(estilo);
@@ -347,7 +405,7 @@
       if($('gBusca')!==inp)return;
       [['gSi','1'],['gNo','0']].forEach(function(p){
         var d=$(p[0]),n=$(p[0]+'N');if(!d)return;
-        n.textContent=' · '+gCuenta(fam,p[1])+' giros';
+        n.textContent=' · '+gCuenta(fam,p[1])+' usos';
         d.addEventListener('toggle',function(){var c=d.querySelector('.resp');if(d.open&&!c.firstChild)c.innerHTML=gTodo(fam,p[1])});
       });
     });
@@ -358,6 +416,15 @@
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
   function lista(a){return '<ul>'+a.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul>'}
   function nombreCorto(fam){var F=PMDU_FAM[fam]||{};return F.corto||F.t||fam}
+  // Una salida humana en cada ficha: la ventanilla, y el teléfono y el horario cuando el Municipio los confirme (PMDU_CFG).
+  function contacto(){
+    var c=window.PMDU_CFG||{},tel=String(c.telefono||'').replace(/\D/g,''),wa=String(c.whatsapp||'').replace(/\D/g,'');
+    var h='<p class="f-duda"><b>¿Dudas?</b> Pregunta en '+esc(c.ventanilla||'Desarrollo Urbano del Municipio')+'.';
+    if(c.horario)h+=' '+esc(c.horario)+'.';
+    if(tel)h+=' <a href="tel:'+tel+'">Llamar al '+esc(c.telefono)+'</a>';
+    if(wa)h+=' <a href="https://wa.me/'+(wa.length===10?'52'+wa:wa)+'">Escribir por WhatsApp</a>';
+    return h+' <a href="guia.html#tramite">Dónde se pregunta</a></p>';
+  }
   function ficha(f,ll){
     var p=f.properties,fam=PMDU.fam(p.c),d=PMDU_DENS[PMDU.dens(p.c)],F=PMDU_FAM[fam]||{};
     var h='<h2 class="oculto" id="fichaTit" tabindex="-1">'+esc(nombreCorto(fam))+'</h2>';
@@ -365,7 +432,8 @@
     h+='<div class="f-ver f-'+F.vs+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+ICO_V[F.vs]+'</svg><div><b>'+esc(F.v)+'</b>'+crece+'</div></div>';
     h+='<div class="sino f-sino"><div class="si"><h3>Sí se puede</h3>'+lista(F.si)+'</div><div class="no"><h3>No se puede</h3>'+lista(F.no)+'</div></div>';
     h+='<p class="f-tram">'+esc(F.tram)+'</p>';
-    h+=gBloque(fam);
+    h+=contacto();
+    h+='<details class="acc g-plegado"><summary>¿Quieres poner un negocio aquí?</summary><div class="resp">'+gBloque(fam)+'</div></details>';
     // --- detalle plegado: clave, medidas, etapa, localidad y fuente
     var conD=d&&fam!=='I'&&fam!=='ECO';
     var det='<div class="f-cab"><span class="f-clave" style="background:'+(COLOR[p.c]||'#ccc')+(fam==='ZN'?';color:#fff':'')+'">'+p.c.replace(',',' · ')+'</span><span class="f-nom">'+esc(PMDU.nombre(p.c))+'</span></div>';
@@ -386,11 +454,12 @@
     h+='<div class="fila-btn"><a class="btn btn-verde btn-chico" href="guia.html">Qué sigue</a><button class="btn btn-linea btn-chico" id="btnComp">Compartir</button></div>';
     return h;
   }
+  var selLL=null;
   function selecciona(f,ll,desdeTeclado){
     if(selCapa)map.removeLayer(selCapa);
     var fam=PMDU.fam(f.properties.c);
     selCapa=(fam!=='ZAM'&&fam!=='ZN')?L.geoJSON(f,{style:{color:'#E8A85A',weight:4,fillOpacity:0,opacity:1},interactive:false}).addTo(map):null;
-    vista='ficha';panel.classList.add('con-ficha');
+    vista='ficha';panel.classList.add('con-ficha');selLL=ll||null;
     cuerpo.innerHTML=ficha(f,ll);
     gActiva(fam);
     cuerpo.scrollTop=0;
@@ -416,6 +485,7 @@
     vista='leyenda';panel.classList.remove('con-ficha');
     var h='<div class="f-vacio"><div><span class="eyebrow">'+(CFG.eyebrow||'Mapa de zonificación')+'</span><h2>'+(CFG.titulo||'Toca tu terreno en el mapa')+'</h2></div>';
     h+='<p class="f-q">'+(CFG.intro||'Cada color tiene sus reglas. Toca un punto y ve qué se puede hacer ahí.')+'</p>';
+    h+='<div class="fila-btn f-ubica"><button class="btn btn-verde btn-chico" id="btnAqui">Usar mi ubicación</button>'+($('irA')?'<button class="btn btn-linea btn-chico" id="btnLoc">Ir a mi localidad</button>':'')+'</div>';
     if(modo==='usos'){
       h+='<div class="ley" id="ley">';
       PMDU_GRUPOS.forEach(function(g){
@@ -433,10 +503,10 @@
     h+=gBloque('');
     h+='<details class="acc"><summary>Claves completas y etapas de crecimiento</summary><div class="resp"><div class="ley-claves">'+claves+'</div><p class="fuente">Los tonos más fuertes indican mayor densidad: aislada (As), mínima (Mn), baja (Bj) y media (Md).</p>'+
        '<button class="btn btn-linea btn-chico" id="btnModo">'+(modo==='usos'?'Ver por etapas de crecimiento':'Volver a ver por usos')+'</button></div></details>';
-    h+='<p class="f-otros"><button class="enlace" id="btnLista">Sin mapa: ver las zonas en una lista</button> · <button class="enlace" id="btnPegar2">Pegar una ubicación</button></p>';
+    h+='<p class="f-otros"><button class="enlace" id="btnLista">Sin mapa: ver las zonas en una lista</button> · <button class="enlace" id="btnPegar2">Pegar una ubicación</button>'+(CFG.soloValle?'':' · <a href="conca.html">Valle de Concá: su propia ventana</a>')+'</p>';
     h+='</div>';
     cuerpo.innerHTML=h;
-    asaTxt.textContent='Leyenda';
+    asaTxt.textContent='Leyenda y buscador de negocios';
     var ley=$('ley');
     if(ley)ley.addEventListener('click',function(e){
       var b=e.target.closest('button');if(!b)return;
@@ -447,6 +517,12 @@
     var gq=$('gQuita');if(gq)gq.addEventListener('click',function(){filtro=null;filtroGiro='';if(capa)capa.setStyle(estilo);leyenda()});
     $('btnModo').addEventListener('click',function(){modo=modo==='usos'?'crece':'usos';filtro=null;filtroGiro='';if(capa)capa.setStyle(estilo);leyenda()});
     $('btnLista').addEventListener('click',function(){listaZonas(true)});
+    $('btnAqui').addEventListener('click',function(){if(window.matchMedia('(max-width:899px)').matches)abre(false);$('btnGps').click()});
+    var bLoc=$('btnLoc');
+    if(bLoc)bLoc.addEventListener('click',function(){
+      var s=$('irA');if(window.matchMedia('(max-width:899px)').matches)abre(false);
+      s.focus();try{if(s.showPicker)s.showPicker()}catch(e){}
+    });
     $('btnPegar2').addEventListener('click',function(){muestraPegar(true)});
   }
 
@@ -547,6 +623,31 @@
   salto.addEventListener('click',function(e){e.preventDefault();listaZonas(true)});
   var visor=$('mapa').closest('.visor,.visor-pag');if(visor)visor.insertBefore(salto,visor.firstChild);
 
+  /* --- Enlace directo al buscador de giros: mapa.html#g=hotel o #g=hotel&p=21.26012,-99.68850 --- */
+  function leeDL(){
+    var h=(location.hash||'').slice(1);if(!/(^|&)g=/.test(h))return null;
+    var o={g:'',p:null};
+    h.split('&').forEach(function(x){
+      var i=x.indexOf('='),k=x.slice(0,i),v=x.slice(i+1);
+      if(k==='g'){try{o.g=decodeURIComponent(v).slice(0,80)}catch(e){}}
+      if(k==='p'){var c=v.split(',').map(parseFloat);if(c.length===2&&isFinite(c[0])&&isFinite(c[1]))o.p=c}
+    });
+    return o;
+  }
+  var DL=leeDL();
+  function ponGiro(g){
+    var inp=$('gBusca');if(!inp)return;
+    abre(true);
+    var pl=inp.closest('details');if(pl)pl.open=true;
+    setTimeout(function(){
+      if($('gBusca')!==inp)return;
+      var sec=inp.closest('.giros');
+      if(sec)cuerpo.scrollTop+=sec.getBoundingClientRect().top-cuerpo.getBoundingClientRect().top-6;
+      if(g){inp.value=g;inp.dispatchEvent(new Event('input',{bubbles:true}))}
+      else if(!window.matchMedia('(max-width:899px)').matches)inp.focus({preventScroll:true});
+    },80);
+  }
+
   /* --- Arranque --- */
   var RUTAS={};Object.keys(PRINC).forEach(function(n){RUTAS[PRINC[n][0]]=n});
   function porHash(){
@@ -561,7 +662,8 @@
   if(!porHash())vistaInicial(false);
   etiquetas();leyenda();
   if(window.matchMedia('(max-width:899px)').matches)abre(false);
-  window.addEventListener('hashchange',porHash);
+  if(DL&&!DL.p){ponGiro(DL.g);DL=null}
+  window.addEventListener('hashchange',function(){var d=leeDL();if(d)ponGiro(d.g);else porHash()});
   setTimeout(function(){map.invalidateSize()},250);
   window.__mapa={buscaGiros:function(t){preparaGiros();return buscaGiros(t)},map:map,zonaDe:zonaDe,selecciona:selecciona,ponBase:ponBase,irUbicacion:irUbicacion,listaZonas:listaZonas,base:function(){return base},zonasListas:false};
   // Con señal lenta, primero la foto (para saber dónde está uno) y enseguida las zonas: a más tardar en 1.5 s.

@@ -18,7 +18,8 @@ body.mapa-app main{flex:1;min-height:0;position:relative;margin-bottom:calc(var(
 .modo{display:flex;background:var(--carta);border:1.5px solid var(--borde);border-radius:99px;padding:3px;box-shadow:var(--sombra);margin-left:auto}
 .modo button{border:0;background:transparent;border-radius:99px;padding:8px 13px;font:600 .82rem var(--texto);color:var(--tinta-2);cursor:pointer;min-height:38px}
 .modo button[aria-pressed="true"]{background:var(--verde);color:#fff}
-.ctrl-lat{position:absolute;z-index:500;right:10px;top:68px;display:grid;gap:8px}
+.ctrl-lat{position:absolute;z-index:500;right:10px;top:68px;display:grid;gap:8px;justify-items:end}
+.fab.fab-rot{width:auto;border-radius:99px;padding:0 14px 0 12px;gap:7px;font:600 .82rem var(--texto)}
 .fab{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--borde);background:var(--carta);box-shadow:var(--sombra);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tinta)}
 .fab svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .fab.act{background:var(--verde);color:#fff;border-color:var(--verde)}
@@ -169,7 +170,11 @@ button.enlace{background:none;border:0;padding:0;font:600 .88rem var(--texto);co
 .g-it .g-t{color:var(--tinta);font-weight:500}
 .g-it small{font-size:.78rem;color:var(--tinta-3)}
 .g-it .g-donde{color:var(--tinta-2)}
-.g-it .g-ver{justify-self:start;margin-top:4px;font-size:.84rem}
+.g-it .g-ver,.g-it .g-comp{justify-self:start;margin-top:4px;font-size:.84rem}
+.g-it mark{background:transparent;color:inherit;font-weight:700}
+.g-it .g-todo{font-size:.8rem;color:var(--tinta-2)}
+.g-nota a{color:inherit;font-weight:600}
+.g-nota+.g-lista{margin-top:8px}
 .g-si{background:#E8F6EE}.g-si svg{background:#1F8A63}.g-si b{color:#0A5743}
 .g-no{background:var(--teja-claro)}.g-no svg{background:var(--teja)}.g-no b{color:#8A2F1B}
 .g-na{background:var(--ambar-claro)}.g-na svg{background:#C98522}.g-na b{color:#6B430C}
@@ -186,3 +191,20 @@ button.enlace{background:none;border:0;padding:0;font:600 .88rem var(--texto);co
 .g-uso h4{margin:8px 0 4px;font:700 .7rem var(--texto);letter-spacing:.08em;text-transform:uppercase;color:var(--ambar-osc)}
 .g-uso ul{margin:0 0 6px;padding-left:1.1em;font-size:.86rem;line-height:1.35;display:grid;gap:3px;color:var(--tinta-2)}
 .g-filtro{background:var(--menta);color:#0B4435;border-radius:12px;padding:9px 12px;font-size:.88rem;line-height:1.35;margin:0}
+
+/* --- Menos a la vista: buscador plegado en la ficha, resultados cortos, letra chica y contacto --- */
+.g-plegado{margin:0}
+.g-plegado>.resp{padding:0 10px 10px}
+.g-plegado .giros{border:0;padding:4px;background:transparent}
+.g-plegado .giros h3{display:none}
+.g-otros summary,.g-ofi summary,.g-letra summary{cursor:pointer;font:600 .84rem var(--texto);color:var(--verde);padding:6px 0;list-style:none}
+.g-otros summary::-webkit-details-marker,.g-ofi summary::-webkit-details-marker,.g-letra summary::-webkit-details-marker{display:none}
+.g-otros summary::before,.g-ofi summary::before,.g-letra summary::before{content:'+ '}
+.g-otros[open] summary::before,.g-ofi[open] summary::before,.g-letra[open] summary::before{content:'– '}
+.g-otros[open] summary{margin-bottom:4px}
+.g-ofi summary{font-size:.78rem;padding:2px 0}
+.g-letra summary{font-size:.78rem;color:var(--tinta-3)}
+.f-duda{margin:0;font-size:.88rem;line-height:1.45;color:var(--tinta-2)}
+.f-duda a{font-weight:600;color:var(--verde);white-space:nowrap}
+.f-duda a+a{margin-left:8px}
+.f-ubica{gap:8px}
