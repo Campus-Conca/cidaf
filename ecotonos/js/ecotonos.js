@@ -91,8 +91,10 @@
       corte.classList.toggle('sino', sino);
       bots.forEach(x => x.setAttribute('aria-pressed', x === b));
     }));
-    const elige = n => { tx.forEach(t => t.classList.toggle('on', t.dataset.eco === n)); bandas.forEach(g => g.classList.toggle('on', g.dataset.eco === n)); };
-    tx.forEach(t => { t.addEventListener('click', () => elige(t.dataset.eco)); t.addEventListener('mouseenter', () => elige(t.dataset.eco)); });
+    const caja = $('.corte-scroll', corte), svg = $('svg', corte);
+    const elige = (n, mueve) => { tx.forEach(t => t.classList.toggle('on', t.dataset.eco === n)); bandas.forEach(g => g.classList.toggle('on', g.dataset.eco === n));
+      if (mueve && caja.scrollWidth > caja.clientWidth) { const b = $('.banda[data-eco="' + n + '"] rect', corte); const cx = (b.x.baseVal.value + b.width.baseVal.value / 2) / 1200 * svg.clientWidth; caja.scrollTo({ left: cx - caja.clientWidth / 2, behavior: 'smooth' }); } };
+    tx.forEach(t => { t.addEventListener('click', () => elige(t.dataset.eco, true)); t.addEventListener('mouseenter', () => elige(t.dataset.eco)); });
     bandas.forEach(g => { g.addEventListener('click', () => elige(g.dataset.eco)); g.addEventListener('mouseenter', () => elige(g.dataset.eco)); });
     elige('1');
   }
@@ -181,7 +183,7 @@
   <div class="p-cuerpo">
     <div class="prosa">
       <h2>Descripción</h2>
-      ${p.desc.map(x => `<p>${esc(x)}</p>`).join('')}
+      <p>${esc(p.desc[0])}</p>${p.desc.length > 1 ? `<details class="mas"><summary>Leer la descripción completa</summary>${p.desc.slice(1).map(x => `<p>${esc(x)}</p>`).join('')}</details>` : ''}
       ${p.nota ? `<p class="nota-pie">${esc(p.nota)}</p>` : ''}
       <div class="fila" style="margin:26px 0 40px">
         <a class="btn teal" href="fichas/P${nn}_ficha.pdf" download>↓ Ficha síntesis (PDF)</a>
@@ -218,6 +220,111 @@
       pasos.forEach((l, i) => tm.push(setTimeout(() => { l.classList.add('ok'); $('i', l).textContent = '✓'; }, 500 + i * 1100)));
     });
     $('.otra', sim).addEventListener('click', () => { tm.forEach(clearTimeout); tm = []; pasos.forEach(l => { l.classList.remove('ok'); $('i', l).textContent = ''; }); acuse.classList.remove('on'); form.style.display = ''; });
+  }
+
+  /* ── antes y después: marcas ── */
+  $$('.ad').forEach(ad => {
+    const notas = $('#ad-notas'), bot = $('#ad-pins'); if (!notas) return;
+    const marca = n => { $$('.pin', ad).forEach(p => p.classList.toggle('on', p.dataset.n === n)); $$('li', notas).forEach(l => l.classList.toggle('on', l.dataset.n === n)); };
+    ad.addEventListener('click', e => { const p = e.target.closest('.pin'); if (p) { marca(p.dataset.n); const l = $('li.on', notas); if (l && matchMedia('(max-width: 760px)').matches) l.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } });
+    notas.addEventListener('click', e => { const l = e.target.closest('li'); if (l) marca(l.dataset.n); });
+    if (bot) bot.addEventListener('click', () => { const ver = ad.classList.toggle('sin-pins'); bot.setAttribute('aria-pressed', !ver); bot.textContent = ver ? 'Mostrar las marcas' : 'Ocultar las marcas'; });
+  });
+
+  /* ── glosario al toque ── */
+  const GLOS = [
+    ['pmdu', /\bPMDU\b/, 'PMDU', 'Programa Municipal de Desarrollo Urbano: el documento del municipio que dice qué se puede construir en cada zona. El de Arroyo Seco se aprobó en enero de 2026.'],
+    ['zona-federal', /\bzona federal\b/i, 'Zona federal', 'La franja de terreno junto a ríos, arroyos y acequias que pertenece a la nación. No se puede ocupar sin una concesión de CONAGUA.'],
+    ['dominio-pleno', /\bdominio pleno\b/i, 'Dominio pleno', 'Trámite por el que una parcela ejidal pasa a ser propiedad privada y puede venderse libremente.'],
+    ['selva-baja', /\bselva baja\b/i, 'Selva baja', 'El monte del cerro: árboles bajos que pierden la hoja en la temporada de secas.'],
+    ['ecotono', /\becotonos?\b/i, 'Ecotono', 'La franja donde se tocan dos paisajes: el río y las parcelas, las parcelas y el pueblo, el campo y el cerro.'],
+    ['ejido', /\bejidos?\b/i, 'Ejido', 'Tierra de propiedad colectiva. Sus decisiones se toman en asamblea de ejidatarios.'],
+    ['lotificar', /\blotific[\p{L}]+/iu, 'Lotificar', 'Partir una parcela en lotes más chicos para venderlos o construir en ellos.'],
+    ['acequia', /\bacequias?\b/i, 'Acequia', 'Canal que lleva el agua de los manantiales a las parcelas.'],
+    ['ribera', /\bribera\b/i, 'Ribera', 'La orilla del río con su vegetación.'],
+    ['cabildo', /\bcabildo\b/i, 'Cabildo', 'El ayuntamiento reunido: presidente municipal, síndicos y regidores. Es quien aprueba reglamentos y acuerdos del municipio.'],
+    ['mojonera', /\bmojoneras?\b/i, 'Mojonera', 'Marca fija, de piedra o concreto, que señala un límite en el terreno.'],
+    ['profepa', /\bPROFEPA\b/, 'PROFEPA', 'Procuraduría Federal de Protección al Ambiente: inspecciona y sanciona los daños ambientales.'],
+    ['conanp', /\bCONANP\b/, 'CONANP', 'Comisión Nacional de Áreas Naturales Protegidas: administra la Reserva de la Biosfera Sierra Gorda.'],
+    ['conagua', /\bCONAGUA\b/, 'CONAGUA', 'Comisión Nacional del Agua: la autoridad sobre ríos, arroyos y su zona federal.'],
+    ['semarnat', /\bSEMARNAT\b/, 'SEMARNAT', 'Secretaría de Medio Ambiente y Recursos Naturales, del gobierno federal.']
+  ];
+  const principal = $('main');
+  if (principal && !$('.hoja')) {
+    const fuera = 'a,button,h1,h2,h3,h4,summary,svg,script,style,time,label,select,textarea,.glos,.ceja,.chip,.voces,.tel,.cita,q,.pin,.ad-notas,.pildora,figcaption,dt';
+    $$('main section, main .p-cuerpo, .s-hero .lead, .r-hero .lead').forEach(zona => {
+      const vistos = new Set();
+      const tw = document.createTreeWalker(zona, NodeFilter.SHOW_TEXT, { acceptNode: n => (!n.nodeValue.trim() || n.parentElement.closest(fuera)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
+      const nodos = []; while (tw.nextNode()) nodos.push(tw.currentNode);
+      nodos.forEach(nodo => {
+        for (const [k, re] of GLOS) {
+          if (vistos.has(k)) continue;
+          const m = re.exec(nodo.nodeValue); if (!m) continue;
+          vistos.add(k);
+          const resto = nodo.splitText(m.index); resto.nodeValue = resto.nodeValue.slice(m[0].length);
+          const b = document.createElement('button'); b.className = 'glos'; b.type = 'button'; b.dataset.g = k; b.textContent = m[0]; b.setAttribute('aria-label', m[0] + ': ver qué significa');
+          resto.parentNode.insertBefore(b, resto);
+          break;
+        }
+      });
+    });
+    let globo;
+    const cierra = () => { if (globo) { globo.classList.remove('on'); } };
+    document.addEventListener('click', e => {
+      const b = e.target.closest('.glos');
+      if (!b) { if (!e.target.closest('.globo')) cierra(); return; }
+      const g = GLOS.find(x => x[0] === b.dataset.g);
+      if (!globo) { globo = document.createElement('div'); globo.className = 'globo'; globo.setAttribute('role', 'dialog'); globo.setAttribute('aria-live', 'polite'); document.body.appendChild(globo); }
+      globo.innerHTML = '<button aria-label="Cerrar">✕</button><b></b><p></p>';
+      $('b', globo).textContent = g[2]; $('p', globo).textContent = g[3];
+      $('button', globo).addEventListener('click', cierra);
+      globo.classList.add('on');
+      if (matchMedia('(min-width: 761px)').matches) {
+        const r = b.getBoundingClientRect(), w = 320;
+        globo.style.left = Math.max(12, Math.min(innerWidth - w - 12, r.left + r.width / 2 - w / 2)) + 'px';
+        globo.style.top = (r.bottom + scrollY + 10) + 'px';
+      } else { globo.style.left = ''; globo.style.top = ''; }
+    });
+    addEventListener('keydown', e => { if (e.key === 'Escape') cierra(); });
+  }
+
+  /* ── celular: barra de abajo, como una app ── */
+  const aqui = (location.pathname.split('/').pop() || 'index.html');
+  const TABS = [
+    ['index.html', 'Valle', 'M3 19l5-9 4 6 3-4 6 7z'],
+    ['historia.html', 'Historia', 'M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z'],
+    ['propuestas.html', 'Propuestas', 'M4 6l5-2 6 2 5-2v14l-5 2-6-2-5 2zM9 4v14M15 6v14'],
+    ['participa.html', 'Qué sigue', 'M5 12h14M13 6l6 6-6 6'],
+    ['reporte.html', 'Reporta', 'M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z']
+  ];
+  if (top && !$('.hoja')) {
+    const act = TABS.some(x => x[0] === aqui) ? aqui : 'propuestas.html';
+    const barra = document.createElement('nav'); barra.className = 'tabs'; barra.setAttribute('aria-label', 'Recorrido');
+    barra.innerHTML = TABS.map(([h, n, d]) => `<a href="${h}"${h === act ? ' class="on" aria-current="page"' : ''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>${n}</a>`).join('');
+    document.body.appendChild(barra); document.body.classList.add('con-tabs');
+  }
+
+  /* ── celular: las filas de tarjetas se deslizan con el dedo ── */
+  $$('.hallazgos,.linea-t,.despues,.pesos,.hub,.tres,.que-g,.herr,.par-g,.desc-g').forEach(f => {
+    f.classList.add('desliza-m');
+    if (f.children.length > 1 && !f.nextElementSibling?.classList.contains('puntos')) {
+      const p = document.createElement('div'); p.className = 'puntos'; p.setAttribute('aria-hidden', 'true');
+      p.innerHTML = Array.from(f.children, (_, i) => `<i${i === 0 ? ' class="on"' : ''}></i>`).join('');
+      f.after(p);
+      let t0; f.addEventListener('scroll', () => { clearTimeout(t0); t0 = setTimeout(() => { const w = f.children[0].getBoundingClientRect().width + 12; const k = Math.round(f.scrollLeft / w); $$('i', p).forEach((d, i) => d.classList.toggle('on', i === k)); }, 60); }, { passive: true });
+    }
+  });
+
+  /* ── computadora: índice lateral que sigue la lectura ── */
+  const partes = $$('.indice a[href^="#"]').map(a => [a.getAttribute('href'), $('b', a).textContent]);
+  const secs = partes.length ? partes : $$('main > section[id]').map(s => ['#' + s.id, ($('h2', s) || {}).textContent || '']).filter(x => x[1]);
+  if (secs.length > 1 && io) {
+    const lat = document.createElement('nav'); lat.className = 'lateral'; lat.setAttribute('aria-label', 'En esta página');
+    lat.innerHTML = secs.map(([h, n]) => `<a href="${h}"><span>${esc(n)}</span><i></i></a>`).join('');
+    document.body.appendChild(lat);
+    const ls = $$('a', lat);
+    const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) ls.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-40% 0px -55% 0px' });
+    secs.forEach(([h]) => { const s = $(h); if (s) o.observe(s); });
   }
 
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});

@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/hero.webp" media="(min-width:701px)">
 <link rel="preload" as="image" href="img/hero-m.webp" media="(max-width:700px)">
-<link rel="stylesheet" href="css/ecotonos.css?v=4">
+<link rel="stylesheet" href="css/ecotonos.css?v=5">
 </head>
 <body>
 
@@ -73,9 +73,10 @@
         <div class="prosa ver d1">
           <h3>El problema</h3>
           <p>Las casas avanzan sobre las parcelas, hay conflictos por el uso del suelo y el río Santa María resiente los daños. La ley dice que la gente debe participar en estas decisiones, pero en la práctica no hay espacios reales para dialogar ni reglas claras que se apliquen: nadie está llevando el timón del territorio.</p>
-          <h3>Lo que proponemos</h3>
-          <p>Cambiar la forma en que se decide sobre el territorio. En lugar de consultas de un solo día, un proceso donde los habitantes aprenden, discuten y construyen acuerdos entre todos, para que la comunidad incida de verdad en el Plan de Desarrollo Urbano: cuidar la naturaleza, mantener viva la agricultura y crecer con responsabilidad, al mismo tiempo.</p>
+          <details class="mas"><summary>Qué propone el proyecto</summary>
+                    <p>Cambiar la forma en que se decide sobre el territorio. En lugar de consultas de un solo día, un proceso donde los habitantes aprenden, discuten y construyen acuerdos entre todos, para que la comunidad incida de verdad en el Plan de Desarrollo Urbano: cuidar la naturaleza, mantener viva la agricultura y crecer con responsabilidad, al mismo tiempo.</p>
           <p>Lo impulsan el Laboratorio de Desarrollo Rural (Facultad de Ciencias Naturales) y el Grupo Colegiado Ciudad, Territorio e Investigación Proyectual (Facultad de Ingeniería) de la Universidad Autónoma de Querétaro.</p>
+          </details>
         </div>
       </div>
       <figure class="ver d2">
@@ -107,8 +108,21 @@
       <span class="et a">2010</span><span class="et d">2026</span>
       <div class="raya" aria-hidden="true"><i>⇆</i></div>
       <input type="range" min="0" max="100" value="50" aria-label="Comparar la imagen de 2010 con la de 2026">
+      <button class="pin" style="left:50%;top:22%" data-n="1" aria-label="Cambio 1: La carretera">1</button>
+      <button class="pin" style="left:75%;top:60%" data-n="2" aria-label="Cambio 2: El caserío">2</button>
+      <button class="pin" style="left:80%;top:74%" data-n="3" aria-label="Cambio 3: Lotes nuevos">3</button>
+      <button class="pin" style="left:36%;top:36%" data-n="4" aria-label="Cambio 4: Más cultivo cubierto">4</button>
+      <button class="pin" style="left:57%;top:83%" data-n="5" aria-label="Cambio 5: El río">5</button>
     </div>
-    <p class="aviso">Imágenes: Esri World Imagery (Wayback), Maxar y Earthstar Geographics. Tomadas el 7 de noviembre de 2010 y el 28 de febrero de 2026, según los metadatos del archivo.</p>
+    <div class="ad-ctl"><button class="btn linea chico" id="ad-pins" aria-pressed="true">Ocultar las marcas</button><span>Cinco cosas en las que fijarse. Toca un número.</span></div>
+    <ol class="ad-notas" id="ad-notas">
+      <li data-n="1"><b>La carretera.</b> Donde en 2010 había huertas y parcelas a la orilla de la carretera, hoy hay casas y negocios a los dos lados.</li>
+      <li data-n="2"><b>El caserío.</b> El poblado junto a la carretera creció y se extendió hacia el cerro.</li>
+      <li data-n="3"><b>Lotes nuevos.</b> Aparecen casas y calles nuevas donde antes había campo.</li>
+      <li data-n="4"><b>Más cultivo cubierto.</b> En las parcelas hay mucha más malla sombra e invernadero que en 2010.</li>
+      <li data-n="5"><b>El río.</b> Compara el cauce: en 2010 se ve un lecho ancho de grava; en 2026, un hilo de agua más angosto entre vegetación.</li>
+    </ol>
+    <p class="aviso">Imágenes: Esri World Imagery (Wayback), Maxar y Earthstar Geographics. Tomadas el 7 de noviembre de 2010 y el 28 de febrero de 2026, según los metadatos del archivo. Las marcas son una lectura a simple vista, no una medición.</p>
   </div>
 </section>
 
@@ -326,6 +340,6 @@
 </footer>
 
 <script src="js/datos.js?v=3"></script>
-<script src="js/ecotonos.js?v=3"></script>
+<script src="js/ecotonos.js?v=4"></script>
 </body>
 </html>
