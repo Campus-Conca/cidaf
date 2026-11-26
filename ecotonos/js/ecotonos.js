@@ -259,9 +259,9 @@
     const guarda = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
     const pintaCuenta = () => {
       if (!datos) return;
-      $('#sum-total').textContent = datos.total;
+      $('#sum-total').textContent = datos.total; $('#sum-total').hidden = !datos.total; $('.sum-n span').textContent = datos.total ? (datos.total === 1 ? 'persona del valle ya se sumó' : 'personas del valle ya se sumaron') : 'Sé la primera persona del valle en sumarse';
       const n = elegida && datos.por ? (datos.por[elegida] || 0) : 0;
-      $('#sum-de').textContent = elegida && elegida !== 'Otro lugar' ? (n ? n + (n === 1 ? ' es' : ' son') + ' de ' + elegida + '.' : 'Todavía nadie de ' + elegida + '. Sé la primera persona.') : '';
+      $('#sum-de').textContent = datos.total && elegida && elegida !== 'Otro lugar' ? (n ? n + (n === 1 ? ' es' : ' son') + ' de ' + elegida + '.' : 'Todavía nadie de ' + elegida + '. Sé la primera persona.') : '';
     };
     const elige = c => {
       elegida = c; guarda('eco-comunidad', c);
