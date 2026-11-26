@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El parque lineal de la Acequia Madre · Concá</title>
+<meta name="description" content="Un kilómetro de agua, sombra y encuentro en el corazón de Concá. Ya tiene plan maestro en ocho etapas y la primera está presupuestada. Conoce el proyecto y cómo sumarte.">
+<meta property="og:title" content="El parque lineal de la Acequia Madre">
+<meta property="og:description" content="Un kilómetro de agua, sombra y encuentro en el corazón de Concá. Ya tiene plan maestro en ocho etapas y la primera está presupuestada. Conoce el proyecto y cómo sumarte.">
+<meta property="og:image" content="https://campus-conca.github.io/cidaf/ecotonos/img/og-parque.jpg">
+<meta property="og:url" content="https://campus-conca.github.io/cidaf/ecotonos/parque.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#082A22">
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ecotonos.css?v=9">
+
+<style>
+  .pq-hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;color:#fff;background:var(--noche);overflow:hidden}
+  .pq-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:respira 30s ease-in-out infinite alternate}
+  .pq-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,42,34,.6) 0%,rgba(8,42,34,.1) 30%,rgba(8,42,34,.74) 66%,rgba(8,42,34,.97) 100%)}
+  .pq-hero .wrap{position:relative;z-index:2;width:100%;padding-top:110px;padding-bottom:38px}
+  .pq-hero h1{font-size:clamp(2.6rem,8vw,6rem);font-weight:480;line-height:.98;letter-spacing:-.025em;max-width:13ch;margin:14px 0 18px}
+  .pq-hero h1 em{color:var(--amber);font-weight:420}
+  .pq-hero .lead{font-size:clamp(1.05rem,1.7vw,1.3rem);max-width:52ch;color:#E4EFE9}
+  .pq-est{display:inline-flex;gap:10px;align-items:center;background:var(--amber);color:var(--ink);font-weight:800;font-size:.8rem;letter-spacing:.06em;padding:8px 16px;border-radius:999px}
+  .mapa-p{display:grid;grid-template-columns:minmax(0,440px) 1fr;gap:clamp(24px,5vw,64px);align-items:center}
+  @media(max-width:900px){.mapa-p{grid-template-columns:1fr}}
+  .mapa-f{position:relative;border-radius:22px;overflow:hidden;box-shadow:var(--sombra);background:var(--noche);aspect-ratio:1668/2830}
+  .mapa-f img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.85) brightness(.82)}
+  .mapa-f svg{position:absolute;inset:0;width:100%;height:100%}
+  .mapa-f path{fill:none;stroke:var(--amber);stroke-width:9;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 0 10px rgba(232,168,90,.9))}
+  .mapa-f.ya path{animation:traza 3.2s ease-out forwards}
+  @keyframes traza{to{stroke-dashoffset:0}}
+  .mapa-f .rot{position:absolute;color:#fff;font-weight:800;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;text-shadow:0 1px 6px #000;padding:4px 10px;border-radius:999px;background:rgba(8,42,34,.6)}
+  .mapa-f .norte{position:absolute;right:12px;top:12px;width:40px;height:40px;border-radius:50%;background:rgba(8,42,34,.7);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.8rem;line-height:1}
+  .tres-p{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:860px){.tres-p{grid-template-columns:1fr}}
+  .tp{border-radius:22px;overflow:hidden;background:#fff;border:1px solid var(--line)}
+  .tp img{width:100%;aspect-ratio:4/3;object-fit:cover}
+  .tp div{padding:20px 22px 24px}
+  .tp span{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--teal)}
+  .tp h3{font-size:1.6rem;margin:6px 0 8px}
+  .tp p{font-size:.96rem;color:var(--ink-2)}
+  .pieza{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(20px,4vw,52px);align-items:center;margin-bottom:clamp(40px,6vw,72px)}
+  .pieza:nth-child(even) .pz-im{order:2}
+  @media(max-width:860px){.pieza{grid-template-columns:1fr}.pieza:nth-child(even) .pz-im{order:0}}
+  .pz-im{position:relative;border-radius:22px;overflow:hidden;box-shadow:var(--sombra);aspect-ratio:16/10;background:var(--noche)}
+  .pz-im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .6s}
+  .pz-im img.hoy{opacity:0}
+  .pz-im.ver-hoy img.hoy{opacity:1}
+  .pz-im .cambia{position:absolute;left:12px;bottom:12px;display:inline-flex;background:rgba(8,42,34,.85);border-radius:999px;padding:4px;gap:2px;backdrop-filter:blur(6px)}
+  .pz-im .cambia button{border:0;background:none;color:#fff;font-weight:700;font-size:.84rem;padding:8px 14px;border-radius:999px}
+  .pz-im .cambia button[aria-pressed=true]{background:var(--amber);color:var(--ink)}
+  .pz-tx .n{font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--amber)}
+  .pz-tx h3{font-size:clamp(1.6rem,3.2vw,2.3rem);margin:8px 0 10px;color:#fff}
+  .pz-tx p{color:#C4D9D0;font-size:1rem}
+  .pz-tx ul{list-style:none;display:grid;gap:8px;margin:14px 0 0}
+  .pz-tx li{padding:8px 12px;background:rgba(255,255,255,.06);border-radius:10px;font-size:.92rem;color:#E0EDE7}
+  .monto{display:flex;align-items:baseline;gap:10px;margin-top:18px;flex-wrap:wrap}
+  .monto b{font-family:var(--serif);font-size:clamp(2rem,4.4vw,3rem);font-weight:440;color:var(--amber);line-height:1}
+  .monto span{font-size:.86rem;color:#BBD3C9}
+  .cuenta-g{background:#fff;border:1px solid var(--line);border-radius:26px;padding:clamp(22px,4vw,44px);display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(20px,4vw,56px);align-items:center}
+  @media(max-width:860px){.cuenta-g{grid-template-columns:1fr}}
+  .cuenta-g .tot b{font-family:var(--serif);font-size:clamp(3rem,8vw,5.4rem);font-weight:440;line-height:.95;color:var(--teal);display:block}
+  .cuenta-g .tot span{font-weight:700}
+  .cuenta-g .tot p{color:var(--ink-2);font-size:.95rem;margin-top:12px}
+  .barras{display:grid;gap:14px}
+  .barra-i{display:grid;grid-template-columns:1fr auto;gap:2px 12px;font-size:.95rem}
+  .barra-i b{font-weight:700}
+  .barra-i em{font-style:normal;font-weight:700;font-variant-numeric:tabular-nums}
+  .barra-i i{grid-column:1/-1;height:12px;border-radius:6px;background:var(--paper-2);overflow:hidden;display:block}
+  .barra-i i::after{content:"";display:block;height:100%;width:var(--p);background:var(--c,var(--teal));border-radius:6px;transform-origin:left;transform:scaleX(0);transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+  .ya .barra-i i::after{transform:none}
+  .etapas{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(20px,4vw,56px);align-items:start}
+  @media(max-width:860px){.etapas{grid-template-columns:1fr}}
+  .et-l{list-style:none;counter-reset:e;display:grid;gap:8px}
+  .et-l li{counter-increment:e;display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:12px 16px}
+  .et-l li::before{content:counter(e);width:36px;height:36px;border-radius:50%;background:var(--paper-2);display:grid;place-items:center;font-family:var(--serif);font-weight:700}
+  .et-l li.uno{border-color:var(--teal);background:var(--mint)}
+  .et-l li.uno::before{background:var(--teal);color:#fff}
+  .et-l b{font-family:var(--serif);font-weight:600;font-size:1.08rem;display:block;line-height:1.2}
+  .et-l span{font-size:.84rem;color:var(--ink-2)}
+  .et-l em{font-style:normal;font-size:.74rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:var(--paper-2);color:var(--ink-2);white-space:nowrap}
+  .et-l li.uno em{background:var(--teal);color:#fff}
+  .et-plano{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#fff;cursor:zoom-in;display:block;width:100%;padding:0}
+  .suma{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:860px){.suma{grid-template-columns:1fr}}
+  .su{border-radius:24px;padding:28px;background:#0E382E;border:1px solid rgba(255,255,255,.12);display:flex;flex-direction:column}
+  .su h3{font-size:1.5rem;color:#fff;margin:10px 0}
+  .su .q{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--amber)}
+  .su p{color:#C4D9D0;font-size:.96rem}
+  .su ul{list-style:none;margin:14px 0 0;display:grid;gap:8px;font-size:.92rem;color:#E0EDE7}
+  .su li{padding-left:20px;position:relative}
+  .su li::before{content:"";position:absolute;left:0;top:.62em;width:10px;height:2px;background:var(--amber)}
+  .cierre{margin-top:22px;border-radius:26px;background:var(--amber);color:var(--ink);padding:clamp(24px,4vw,44px);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
+  @media(max-width:760px){.cierre{grid-template-columns:1fr}}
+  .cierre h3{font-size:clamp(1.6rem,3.6vw,2.4rem)}
+  .cierre p{margin-top:6px;max-width:56ch}
+  .cierre .btn{background:var(--ink);color:#fff}
+  .gal2{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+  .gal2 button{border:0;padding:0;border-radius:18px;overflow:hidden;cursor:zoom-in;background:var(--noche)}
+  .gal2 img{width:100%;height:100%;object-fit:cover}
+  @media(max-width:700px){.gal2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="marca" href="index.html"><i></i>Ecotonos · Valle de Concá</a>
+    <button class="menu" aria-expanded="false" aria-controls="nav">Menú</button>
+    <nav id="nav" aria-label="Recorrido del sitio">
+      <a href="index.html">El valle hoy</a>
+      <a href="historia.html">Cómo llegamos aquí</a>
+      <a href="propuestas.html" class="on" aria-current="page">Las propuestas</a>
+      <a href="participa.html">Qué sigue</a>
+      <a class="cta" href="index.html#herramientas">Consulta y reporta</a>
+    </nav>
+  </div>
+</header>
+
+<div class="pq-hero">
+  <img src="img/pl/andador-elevado.webp" alt="Imagen del proyecto: una pasarela elevada junto a la Acequia Madre, bajo los árboles" fetchpriority="high">
+  <div class="wrap">
+    <span class="pq-est">CON PLAN MAESTRO · ETAPA 1 PRESUPUESTADA</span>
+    <h1>El parque lineal de la <em>Acequia Madre</em></h1>
+    <p class="lead">Un kilómetro de agua, sombra y encuentro en el corazón de Concá. Ya tiene dictamen ambiental, lugar en el plan municipal y un plan maestro en ocho etapas. Falta hacerlo.</p>
+    <div class="fila">
+      <a class="btn ambar" href="#sumate">Cómo sumarte</a>
+      <a class="btn claro" href="#etapa1">Ver la primera etapa ↓</a>
+    </div>
+    <div class="cifras">
+      <div><b>≈ 1 km</b><span>de acequia, de norte a sur del pueblo</span></div>
+      <div><b data-cuenta="8">8</b><span>etapas en el plan maestro</span></div>
+      <div><b>$2.9 M</b><span>cuesta la primera etapa, con IVA</span></div>
+      <div><b data-cuenta="2">2</b><span>pozas de nado que la gente ya usa</span></div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<section id="lugar">
+  <div class="wrap">
+    <div class="mapa-p">
+      <figure class="mapa-f ver" id="mapa-f">
+        <img src="img/pl/satelite.webp" alt="Imagen de satélite de Concá con el trazo del parque lineal" loading="lazy" width="1668" height="2830">
+        <svg viewBox="0 0 1668 2830" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="M565.7,1936.5 L577.5,1955.5 L587.5,1980.2 L598.9,1989.8 L603.1,1993.4 L639.5,2015.3 L651.8,2020.1 L660.6,2027.2 L669.9,2035.5 L676.4,2047.5 L685.4,2069.6 L686.6,2076.7 L692.7,2094.6 L707.7,2117.6 L723.7,2142.4 L732.3,2149.2 L742.3,2157.5 L779.8,2166.7 L809.7,2177.3 L822.9,2178.6 L831.2,2184.5 L823.9,2206.1 L826.6,2222.6 L829.3,2233.4 L845.8,2247.0 L856.3,2264.1 L857.3,2285.3 L860.6,2303.8 L874.6,2311.7 L886.3,2320.1 L895.5,2329.4 L897.5,2339.6 L894.7,2357.3 L879.3,2359.1 L872.8,2357.5 L862.7,2361.6 L860.9,2364.0 L870.5,2393.4 L880.6,2400.7 L880.8,2410.4 L866.7,2418.6 L862.6,2432.1 L851.9,2449.0 L842.7,2456.6 L837.4,2470.2 L838.4,2476.4 L839.2,2481.6 L839.8,2485.8 L840.3,2489.2 L840.7,2492.0 L840.9,2494.2 L840.9,2495.9 L840.9,2497.3 L840.7,2498.6 L840.4,2499.6 L840.0,2500.6 L839.4,2501.4 L838.6,2502.2 L837.7,2503.0 L836.5,2503.8 L835.1,2504.6 L833.5,2505.6 L831.6,2506.5 L829.6,2507.6 L827.4,2508.7 L825.1,2509.8 L822.6,2511.0 L820.0,2512.2 L817.4,2513.3 L814.8,2514.5 L812.0,2515.6 L809.3,2516.7 L806.6,2517.7 L803.9,2518.7 L801.2,2519.6 L798.5,2520.4 L795.9,2521.0 L793.4,2521.6 L790.9,2522.0 L788.4,2522.1 L785.9,2522.0 L783.3,2521.5 L780.6,2520.6 L777.9,2519.2 L775.0,2517.4 L759.0,2508.2 L750.9,2498.6 L741.4,2496.1 L734.3,2497.0 L719.5,2505.0 L716.1,2512.6" pathLength="1"/><path d="M585.8,1674.7 L591.9,1695.4 L570.7,1722.6 L570.6,1736.1 L571.2,1737.5 L578.8,1748.4 L582.0,1754.3 L586.7,1771.0 L578.5,1798.5 L572.4,1811.5 L571.1,1814.0 L570.6,1818.9 L581.9,1871.5 L593.4,1895.1 L596.5,1905.5 L602.4,1920.0 L602.6,1921.7 L606.1,1925.1 L609.6,1931.5 L668.6,1988.0 L675.0,2000.1 L685.0,2010.5 L699.8,2021.1 L719.8,2070.9 L729.6,2080.4 L729.7,2094.5 L737.5,2109.4 L741.6,2114.7 L752.9,2123.2 L759.9,2131.4 L794.8,2143.6 L818.5,2149.9 L834.0,2151.0 L852.8,2142.3 L865.5,2178.5 L856.4,2206.2 L854.4,2208.1 L854.3,2211.2 L879.5,2242.7 L887.4,2264.1 L891.6,2284.3 L922.2,2308.8 L927.2,2327.3 L926.6,2347.3 L921.2,2371.7 L944.6,2378.8 L890.1,2442.6 L869.3,2496.6 L867.3,2506.0 L869.8,2525.0 L854.3,2544.7 L839.2,2549.9 L800.4,2552.1 L760.2,2548.2 L748.2,2550.7 L749.6,2561.3 L754.4,2567.1 L760.2,2600.1 L756.2,2621.8 L757.4,2637.9 L752.2,2650.9 L720.4,2642.9 L717.4,2640.9 L720.9,2632.2 L719.9,2619.7 L723.6,2599.9 L720.7,2582.9 L715.2,2576.4 L713.0,2558.5 L709.7,2541.9 L701.4,2528.2 L697.7,2525.1 L712.9,2516.5 L715.8,2513.2 L716.1,2512.6" pathLength="1"/><path d="M497.2,1627.8 L498.0,1630.6 L504.4,1647.4 L511.0,1664.3 L519.9,1671.0 L522.9,1695.2 L521.9,1696.5 L516.8,1722.2 L523.9,1751.5 L533.3,1768.4 L533.2,1776.0 L527.5,1786.8 L518.5,1800.6 L518.5,1810.4 L513.4,1819.9 L528.1,1879.6 L533.2,1912.2 L540.0,1928.3" pathLength="1"/><path d="M497.2,1627.9 L497.2,1627.9 L493.6,1614.6 L438.7,1545.7 L432.3,1546.6 L416.2,1538.7 L399.7,1521.8 L394.8,1509.3 L393.1,1508.0 L354.9,1523.4 L332.2,1497.6 L289.4,1479.7 L288.9,1475.7 L290.1,1464.9 L288.3,1444.9 L291.9,1431.1 L294.8,1427.2 L293.4,1372.4 L302.5,1349.1 L302.1,1347.1 L315.0,1306.9 L320.8,1296.3 L322.1,1294.1 L353.1,1270.3" pathLength="1"/><path d="M540.0,1928.3 L549.2,1944.4 L549.2,1944.4 L565.7,1936.5" pathLength="1"/><path d="M712.9,757.7 L711.3,756.4 L707.2,754.8 L698.9,754.5 L689.8,756.1 L682.3,757.5 L669.9,759.2 L662.2,763.1 L656.0,765.8 L650.1,770.5 L644.2,773.7 L640.7,773.8 L632.9,775.0 L610.7,744.8 L608.3,739.5 L606.9,735.6 L603.2,726.6 L602.9,722.2 L600.8,716.0 L600.0,712.5 L599.1,708.5 L599.8,700.9 L599.5,696.9 L600.2,692.4 L600.0,686.9 L601.9,677.9 L604.8,671.7 L610.4,669.5 L616.4,669.5 L620.3,670.3 L626.2,673.1 L630.3,673.1 L638.2,674.9 L641.1,674.7 L645.1,675.0 L650.8,676.1 L655.0,675.1 L658.2,673.9 L661.0,670.7 L660.2,664.9 L659.1,660.5 L658.5,654.8 L653.6,645.0 L652.6,637.1 L655.7,632.8 L665.9,617.2 L668.7,615.7 L685.9,607.9 L687.6,604.6 L690.5,595.5 L692.0,594.0 L694.3,589.1 L699.6,584.3 L702.1,579.1 L705.9,573.9 L700.6,559.6 L698.2,554.1 L695.0,546.6 L692.5,540.1 L689.4,532.7 L688.8,525.3 L689.4,521.7 L698.4,511.3 L703.9,503.8 L702.7,497.8 L701.4,492.7 L701.2,486.1 L698.8,482.1 L695.3,481.0 L689.9,480.5 L684.6,479.8 L679.0,478.9 L673.4,475.7 L668.0,474.5 L661.9,476.9 L648.1,483.9 L640.1,489.3 L636.8,491.5 L623.4,492.8 L613.8,493.3 L604.0,485.7 L589.9,458.0 L582.9,445.1 L584.9,429.7 L595.9,418.7 L601.6,408.8 L598.8,400.1 L598.8,380.6 L614.0,380.5 L614.0,380.3 L607.4,356.1 L611.1,328.4 L583.3,348.3 L560.6,362.8 L552.9,350.6 L574.9,336.4 L603.5,316.1 L603.2,306.2 L615.6,295.0 L619.0,281.1 L635.2,269.6 L647.2,269.1 L654.1,270.1 L659.5,263.4 L677.9,248.1 L690.6,234.7 L698.8,246.7 L698.8,260.1 L697.0,274.6 L686.2,284.2 L679.3,280.9 L674.6,276.3 L663.9,287.8 L667.7,299.3 L676.5,310.5 L683.1,318.3 L683.1,327.8 L671.0,347.3 L647.5,376.0 L644.2,381.1 L641.8,381.2 L642.6,387.1 L647.9,394.4 L657.6,411.5 L659.5,414.7 L661.2,419.8 L660.9,428.1 L680.3,437.6 L684.1,444.8 L694.2,448.8 L705.2,452.8 L718.8,459.0 L726.0,466.1 L738.9,482.6 L731.1,496.9 L733.7,500.9 L732.3,519.7 L721.7,528.8 L719.7,530.5 L718.7,531.5 L723.9,537.4 L735.7,562.8 L735.6,563.6 L737.5,565.3 L738.9,591.7 L724.9,596.8 L721.3,600.6 L718.6,604.8 L716.6,614.9 L708.8,622.2 L705.4,626.4 L694.8,638.2 L682.6,643.2 L685.7,647.4 L688.5,663.3 L692.1,673.8 L684.3,690.5 L676.9,700.4 L673.6,701.8 L675.1,712.0 L682.4,724.0 L687.5,726.7 L692.2,725.5 L702.0,727.5 L712.6,729.2 L715.3,728.2 L724.9,726.7 L736.7,726.4 L739.3,727.5 L756.3,728.9 L757.5,729.2 L758.6,729.2 L761.2,729.9 L762.3,730.3 L762.7,730.4 L763.8,730.4 L766.4,731.1 L767.5,731.5 L767.9,731.6 L769.1,731.6 L771.6,732.3 L772.7,732.7 L773.2,732.8 L779.7,732.8 L779.7,734.6 L785.0,740.2 L785.5,743.6 L786.9,745.1 L787.9,753.8 L788.2,757.7 L790.9,761.0 L792.6,762.8 L795.2,765.6 L797.4,769.0 L798.2,770.3 L798.4,770.1 L803.9,771.1 L804.8,771.4 L804.8,771.3 L813.4,771.3 L817.2,773.3 L819.9,776.1 L821.0,777.1 L822.9,778.5 L824.2,780.0 L827.0,782.0 L827.8,783.3 L829.3,784.5 L830.4,786.3 L830.7,786.4 L832.6,787.2 L833.4,787.4 L835.5,787.8 L841.2,789.2 L844.3,790.7 L847.1,791.9 L849.8,793.4 L851.6,794.1 L852.5,794.4 L854.3,794.1 L857.3,793.7 L859.9,793.4 L864.0,791.8 L867.1,790.2 L870.9,788.8 L872.7,788.2 L874.3,787.3 L877.9,785.0 L880.6,783.4 L882.3,781.5 L887.8,777.9 L891.0,775.8 L896.2,773.0 L898.8,772.0 L901.2,771.2 L903.8,770.4 L906.7,769.3 L915.3,768.7 L918.7,770.9 L920.5,771.9 L922.3,772.7 L925.6,774.4 L930.7,779.4 L934.0,782.6 L935.1,783.6 L935.8,783.7 L941.0,778.9 L953.0,791.8 L954.0,791.7 L958.0,791.7 L961.4,791.7 L962.9,791.7 L966.2,791.3 L968.3,791.0 L969.7,790.5 L972.3,788.4 L976.2,786.0 L979.5,785.4 L981.9,784.9 L984.5,784.9 L985.0,784.9 L986.9,784.5 L988.7,784.3 L988.8,784.0 L993.5,779.5 L999.8,776.5 L1006.0,776.5 L1008.1,776.9 L1008.4,776.7 L1009.4,776.4 L1009.1,776.1 L1005.6,773.8 L1004.5,767.6 L1001.1,761.2 L999.9,752.4 L999.4,749.2 L999.4,747.0 L999.1,743.0 L999.1,740.7 L998.3,737.5 L998.3,733.3 L998.1,732.0 L997.4,728.6 L996.1,724.0 L996.1,721.1 L996.3,719.4 L996.1,718.9 L995.2,716.5 L994.8,714.9 L994.2,713.2 L991.9,706.2 L990.3,700.7 L989.7,698.2 L989.7,696.1 L990.1,694.1 L990.1,693.8 L989.8,692.5 L989.4,689.0 L988.9,686.8 L988.2,684.8 L988.2,683.8 L988.0,683.1 L987.5,682.2 L987.0,680.5 L986.6,679.1 L986.5,678.6 L984.5,676.1 L983.4,670.0 L983.4,667.7 L983.0,663.3 L983.0,659.7 L983.8,657.0 L984.1,653.2 L984.1,650.6 L984.1,648.8 L984.0,647.9 L983.5,646.7 L982.4,644.2 L980.4,641.4 L979.1,639.6 L977.2,636.1 L976.7,630.9 L976.7,628.6 L977.1,625.8 L977.1,623.6 L976.9,622.8 L975.7,619.9 L975.2,618.9 L973.9,618.9 L972.2,611.7 L972.2,608.7 L971.6,605.5 L970.6,601.4 L968.7,594.9 L968.3,593.3 L966.2,593.3 L966.2,589.0 L965.3,588.0 L962.7,585.2 L961.8,581.2 L961.8,576.8 L962.3,573.2 L963.7,569.9 L965.5,564.5 L968.3,563.0 L969.2,561.5 L975.0,559.8 L975.6,559.8 L976.4,558.8 L977.0,557.8 L977.0,557.6 L976.7,555.1 L976.3,550.2 L977.3,544.4 L976.5,541.5 L975.2,534.6 L975.2,530.8 L975.8,527.0 L978.7,520.8 L982.6,521.6 L973.0,511.4 L979.8,504.0 L979.3,502.2 L977.3,497.9 L973.8,490.9 L971.3,484.1 L970.1,477.8 L969.2,471.6 L969.2,467.3 L970.3,464.3 L969.9,459.1 L971.4,452.3 L971.1,449.0 L971.1,445.1 L970.8,442.1 L969.6,436.1 L969.6,427.9 L969.6,422.7 L969.6,419.1 L969.6,409.3 L970.5,404.0 L971.6,400.6 L971.8,397.9 L971.8,397.4 L972.1,395.4 L971.8,393.1 L971.8,388.2 L973.1,383.1 L974.4,377.7 L974.1,376.3 L973.3,366.1 L974.6,360.7 L975.7,356.0 L977.9,346.8 L979.1,345.0 L979.5,343.8 L981.2,341.2 L982.2,337.4 L983.5,334.0 L986.1,328.5 L987.5,324.9 L988.7,321.1 L990.1,317.9 L991.4,313.4 L989.3,313.2 L988.0,302.8 L991.2,298.4 L994.2,295.2 L996.6,293.0 L997.9,291.3 L1000.4,287.4 L1005.6,285.3 L1008.2,284.6 L1011.8,282.6 L1016.1,281.3 L1018.7,280.4 L1020.8,278.7 L1015.5,266.0 L1021.0,256.3 L1022.8,252.5 L1025.0,248.1 L1026.9,244.1 L1030.9,236.0 L1034.7,232.9 L1036.5,232.6 L1040.3,228.5 L1043.4,226.1 L1045.7,224.5 L1046.9,223.6 L1047.9,222.0 L1051.5,220.1 L1054.2,220.1 L1055.4,220.1 L1059.9,221.3 L1061.2,223.2 L1062.1,223.5 L1064.6,223.3 L1068.6,223.6 L1069.9,223.4 L1072.4,222.6 L1073.7,221.7 L1076.0,220.5 L1078.1,219.2 L1086.5,215.5 L1089.3,214.0 L1094.0,211.5 L1095.5,209.0 L1099.3,206.7 L1102.8,202.5 L1108.7,199.6 L1112.1,197.7 L1115.9,195.3 L1124.1,190.9 L1127.0,190.0 L1130.4,188.6 L1136.0,187.8 L1143.2,185.7 L1148.2,185.1 L1150.4,185.7 L1154.3,186.1 L1159.0,187.6 L1161.7,190.4 L1163.5,192.4 L1164.0,193.4 L1164.2,193.7 L1165.5,194.1 L1165.8,194.2 L1201.1,180.2 L1357.1,221.7 L1380.8,222.3" pathLength="1"/><path d="M782.9,793.2 L781.8,796.5 L774.5,806.3 L771.8,810.1 L769.1,814.0 L765.9,818.0 L760.4,822.7 L754.5,826.0 L745.5,829.1 L743.6,828.2 L734.3,831.3 L728.6,832.3 L717.7,833.4 L710.3,835.3 L705.5,836.7 L697.9,839.1 L686.6,842.4 L675.4,847.9 L672.0,851.7 L670.7,855.9 L667.2,862.4 L665.2,870.1 L661.7,876.3 L661.4,881.0 L659.0,892.9 L657.8,899.2 L655.8,902.9 L652.6,910.7 L650.2,918.6 L647.7,922.0 L651.3,927.7 L664.8,935.3 L672.5,940.5 L678.7,945.5 L682.1,949.6 L684.7,955.3 L687.4,969.6 L686.7,974.2 L688.2,983.1 L687.2,987.0 L689.5,990.5 L688.1,1005.9 L685.5,1013.1 L684.3,1021.3 L684.8,1026.6 L684.0,1032.0 L680.6,1038.8 L675.4,1044.3 L669.3,1043.9 L663.9,1040.8 L659.0,1037.7 L654.3,1036.7 L649.0,1037.7 L642.3,1040.6 L632.7,1046.3 L627.0,1050.7 L609.4,1055.3 L604.4,1056.3 L600.2,1056.2 L596.8,1055.8 L593.7,1056.4 L588.6,1059.6 L581.4,1065.4 L576.4,1070.5 L569.9,1074.2 L564.4,1079.7 L556.9,1083.6 L555.7,1087.9 L557.6,1090.5 L554.5,1096.6 L552.9,1100.5 L550.2,1103.6 L554.0,1109.6 L548.2,1116.6 L546.8,1125.3 L547.5,1134.8 L547.9,1145.2 L539.1,1177.1 L525.5,1208.2 L525.0,1226.8 L495.3,1217.8 L491.5,1221.0 L470.4,1232.4 L460.3,1237.2 L450.1,1241.7 L439.8,1245.9 L429.4,1249.9 L418.9,1253.6 L408.3,1257.1 L397.6,1260.2 L389.6,1262.4 L381.9,1253.1 L356.0,1267.9 L353.1,1270.3 L353.1,1270.3" pathLength="1"/><path d="M483.8,1380.9 L483.8,1380.9 L505.9,1371.9 L522.1,1356.0 L522.6,1348.6 L531.0,1343.3 L547.9,1305.0 L548.7,1269.2 L544.1,1257.2 L542.4,1249.2 L543.4,1212.2 L555.9,1183.8 L565.2,1144.3 L564.8,1134.4 L564.1,1125.9 L564.7,1121.0 L566.6,1115.6 L567.1,1110.3 L568.1,1108.9 L570.0,1104.4 L577.2,1091.7 L580.6,1088.5 L587.5,1084.7 L593.6,1077.9 L598.5,1073.9 L599.2,1073.5 L604.7,1074.3 L614.6,1072.5 L623.0,1069.5 L635.0,1066.6 L642.5,1060.2 L649.4,1056.3 L653.8,1054.6 L657.1,1056.0 L664.6,1060.0 L681.5,1061.6 L681.5,1061.6" pathLength="1"/><path d="M685.1,1058.2 L691.2,1054.6 L691.5,1052.0 L695.1,1048.5 L700.4,1037.2 L702.1,1028.1 L701.8,1022.2 L702.6,1017.1 L705.3,1009.9 L707.4,985.7 L705.3,982.4 L704.1,973.3 L704.1,968.1 L701.0,950.4 L696.7,940.6 L690.5,933.1 L682.5,926.3 L673.4,920.5 L669.3,918.2 L671.6,910.8 L674.8,905.2 L676.5,895.5 L681.3,880.5 L684.4,870.9 L687.4,861.6 L693.2,858.6 L703.3,855.9 L710.5,853.4 L714.8,852.3 L721.0,850.7 L734.2,849.3 L740.9,847.6 L743.6,846.8 L746.5,847.6 L763.0,841.3 L770.1,837.4 L778.0,831.1 L784.1,823.1 L786.8,818.3 L790.1,814.0 L793.6,809.7 L798.1,804.9 L802.3,790.2 L800.0,784.3 L800.2,784.4 L801.2,783.6 L802.5,784.1 L802.6,784.2 L805.4,786.2 L811.6,791.5 L814.6,788.3 L815.9,789.6 L817.6,790.8 L818.3,791.9 L819.6,792.9 L820.1,794.5 L822.5,797.1 L825.3,798.1 L826.6,798.4 L828.4,799.2 L830.6,799.8 L832.9,800.2 L837.0,801.2 L839.1,802.2 L841.5,803.3 L844.7,805.0 L847.4,806.0 L851.0,807.3 L855.9,806.7 L858.9,806.3 L863.0,805.8 L869.3,803.4 L872.2,801.8 L875.1,800.8 L877.8,799.8 L880.7,798.3 L884.5,795.8 L888.5,793.4 L890.5,791.3 L894.7,788.5 L897.5,786.6 L901.3,784.6 L903.1,784.0 L905.2,783.2 L907.8,782.4 L909.3,781.8 L912.0,781.7 L912.3,781.9 L915.0,783.3 L916.9,784.1 L918.1,784.8 L921.9,788.6 L925.4,791.8 L929.5,795.6 L933.6,796.2 L935.9,797.1 L942.3,799.7 L943.6,800.5 L947.6,805.0 L951.4,804.7 L955.3,806.8 L957.1,804.4 L958.0,804.4 L961.4,804.4 L963.6,804.4 L967.7,803.9 L971.5,803.4 L976.1,801.5 L979.5,798.8 L980.8,798.0 L982.0,797.8 L983.3,797.5 L984.5,797.5 L986.1,797.5 L988.7,797.1 L992.6,796.6 L998.3,794.6 L999.5,791.2 L1000.8,790.1 L1002.7,789.1 L1004.7,789.1 L1009.5,790.2 L1013.1,788.9 L1014.3,788.1 L1015.4,787.7 L1016.5,786.9 L1016.8,786.8 L1019.3,785.8 L1020.1,785.0 L1021.7,784.5 L1022.8,783.7 L1023.9,783.3 L1030.6,778.5 L1026.0,771.0 L1022.5,768.8 L1017.6,766.7 L1017.2,766.3 L1017.1,766.2 L1016.6,763.5 L1013.3,757.2 L1012.3,750.7 L1012.0,748.3 L1012.0,746.5 L1011.6,742.4 L1011.6,739.2 L1010.9,736.0 L1010.9,732.1 L1010.4,729.5 L1009.6,725.6 L1008.7,722.2 L1008.7,721.9 L1009.2,718.0 L1007.9,714.5 L1007.3,712.9 L1006.9,711.3 L1006.1,709.0 L1003.9,702.4 L1002.5,697.5 L1002.4,697.0 L1002.7,695.3 L1002.7,692.3 L1002.2,690.4 L1001.9,686.7 L1001.0,683.3 L1000.8,682.9 L1000.8,681.5 L999.6,678.2 L999.3,677.6 L999.1,676.8 L998.8,675.8 L998.1,673.1 L996.3,670.8 L996.0,668.9 L996.0,667.2 L995.6,662.8 L995.6,661.6 L996.3,659.4 L996.7,653.7 L996.7,650.6 L996.7,647.6 L996.2,644.5 L995.1,641.7 L993.3,637.8 L990.7,634.2 L989.8,632.8 L989.5,632.2 L989.3,630.3 L989.3,629.4 L989.6,626.6 L989.6,622.4 L989.0,619.2 L987.2,614.8 L984.8,609.5 L984.8,607.6 L983.9,602.8 L982.7,598.1 L980.9,591.7 L980.1,588.5 L976.0,573.6 L976.7,573.3 L977.3,572.4 L981.5,572.4 L986.6,566.2 L989.0,562.3 L989.7,557.8 L989.2,553.8 L989.0,550.7 L990.2,543.7 L988.7,538.6 L988.0,534.9 L989.7,534.5 L995.0,532.2 L997.7,529.8 L999.6,528.9 L1002.2,527.5 L1006.3,523.1 L1004.6,518.5 L1004.6,513.9 L1001.0,510.1 L996.8,507.9 L993.7,508.3 L993.5,507.8 L992.9,503.8 L991.1,497.8 L988.7,492.4 L985.4,485.9 L983.5,480.6 L982.5,475.7 L981.8,470.7 L981.8,469.4 L983.0,466.0 L982.6,460.0 L984.1,453.1 L983.7,448.4 L983.7,444.4 L983.2,440.2 L982.2,434.9 L982.2,427.9 L982.2,422.7 L982.2,419.1 L982.2,410.4 L982.8,406.9 L984.0,403.1 L984.4,398.6 L984.4,398.3 L984.9,395.5 L984.4,392.2 L984.4,389.8 L984.7,388.7 L990.4,387.8 L987.2,377.4 L986.6,374.5 L986.0,367.1 L986.9,363.7 L988.0,358.8 L989.6,352.0 L990.6,350.6 L991.0,349.3 L992.9,346.4 L994.2,341.3 L995.1,339.1 L997.7,333.4 L999.4,329.0 L1000.4,325.6 L1002.0,322.4 L1004.3,313.8 L1007.3,302.1 L1005.6,301.9 L1005.9,301.6 L1008.3,298.5 L1008.9,297.6 L1009.6,297.3 L1012.9,296.4 L1016.8,294.4 L1019.9,293.3 L1024.8,291.8 L1027.9,289.2 L1031.6,289.2 L1033.1,283.0 L1034.4,278.6 L1029.5,266.9 L1032.2,262.2 L1034.1,258.0 L1036.4,253.6 L1038.2,249.6 L1040.7,244.7 L1042.8,244.3 L1048.7,237.9 L1050.8,236.3 L1053.0,234.8 L1054.1,234.0 L1060.5,236.5 L1064.7,236.0 L1068.9,236.4 L1072.8,235.8 L1077.8,234.2 L1080.1,232.7 L1082.4,231.5 L1084.0,230.4 L1092.0,226.9 L1092.7,226.6 L1096.5,231.7 L1104.6,218.2 L1107.5,216.5 L1110.7,212.7 L1114.5,210.8 L1118.5,208.7 L1122.2,206.2 L1128.9,202.7 L1131.2,202.0 L1133.8,200.9 L1138.7,200.2 L1145.6,198.2 L1147.3,198.0 L1148.1,198.2 L1151.7,198.6 L1152.2,198.7 L1152.5,199.1 L1152.9,199.6 L1153.2,200.1 L1156.7,204.6 L1162.9,206.6 L1166.4,207.0 L1167.0,207.3 L1172.2,209.5 L1176.9,209.5 L1180.5,209.0 L1188.6,207.5 L1192.0,207.5 L1194.4,208.5 L1200.2,209.6 L1203.4,211.1 L1207.0,211.1 L1210.5,211.1 L1211.2,210.7 L1213.1,211.4 L1215.4,210.8 L1217.8,211.0 L1219.9,212.2 L1219.9,212.3 L1220.7,213.5 L1222.3,215.2 L1226.9,218.5 L1231.9,220.3 L1236.4,222.3 L1242.1,224.3 L1244.6,224.3 L1246.7,225.9 L1251.2,228.0 L1255.9,229.1 L1262.4,229.1 L1265.7,228.1 L1266.2,228.0 L1267.8,228.2 L1270.2,228.8 L1272.5,229.9 L1276.8,231.4 L1281.0,231.9 L1285.9,232.3 L1287.6,232.7 L1289.2,233.8 L1293.1,237.4 L1300.2,239.2 L1304.6,239.2 L1310.8,238.7 L1315.0,237.9 L1318.1,237.5 L1322.1,237.1 L1325.9,236.8 L1329.7,236.8 L1333.1,237.1 L1336.9,237.5 L1341.3,238.0 L1345.8,237.5 L1346.3,237.4 L1379.1,246.2 L1380.8,222.3" pathLength="1"/><path d="M712.9,757.7 L712.8,757.7 L712.4,758.8 L714.5,760.3 L723.3,761.5 L727.2,764.2 L732.5,767.0 L731.4,770.7 L736.1,774.7 L744.9,779.8 L749.0,780.6 L754.9,783.3 L760.4,784.5 L765.9,785.7 L768.1,788.2 L767.7,790.3 L782.9,793.2" pathLength="1"/><path d="M539.7,1584.6 L539.7,1584.6 L535.1,1568.0 L531.3,1560.9 L538.5,1553.7 L538.4,1542.0 L545.5,1531.9 L531.6,1480.2 L529.5,1463.3 L507.0,1442.4 L498.2,1441.1 L498.3,1441.1 L483.8,1380.9" pathLength="1"/><path d="M548.6,1277.4 L548.5,1277.5 L547.9,1305.0 L531.0,1343.3 L522.6,1348.7 L522.0,1356.0 L505.8,1371.9 L483.8,1380.9 L498.3,1441.2 L507.0,1442.4 L529.4,1463.4 L531.5,1480.3 L545.5,1532.0 L538.4,1542.1 L538.4,1553.7 L531.3,1561.0 L535.1,1568.0 L547.7,1613.7 L549.2,1626.8 L568.2,1640.2 L582.1,1655.6 L585.8,1674.7" pathLength="1"/></svg>
+        <span class="rot" style="left:5%;top:56%">Concá</span>
+        <span class="rot" style="left:50%;top:38%">Parcelas de riego</span>
+        <span class="rot" style="left:40%;top:6%">Manantiales</span>
+        <span class="norte">N<br>↑</span>
+      </figure>
+      <div>
+        <div class="sec-cab ver">
+          <p class="ceja">El lugar</p>
+          <h2>Justo donde el pueblo toca las parcelas</h2>
+          <p>La Acequia Madre nace en los manantiales, al norte, y baja bordeando el pueblo. De un lado quedan las casas; del otro, la tierra de riego. Esa orilla es el parque.</p>
+        </div>
+        <div class="prosa ver d1">
+          <p>Hoy ya existe como costumbre: la gente camina por ahí, se baña en las pozas y cruza por sus dos pasos. Lo que no existe es la protección. Hay casas que descargan aguas residuales al cauce y la ribera corre el riesgo de ir quedando en manos privadas, barda por barda.</p>
+          <p>El proyecto busca tres cosas: conservar la ribera y el cauce, mantener el uso público del espacio, y que sirva de ejemplo para otros cauces dentro de los pueblos de la Reserva de la Biosfera Sierra Gorda.</p>
+          <p class="aviso">La línea ámbar es el trazo del parque según el levantamiento del equipo. Imagen: Esri World Imagery, Maxar (febrero de 2026).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="idea" class="crema">
+  <div class="wrap">
+    <div class="sec-cab ver">
+      <p class="ceja">La idea</p>
+      <h2>Tres parques en uno</h2>
+      <p>El plan maestro lee la acequia en tres tramos, cada uno con su carácter, y los une con un mismo propósito: conservar, convivir y aprender.</p>
+    </div>
+    <div class="tres-p">
+      <div class="tp ver"><img src="img/pl/nado.webp" alt="Imagen del proyecto: una poza de la acequia con piedras para sentarse" loading="lazy"><div><span>Conservar</span><h3>El bosque</h3><p>El tramo más húmedo y arbolado, junto a los manantiales. Aquí se camina sobre pasarelas para que el suelo y la vegetación se regeneren solos.</p></div></div>
+      <div class="tp ver d1"><img src="img/pl/largo-arbol.webp" alt="Imagen del proyecto: niñas y niños jugando en un andador empedrado bajo los árboles" loading="lazy"><div><span>Convivir</span><h3>El corazón</h3><p>Donde desembocan las calles del pueblo y están las pozas. Es el lugar de encuentro: andadores con sombra, gradas y un mirador hacia las parcelas.</p></div></div>
+      <div class="tp ver d2"><img src="img/pl/bosque.webp" alt="Imagen del proyecto: un andador con árboles en flor, gente caminando y un puesto de fruta" loading="lazy"><div><span>Aprender</span><h3>La trama</h3><p>Las calles que llegan al parque se vuelven andadores que filtran el agua de lluvia antes de que toque la acequia. El pueblo entero aprende a cuidar su agua.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="etapa1" class="oscura">
+  <div class="wrap">
+    <div class="sec-cab ver">
+      <p class="ceja">Primera etapa · Tres calles y sendero del parque</p>
+      <h2>Por dónde se empieza, y por qué ahí</h2>
+      <p>Se eligió este tramo porque concentra el uso actual del parque y porque, al terminarse, se lee como una pieza completa aunque las siguientes etapas tarden en llegar. Empezar en otro punto dejaría la sensación de una obra a medias.</p>
+    </div>
+
+    <div class="piezas">
+      <div class="pieza ver">
+        <div class="pz-im"><img src="img/pl/andador-elevado.webp" alt="Imagen del proyecto: pasarela semielevada junto a la acequia" loading="lazy"></div>
+        <div class="pz-tx"><span class="n">Pieza 1 · Los senderos del parque</span><h3>Caminar sin pisar el suelo</h3>
+          <p>Una pasarela semielevada recorre el tramo más húmedo. Permite pasear sin compactar la tierra, y debajo de ella la vegetación se regenera por sí sola.</p>
+          <ul><li>Dos pozas que la gente ya usa, La Guayabita y La Pancita, se arreglan como lugares para estar, con losas para secarse</li><li>Cerramientos de vara y alambre en vez de malla, que cierran el terreno vecino sin amurallar el parque</li><li>Regeneración de la vegetación nativa de la ribera</li></ul>
+          <div class="monto"><b>$1,407,515</b><span>presupuesto paramétrico, sin IVA</span></div>
+        </div>
+      </div>
+      <div class="pieza ver">
+        <div class="pz-im" data-par><img src="img/pl/acequia-prop.webp" alt="Imagen del proyecto: el andador de la Acequia Madre con pavimento permeable y un árbol en flor" loading="lazy"><img class="hoy" src="img/pl/acequia-hoy.webp" alt="La misma calle hoy" loading="lazy"><div class="cambia"><button aria-pressed="true" data-v="prop">Propuesta</button><button aria-pressed="false" data-v="hoy">Hoy</button></div></div>
+        <div class="pz-tx"><span class="n">Pieza 2 · Andador Acequia Madre</span><h3>Una calle que filtra el agua</h3>
+          <p>La calle se vuelve andador de convivencia, al mismo nivel que la banqueta. El pavimento es permeable y los árboles se plantan en cajetes que también absorben la lluvia.</p>
+          <div class="monto"><b>$405,155</b><span>presupuesto paramétrico, sin IVA</span></div>
+        </div>
+      </div>
+      <div class="pieza ver">
+        <div class="pz-im" data-par><img src="img/pl/carranza-prop.webp" alt="Imagen del proyecto: el andador Venustiano Carranza con niños corriendo" loading="lazy"><img class="hoy" src="img/pl/carranza-hoy.webp" alt="La misma calle hoy" loading="lazy"><div class="cambia"><button aria-pressed="true" data-v="prop">Propuesta</button><button aria-pressed="false" data-v="hoy">Hoy</button></div></div>
+        <div class="pz-tx"><span class="n">Pieza 3 · Andador Venustiano Carranza</span><h3>Sombra para llegar caminando</h3>
+          <p>El mismo sistema de concreto y adoquín permeable, con arbolado para dar sombra todo el trayecto. La calle sigue sirviendo a sus vecinos, pero manda quien camina.</p>
+          <div class="monto"><b>$335,518</b><span>presupuesto paramétrico, sin IVA</span></div>
+        </div>
+      </div>
+      <div class="pieza ver">
+        <div class="pz-im" data-par><img src="img/pl/victoria-prop.webp" alt="Imagen del proyecto: el andador Guadalupe Victoria con un árbol al centro" loading="lazy"><img class="hoy" src="img/pl/victoria-hoy.webp" alt="La misma calle hoy" loading="lazy"><div class="cambia"><button aria-pressed="true" data-v="prop">Propuesta</button><button aria-pressed="false" data-v="hoy">Hoy</button></div></div>
+        <div class="pz-tx"><span class="n">Pieza 4 · Andador Guadalupe Victoria</span><h3>La calle que termina en mirador</h3>
+          <p>Baja hasta una de las pozas por una escalera, con gradas y un mirador hacia el paisaje agrícola. Al final, un jardín de lluvia limpia el agua antes de que llegue a la acequia.</p>
+          <div class="monto"><b>$353,943</b><span>presupuesto paramétrico, sin IVA</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cuenta">
+  <div class="wrap">
+    <div class="sec-cab ver">
+      <p class="ceja">La cuenta</p>
+      <h2>Lo que cuesta empezar</h2>
+    </div>
+    <div class="cuenta-g ver">
+      <div class="tot"><b>$2,902,474</b><span>pesos, con IVA, para toda la primera etapa</span>
+        <p>Son $2,502,132 de obra más 16% de IVA. El monto ya incluye 25% de imprevistos. Es un presupuesto paramétrico al 30 de septiembre de 2026: sirve para gestionar, y se afina con el proyecto ejecutivo.</p></div>
+      <div class="barras">
+        <div class="barra-i" style="--p:56.3%"><b>Senderos del parque y pozas</b><em>$1,407,515</em><i></i></div>
+        <div class="barra-i" style="--p:16.2%;--c:var(--agua-d)"><b>Andador Acequia Madre</b><em>$405,155</em><i></i></div>
+        <div class="barra-i" style="--p:14.1%;--c:var(--urbano-d)"><b>Andador Guadalupe Victoria</b><em>$353,943</em><i></i></div>
+        <div class="barra-i" style="--p:13.4%;--c:var(--natural-d)"><b>Andador Venustiano Carranza</b><em>$335,518</em><i></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="etapas" class="crema">
+  <div class="wrap">
+    <div class="sec-cab ver">
+      <p class="ceja">El plan completo</p>
+      <h2>Ocho etapas que funcionan juntas</h2>
+      <p>Cuatro etapas trabajan sobre las calles que conectan con el parque o con el predio de los manantiales; las otras cuatro, sobre el parque mismo. Las primeras preparan el diseño de las siguientes.</p>
+    </div>
+    <div class="etapas">
+      <ol class="et-l ver">
+        <li class="uno"><div><b>Tres calles y sendero del parque</b><span>Tres andadores, pasarelas y las dos pozas</span></div><em>Presupuestada</em></li>
+        <li><div><b>Andadores y equipamiento</b></div><em>Por presupuestar</em></li>
+        <li><div><b>Andadores del bosquecito</b></div><em>Por presupuestar</em></li>
+        <li><div><b>El largo del árbol milenario</b></div><em>Por presupuestar</em></li>
+        <li><div><b>Sendero del manantial</b></div><em>Por presupuestar</em></li>
+        <li><div><b>Recorrido del parque lineal, primer tramo</b></div><em>Por presupuestar</em></li>
+        <li><div><b>Recorrido del parque lineal, segundo tramo</b></div><em>Por presupuestar</em></li>
+        <li><div><b>Los Puentes</b></div><em>Por presupuestar</em></li>
+      </ol>
+      <div class="ver d1">
+        <button class="et-plano" data-ampliar="img/pl/etapas.webp" data-cap="Plano de etapas del Plan Maestro del Parque Lineal de la Acequia Madre"><img src="img/pl/etapas.webp" alt="Plano de etapas del plan maestro" loading="lazy"></button>
+        <p class="aviso">Plano de etapas del plan maestro. Toca para ampliar.</p>
+        <div class="gal2" style="margin-top:14px">
+          <button data-ampliar="img/pl/largo-arbol-2.webp" data-grupo="pq" data-cap="Imagen del proyecto: el largo del árbol milenario"><img src="img/pl/largo-arbol-2.webp" alt="Imagen del proyecto: un camino empedrado con sombra" loading="lazy"></button>
+          <button data-ampliar="img/pl/bosque-2.webp" data-grupo="pq" data-cap="Imagen del proyecto: andadores del bosquecito"><img src="img/pl/bosque-2.webp" alt="Imagen del proyecto: un andador con ciclistas" loading="lazy"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="avance">
+  <div class="wrap">
+    <div class="dos">
+      <div>
+        <div class="sec-cab ver" style="margin-bottom:18px">
+          <p class="ceja">Lo que ya se caminó</p>
+          <h2>No empieza de cero</h2>
+          <p>Llevamos varios años con los vecinos, los propietarios colindantes y el ejido. Esto es lo que ya está resuelto y lo que sigue abierto.</p>
+        </div>
+        <ul class="estado ver d1">
+          <li class="ok"><i>✓</i><div><b>Diseño hecho con la gente</b><small>Entrevistas, talleres comunitarios y un anteproyecto socializado con vecinos y ejidatarios.</small></div></li>
+          <li class="ok"><i>✓</i><div><b>El manantial El Abanico ya es protección ecológica</b><small>Dejó de estar clasificado como zona urbana.</small></div></li>
+          <li class="ok"><i>✓</i><div><b>Dictamen de impacto ambiental</b><small>Obtenido ante SEMARNAT en 2024.</small></div></li>
+          <li class="ok"><i>✓</i><div><b>Dentro del plan municipal</b><small>La Acequia Madre de Concá es un área de actuación del PMDU aprobado en enero de 2026.</small></div></li>
+          <li class="ok"><i>✓</i><div><b>Plan maestro en ocho etapas</b><small>Trabajado durante 2026 en talleres con estudiantes y docentes de Arquitectura de la UAQ.</small></div></li>
+          <li class="curso"><i>…</i><div><b>Concesión de la zona federal</b><small>En trámite ante CONAGUA: cinco metros a cada lado del cauce.</small></div></li>
+          <li class="falta"><i>$</i><div><b>Recursos para la primera etapa</b><small>Es lo que falta. Para eso es esta página.</small></div></li>
+        </ul>
+      </div>
+      <div class="prosa ver d2">
+        <h3>Cómo cuida el agua</h3>
+        <p>El parque no es solo un paseo: es parte del sistema que alimenta a los manantiales. Las calles que bajan hacia la acequia dejan de mandarle el agua sucia de la lluvia. El pavimento permeable y los cajetes de los árboles la absorben; lo que escurre termina en un jardín de lluvia que la filtra antes de llegar al cauce.</p>
+        <h3>Y a los vecinos</h3>
+        <p>Las bardas de malla se sustituyen por cerramientos diseñados: de vara y alambre hacia el campo, de celosía de ladrillo hacia las casas. Dan al colindante la certeza de que su terreno queda cerrado al paso, y al parque, un borde cuidado en lugar de un muro.</p>
+        <details class="mas"><summary>Reglas que propone el plan para los predios vecinos</summary>
+          <p>El plan maestro propone que las manzanas alrededor del parque conserven un mínimo de suelo sin pavimentar: 75% en las rurales, 50% en las mixtas y 35% en las urbanas, y cinco puntos más si colindan con el parque.</p>
+          <p>También propone que las construcciones se abran hacia el parque en vez de darle la espalda con bardas ciegas, que el agua de lluvia se infiltre dentro de cada predio, y que las alturas bajen conforme se acercan a la acequia. Son propuestas: se discuten con los vecinos y el municipio.</p></details>
+        <div class="fila" style="margin-top:20px">
+          <a class="btn linea chico" href="https://labrural.org/wp-content/uploads/2025/01/Resumen_proyecto_parque_linieal_conca.pdf" target="_blank" rel="noopener">Resumen del proyecto ↗</a>
+          <a class="btn linea chico" href="https://labrural.org/wp-content/uploads/2025/01/paleta_vegetal_parque_lineal_conca.pdf" target="_blank" rel="noopener">Paleta vegetal ↗</a>
+          <a class="btn linea chico" href="https://labrural.org/wp-content/uploads/2025/01/plano_zona-federal_parque_lineal_conca.pdf" target="_blank" rel="noopener">Plano de zona federal ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sumate" class="oscura">
+  <div class="wrap">
+    <div class="sec-cab ver">
+      <p class="ceja">Cómo sumarte</p>
+      <h2>Tres maneras de hacer que suceda</h2>
+      <p>El diseño está, los permisos avanzan y la gente lo quiere. Lo que falta se puede poner de varias formas.</p>
+    </div>
+    <div class="suma">
+      <div class="su ver"><span class="q">Si representas a una institución o un fondo</span><h3>Financia una pieza</h3><p>La primera etapa se puede tomar completa o por partes. Cada pieza funciona sola y tiene su monto.</p><ul><li>Un andador: desde $335 mil</li><li>Los senderos y las pozas: $1.4 millones</li><li>La etapa completa: $2.9 millones con IVA</li></ul></div>
+      <div class="su ver d1"><span class="q">Si tienes una empresa o un oficio</span><h3>Aporta en especie</h3><p>Mucho de lo que hace falta no es dinero. Son cosas que alguien del valle ya sabe hacer o producir.</p><ul><li>Árboles nativos: la etapa 1 pide veinte</li><li>Bancas, botes y señalización</li><li>Adoquín, piedra, vara y mano de obra</li></ul></div>
+      <div class="su ver d2"><span class="q">Si eres autoridad o conoces el camino</span><h3>Abre una puerta</h3><p>Hay programas y convocatorias donde este proyecto cabe, y trámites que se destraban con una llamada.</p><ul><li>Incluirlo en un programa de obra o inversión</li><li>Acompañar la concesión de zona federal</li><li>Presentarnos con quien decide</li></ul></div>
+    </div>
+    <div class="cierre ver">
+      <div><h3>¿Platicamos?</h3><p>Escríbenos y te mandamos el plan maestro, el presupuesto desglosado y los planos. Si quieres conocer el lugar, te llevamos a caminarlo.</p></div>
+      <a class="btn" href="mailto:info@labrural.org?subject=Parque%20lineal%20de%20la%20Acequia%20Madre">info@labrural.org</a>
+    </div>
+  </div>
+</section>
+
+<section class="sigue-s" style="padding-top:clamp(40px,6vw,72px)">
+  <div class="wrap">
+    <a class="sigue" href="propuestas.html"><small>El parque es parte de algo más grande</small><b>Las siete propuestas para el valle <i>→</i></b><span>El parque lineal es el ejemplo vivo de lo que el proyecto llama ecotono.</span></a>
+  </div>
+</section>
+
+</main>
+
+<div class="creditos"><div class="wrap">
+  <img src="logos/uaq.svg" alt="Universidad Autónoma de Querétaro" width="115" height="49">
+  <img class="cuadro" src="logos/ctip.svg" alt="Grupo Colegiado Ciudad, Territorio e Investigación Proyectual, Facultad de Ingeniería" width="172" height="172">
+  <img src="logos/labrural.png" alt="Laboratorio de Desarrollo Rural, UAQ" width="285" height="158">
+</div></div>
+
+<footer>
+  <div class="wrap">
+    <div class="g">
+      <div>
+        <h4>Ecotonos urbanos y rurales del valle agrícola de Concá</h4>
+        <p>Prospectivas para el ordenamiento territorial sostenible del paisaje de Concá, municipio de Arroyo Seco, en la Reserva de la Biosfera Sierra Gorda. Proyecto de investigación aplicada de la Universidad Autónoma de Querétaro: Laboratorio de Desarrollo Rural (Facultad de Ciencias Naturales, Campus Concá) y Grupo Colegiado Ciudad, Territorio e Investigación Proyectual (Facultad de Ingeniería).</p>
+      </div>
+      <div>
+        <h4>Equipo y contacto</h4>
+        <ul>
+          <li>Dr. Miguel Ángel Bartorila, responsable</li>
+          <li>Dr. Eduardo Luna Sánchez, Laboratorio de Desarrollo Rural</li>
+          <li><a href="mailto:info@labrural.org">info@labrural.org</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Sigue explorando</h4>
+        <ul>
+          <li><a href="../index.html">CIDAF · UAQ Campus Concá</a></li>
+          <li><a href="../politica-publica.html">Política pública para Arroyo Seco</a></li>
+          <li><a href="https://labrural.org" target="_blank" rel="noopener">labrural.org</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fin"><span>Universidad Autónoma de Querétaro · Campus Concá</span><span>Alojado en el sitio del CIDAF</span></div>
+  </div>
+</footer>
+
+<script src="js/datos.js?v=3"></script>
+<script src="js/ecotonos.js?v=7"></script>
+<script>
+document.querySelectorAll('[data-par]').forEach(function (c) {
+  c.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return;
+    c.classList.toggle('ver-hoy', b.dataset.v === 'hoy');
+    c.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); });
+});
+</script>
+</body>
+</html>
