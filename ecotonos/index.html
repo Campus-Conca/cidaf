@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/hero.webp" media="(min-width:701px)">
 <link rel="preload" as="image" href="img/hero-m.webp" media="(max-width:700px)">
-<link rel="stylesheet" href="css/ecotonos.css?v=5">
+<link rel="stylesheet" href="css/ecotonos.css?v=6">
 </head>
 <body>
 
@@ -47,8 +47,8 @@
     <h1>El valle se cuida <em>desde adentro</em></h1>
     <p class="lead">Un proceso participativo para decidir, entre todas y todos, cómo crece el valle sin perder lo que lo hace vivir: sus tierras de riego, su agua y su gente.</p>
     <div class="fila">
-      <a class="btn ambar" href="#valle">Empieza por aquí ↓</a>
-      <a class="btn claro" href="propuestas.html">Ir directo a las propuestas</a>
+      <a class="btn ambar" href="#video" data-reproduce="#video .video button"><span class="tri">▶</span> Mira el proyecto en 2 minutos</a>
+      <a class="btn claro" href="#valle">Empieza a recorrerlo ↓</a>
     </div>
     <div class="cifras">
       <div><b data-cuenta="3">3</b><span>talleres participativos en 2025</span></div>
@@ -61,6 +61,21 @@
 </div>
 
 <main>
+
+<!-- ═══════════ EL PROYECTO EN VIDEO ═══════════ -->
+<section id="video" class="oscura video-s">
+  <div class="wrap">
+    <div class="video-p">
+      <div class="sec-cab ver">
+        <p class="ceja">Si solo tienes dos minutos</p>
+        <h2>El proyecto, contado por quienes lo hicieron</h2>
+        <p>Los talleres, el mapa, la maqueta y lo que la gente del valle acordó cuidar. Míralo antes de seguir.</p>
+      </div>
+      <div class="video ver d1"><button data-yt="azAoZWD1tYU" aria-label="Reproducir el video que resume el proyecto"><img src="img/v/resumen.jpg" alt="" width="1280" height="720"><span><i>▶</i>Ver el video</span></button></div>
+    </div>
+    <p class="video-nota" style="color:#9DB8AD">Al reproducir se carga contenido de YouTube. <a style="color:var(--amber)" href="propuestas.html#videos">Ver también un video por cada propuesta →</a></p>
+  </div>
+</section>
 
 <section id="valle">
   <div class="wrap">
@@ -340,6 +355,6 @@
 </footer>
 
 <script src="js/datos.js?v=3"></script>
-<script src="js/ecotonos.js?v=4"></script>
+<script src="js/ecotonos.js?v=5"></script>
 </body>
 </html>

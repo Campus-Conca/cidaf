@@ -705,3 +705,15 @@ details.mas[open]>*:not(summary){animation:entra .4s}
   .creditos img{height:42px}.creditos img.cuadro{height:54px}
 }
 @keyframes sube{from{transform:translateY(100%)}}
+
+/* ── el video del proyecto, justo bajo la portada ── */
+.video-s{padding:clamp(40px,6vw,72px) 0 clamp(48px,7vw,84px);scroll-margin-top:0}
+.video-p{display:grid;grid-template-columns:.8fr 1.5fr;gap:clamp(24px,4vw,56px);align-items:center}
+.video-p .sec-cab{margin:0}
+.video-p .sec-cab h2{font-size:clamp(1.8rem,3.4vw,2.7rem)}
+.video-s .video{box-shadow:0 30px 70px -30px #000;border:1px solid rgba(255,255,255,.14)}
+.video-s .video button img{opacity:.85}
+.video-s .video button span{font-size:1.15rem;padding:16px 30px 16px 16px}
+.video-s .video button span i{width:56px;height:56px;font-size:1.2rem}
+.btn .tri{font-size:.8em}
+@media(max-width:860px){.video-p{grid-template-columns:1fr}.video-s .wrap{display:flex;flex-direction:column}.video-s .video{margin-inline:-22px;border-radius:0;border-inline:0}}

@@ -82,6 +82,8 @@
     $$('.vlista button').forEach(x => x.setAttribute('aria-pressed', x === l)); v.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   });
 
+  $$('[data-reproduce]').forEach(b => b.addEventListener('click', e => { const v = $(b.dataset.reproduce); if (!v) return; e.preventDefault(); v.closest('section').scrollIntoView({ behavior: 'smooth' }); setTimeout(() => v.click(), 450); }));
+
   /* ── el corte del valle: con ecotonos / sin orden ── */
   const corte = $('.corte-caja');
   if (corte) {

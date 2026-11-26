@@ -1,6 +1,6 @@
 /* Ecotonos del valle de Concá — para que el sitio abra sin señal después de la primera visita.
    Sube VERSION con cada cambio publicado. */
-const VERSION = 'ecotonos-v5';
+const VERSION = 'ecotonos-v6';
 const BASE = ['./', 'index.html', 'historia.html', 'propuestas.html', 'participa.html', 'reporte.html', 'resumen.html', 'css/ecotonos.css', 'js/datos.js', 'js/ecotonos.js'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(BASE)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== VERSION).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
