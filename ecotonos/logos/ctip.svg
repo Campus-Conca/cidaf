@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172 172" role="img" aria-label="Ciudad, Territorio e Investigación Proyectual">
+  <!-- Redibujado a partir del logotipo del grupo colegiado que aparece en el reporte del taller 3 -->
+  <g fill="none" stroke="#E6501E" stroke-width="9" stroke-linecap="butt">
+    <path d="M22.5,70 V22.5 H149.5 V70"/>
+    <path d="M22.5,112 V151.500 H149.5 V112"/>
+  </g>
+  <g fill="#E6501E" font-family="'Gill Sans','Gill Sans MT','Instrument Sans',Calibri,sans-serif" font-weight="600">
+    <text x="29" y="70"><tspan font-size="24">C</tspan><tspan font-size="13.5" letter-spacing=".3">IUDAD</tspan></text>
+    <text x="30" y="94"><tspan font-size="24">T</tspan><tspan font-size="13.5" letter-spacing=".3">ERRITORIO</tspan></text>
+    <text x="31" y="118"><tspan font-size="24">I</tspan><tspan font-size="13.5" letter-spacing=".3">NVESTIGACIÓN</tspan></text>
+    <text x="30" y="142"><tspan font-size="24">P</tspan><tspan font-size="13.5" letter-spacing=".3">ROYECTUAL</tspan></text>
+  </g>
+</svg>
