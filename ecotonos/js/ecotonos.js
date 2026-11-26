@@ -169,7 +169,7 @@
     hoja.className = 'e-' + p.eco;
     hoja.innerHTML = `
 <header class="p-hero"><div class="wrap">
-  <a class="volver" href="index.html#propuestas">← Las siete propuestas</a><br>
+  <a class="volver" href="propuestas.html#propuestas">← Las siete propuestas</a><br>
   <span class="chip">${esc(p.chip)}</span>
   <h1>${esc(p.titulo)}</h1>
   <p class="res">${esc(p.resumen)}</p>
@@ -189,7 +189,7 @@
       </div>
       <h2>${i === 0 ? 'Cómo se llegó a esta propuesta' : 'La propuesta en video'}</h2>
       <div class="video"><button data-yt="${p.video}" aria-label="Reproducir el video"><img src="img/${(p.gal.find(g => !g[2]) || p.gal[0])[0]}-s.webp" alt="" loading="lazy"><span><i>▶</i>${i === 0 ? 'Ver el resumen de los talleres' : 'Ver el video de la propuesta'}</span></button></div>
-      <p class="video-nota">Al reproducir se carga contenido de YouTube. <a href="index.html#videos">Ver todos los videos</a></p>
+      <p class="video-nota">Al reproducir se carga contenido de YouTube. <a href="propuestas.html#videos">Ver todos los videos</a></p>
     </div>
     <aside class="ficha"><h3>Ficha técnica</h3><dl>${p.ficha.map(f => `<dt>${esc(f[0])}</dt><dd>${esc(f[1])}</dd>`).join('')}</dl></aside>
   </div>
