@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Revisión del equipo · Ecotonos del valle de Concá</title>
+<meta name="description" content="Lista de lo que el equipo necesita revisar, resolver y enviar para terminar el sitio de Ecotonos.">
+<meta property="og:title" content="Sitio de Ecotonos: lo que falta revisar">
+<meta property="og:description" content="Textos por revisar, dudas por resolver y archivos que hacen falta. Marca, comenta y manda tus respuestas por WhatsApp.">
+<meta property="og:image" content="https://campus-conca.github.io/cidaf/ecotonos/img/og.jpg">
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ecotonos.css?v=9">
+<style>
+  .rv-hero{background:var(--noche);color:#fff;padding:56px 0 44px;position:relative;overflow:hidden}
+  .rv-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 120% at 100% 0%,rgba(232,168,90,.38),transparent 65%)}
+  .rv-hero .wrap{position:relative}
+  .rv-hero h1{font-size:clamp(2.1rem,6vw,3.8rem);font-weight:480;margin:12px 0 14px;max-width:16ch}
+  .rv-hero h1 em{color:var(--amber)}
+  .rv-hero p{color:#DCEAE4;max-width:60ch;font-size:1.08rem}
+  .rv-como{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:26px}
+  .rv-como div{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:14px 16px;font-size:.92rem;color:#DCEAE4}
+  .rv-como b{display:block;font-family:var(--serif);font-size:1.1rem;color:#fff;font-weight:560}
+  .rv-barra{position:sticky;top:0;z-index:30;background:rgba(251,248,241,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .rv-barra .wrap{display:flex;gap:10px;align-items:center;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+  .rv-barra input{font:inherit;padding:10px 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff;min-width:0;flex:1 1 160px}
+  .rv-barra .cuenta{font-weight:700;font-size:.9rem;color:var(--teal);white-space:nowrap}
+  .rv-sec{padding:44px 0 8px}
+  .rv-sec h2{font-size:clamp(1.6rem,4vw,2.3rem);display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .rv-sec h2 i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:1.1rem;background:var(--c);color:#fff;flex:none}
+  .rv-sec>.wrap>p{color:var(--ink-2);max-width:66ch;margin-bottom:18px}
+  .rv-lista{display:grid;gap:12px}
+  .it{background:#fff;border:1.5px solid var(--line);border-left:6px solid var(--c);border-radius:16px;padding:16px 18px;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;transition:opacity .2s,border-color .2s}
+  .it input[type=checkbox]{width:26px;height:26px;accent-color:var(--teal);margin-top:2px;grid-row:span 3}
+  .it h3{font-size:1.15rem;line-height:1.25}
+  .it p{font-size:.94rem;color:var(--ink-2)}
+  .it .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .it .meta span{font-size:.76rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--paper-2);color:var(--ink-2)}
+  .it .meta a{font-size:.8rem;font-weight:700}
+  .it textarea{grid-column:2;margin-top:8px;width:100%;font:inherit;font-size:.92rem;padding:9px 12px;border-radius:12px;border:1.5px solid var(--line);resize:vertical;min-height:42px;height:42px;background:var(--paper)}
+  .it.ok{opacity:.62;border-color:var(--teal)}
+  .it.ok h3{text-decoration:line-through;text-decoration-color:var(--teal)}
+  .pies{grid-column:2;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:10px}
+  .pies figure{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .pies img{width:100%;aspect-ratio:16/10;object-fit:cover}
+  .pies figcaption{padding:8px 10px;font-size:.82rem;line-height:1.35}
+  .pies h4{grid-column:1/-1;font-family:var(--sans);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-top:6px}
+  .rv-fin{background:var(--noche);color:#fff;margin-top:44px;padding:44px 0 56px}
+  .rv-fin h2{font-size:clamp(1.6rem,4vw,2.3rem);margin-bottom:8px}
+  .rv-fin p{color:#BBD3C9;max-width:60ch}
+  .rv-fin pre{white-space:pre-wrap;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:16px;font:inherit;font-size:.9rem;color:#EAF3EF;margin:18px 0;max-height:320px;overflow:auto}
+  @media(max-width:700px){.rv-como{grid-template-columns:1fr}.it{padding:14px}.pies{grid-column:1/-1}.it textarea{grid-column:1/-1}}
+  @media print{.rv-barra,.rv-fin .fila{display:none}}
+</style>
+</head>
+<body>
+
+<div class="rv-hero"><div class="wrap">
+  <p class="ceja">Para el equipo · página de trabajo</p>
+  <h1>El sitio ya está en línea. <em>Falta tu ojo.</em></h1>
+  <p>Hay textos que se redactaron sin ustedes, dudas que solo el equipo puede resolver y archivos que harían al sitio mucho mejor. Esta lista lo junta todo. <a style="color:var(--amber)" href="index.html" target="_blank" rel="noopener">Abrir el sitio en otra pestaña ↗</a></p>
+  <div class="rv-como">
+    <div><b>1. Marca</b>Palomea lo que ya revisaste, resolviste o enviaste.</div>
+    <div><b>2. Comenta</b>Escribe la corrección o la respuesta en el recuadro de cada punto.</div>
+    <div><b>3. Manda</b>Al final, un botón arma el mensaje para WhatsApp con todo lo tuyo.</div>
+  </div>
+</div></div>
+
+<div class="rv-barra"><div class="wrap">
+  <input id="quien" placeholder="Tu nombre" maxlength="40" aria-label="Tu nombre">
+  <span class="cuenta" id="cuenta"></span>
+  <a class="btn teal chico" href="#enviar">Ir a enviar ↓</a>
+</div></div>
+
+<main id="lista"></main>
+
+<section class="rv-fin" id="enviar"><div class="wrap">
+  <h2>Manda tus respuestas</h2>
+  <p>Esto es lo que se va a enviar. Lo que marques y escribas se guarda en este teléfono o computadora, así que puedes volver después.</p>
+  <pre id="vista"></pre>
+  <div class="fila">
+    <a class="btn ambar" id="wa" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+    <button class="btn claro" id="copiar">Copiar el texto</button>
+  </div>
+  <p style="margin-top:22px;font-size:.9rem">Los archivos van aparte: por WhatsApp si pesan poco, o en una carpeta compartida de Drive. Nombra cada archivo con el número del punto, por ejemplo <b>C1_poligonos.kml</b>.</p>
+</div></section>
+
+<script src="js/datos.js?v=3"></script>
+<script>
+(function () {
+  'use strict';
+  const S = [
+    { k: 'A', c: 'var(--teal)', ico: '✎', t: 'Textos por revisar', d: 'Se redactaron a partir de las fichas y los reportes, pero no los ha leído nadie del equipo. Basta con decir «está bien» o corregir.', its: [
+      ['Pies de foto de las propuestas 2 a 6', 'El material original solo traía pies de foto para las propuestas 0 y 1. Los demás se escribieron mirando cada imagen. Abajo están todos.', ['Corregir o aprobar'], 'propuestas.html#propuestas', 'PIES'],
+      ['Notas por comunidad en «¿De dónde eres?»', 'Cada comunidad muestra una frase y las propuestas que le quedan cerca. Revisen sobre todo Mesa de Palo Blanco y El Coyote, donde había menos información.', ['Concá', 'Las Trancas', 'El Salitrillo', 'El Crucero', 'Mesa de Palo Blanco', 'El Coyote'], 'index.html#comunidad'],
+      ['Las tres marcas del antes y después (2010 y 2026)', 'Dicen: la carretera tiene casas a los dos lados; El Crucero creció hacia el cerro; aparecieron lotes donde había campo. Es una lectura a simple vista. ¿Es correcta? ¿Falta algo importante?', ['Confirmar lectura'], 'index.html#arriba'],
+      ['Las quince palabras del glosario', 'PMDU, ecotono, zona federal, ejido, lotificar, acequia, dominio pleno, selva baja, ribera, cabildo, mojonera, PROFEPA, CONANP, CONAGUA y SEMARNAT. Aparecen subrayadas con puntos; al tocarlas se explican.', ['Revisar definiciones'], 'historia.html'],
+      ['La línea del tiempo del valle', 'Son 21 hitos escogidos de la memoria colectiva del taller 1. ¿Sobra o falta alguno? ¿Hay alguna fecha equivocada?', ['Fechas', 'Selección'], 'historia.html#memoria'],
+      ['«Qué me toca», por tipo de persona', 'Acciones propuestas para vecinos, ejido y productores, autoridad municipal y dependencias. ¿Está bien que el sitio se las atribuya así, en público?', ['Tono', 'Acuerdo con actores'], 'participa.html#quien'],
+      ['Página del reporte ciudadano', 'Dice que el piloto está previsto para marzo de 2027, describe un protocolo de siete pasos con plazos y da teléfonos y correos de PROFEPA, la procuraduría estatal, CONANP y el municipio.', ['Fecha del piloto', 'Protocolo', 'Contactos'], 'reporte.html'],
+      ['Estado del parque lineal', 'Se afirma: el manantial El Abanico ya es protección ecológica; hay dictamen de impacto ambiental de SEMARNAT (2024); la concesión de zona federal ante CONAGUA está en trámite.', ['Confirmar trámites'], 'propuestas.html#parque'],
+      ['Fotos de los talleres con rostros', 'Se usan las que ya están en labrural.org. ¿Todo el equipo y los participantes están de acuerdo con que sigan públicas?', ['Consentimiento'], 'historia.html#talleres']
+    ]},
+    { k: 'B', c: 'var(--amber-d)', ico: '?', t: 'Dudas por resolver', d: 'Los documentos se contradicen o no lo dicen. Una línea de respuesta basta.', its: [
+      ['¿Cuatro o cinco distritos de riego?', 'La ficha del área agrícola nombra cuatro (Acequia Madre, Los Limones, San Isidro, Abanico–Salitrillo). El mapa y el marco lógico suman un quinto: La Vega. El sitio dice «cuatro» en la tarjeta de la propuesta.', ['Dato'], 'aca.html'],
+      ['«Sello Concá»: ¿se queda o se quita?', 'Aparece en la propuesta síntesis porque viene en el texto aprobado. La teoría del cambio lo dejó fuera.', ['Decisión'], 'aca.html'],
+      ['¿Mesa de Palo Blanco o Mesa de Palo Alto?', 'Las fichas usan los dos nombres para lo que parece el mismo lugar. El sitio usa «Mesa de Palo Blanco».', ['Nombre correcto']],
+      ['¿«El Crucero» o «El Crucero del Sabinito»?', 'En el antes y después y en comunidades se puso «El Crucero». ¿Así le dice la gente?', ['Nombre correcto']],
+      ['¿Quiénes van en los créditos?', 'Hoy solo aparecen el Dr. Miguel Ángel Bartorila como responsable y el Dr. Eduardo Luna Sánchez. Manden la lista completa del equipo, con el nombre como quieren que aparezca.', ['Lista de nombres'], 'index.html'],
+      ['¿El video resumen dura dos minutos?', 'El botón de la portada dice «Mira el proyecto en 2 minutos». Si dura otra cosa, se cambia el texto.', ['Dato'], 'index.html#video'],
+      ['¿Hay fecha para la próxima reunión pública?', 'Mesa del valle, asamblea o presentación. Si la hay, se anuncia en la portada.', ['Fecha y lugar']]
+    ]},
+    { k: 'C', c: 'var(--agua-d)', ico: '↑', t: 'Archivos que hacen falta', d: 'Con esto el sitio da el siguiente salto. Cada punto dice en qué formato sirve y para qué se va a usar.', its: [
+      ['Polígonos de las siete propuestas', 'Para cambiar las siete imágenes de mapa por un mapa de verdad, que se mueve y donde cada quien ubica su casa o su parcela. Es lo que más mejoraría el sitio.', ['KML, GeoJSON o SHP', 'o DWG georreferenciado', 'Equipo de Ingeniería']],
+      ['Logotipo original del grupo Ciudad, Territorio e Investigación Proyectual', 'El que está puesto se redibujó a partir de una imagen de 86 píxeles sacada de un reporte.', ['SVG, AI o PNG grande']],
+      ['Logotipo del Laboratorio de Desarrollo Rural en alta', 'El actual mide 285 píxeles y se ve borroso en pantallas grandes.', ['SVG o PNG de 1000 px o más']],
+      ['Un video corto para la portada', 'Los videos que hay son de referencia: movidos y con rejas en cuadro. Sirve una toma fija o de dron del valle, el río o un manantial.', ['10 a 15 segundos', 'Horizontal', 'Sin gente en primer plano']],
+      ['Foto del valle en alta para la portada', 'La vista desde el cerro de la Cruz que usamos mide 1068 píxeles. Si alguien tiene la original, o una mejor, mándenla.', ['JPG de 2500 px o más', 'Horizontal']],
+      ['Fotos buenas del parque lineal y la Acequia Madre', 'Las actuales son una captura de video y un plano.', ['3 a 5 fotos', 'Horizontales', '2000 px o más']],
+      ['Fotos viejas del valle, para parearlas con una actual', 'El río, la acequia, el crucero o la plaza, de hace diez años o más. Una foto vieja pesa más que el satélite porque es lo que la gente recuerda.', ['Cualquier formato', 'Con el año aproximado y el lugar']],
+      ['Frases de gente del valle', 'Con su permiso. Con nombre, o como «ejidatario de Concá». Texto o audio corto.', ['3 a 6 frases', 'Con autorización']],
+      ['Costos estimados o cartera de proyectos', 'Para la hoja de una página que va al cabildo. Solo si ya se pueden hacer públicos.', ['Tabla o PDF']],
+      ['Imagen de satélite anterior a 2010', 'El archivo que usamos empieza en 2010. Desde Google Earth Pro se puede exportar una más vieja con el mismo encuadre que la del sitio.', ['JPG', 'Con la fecha de la imagen']]
+    ]}
+  ];
+
+  const $ = s => document.querySelector(s), $$ = s => Array.from(document.querySelectorAll(s));
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  let E = {}; try { E = JSON.parse(localStorage.getItem('eco-revision') || '{}'); } catch (e) {}
+  const guarda = () => { try { localStorage.setItem('eco-revision', JSON.stringify(E)); } catch (e) {} };
+
+  const pies = () => (window.PROPUESTAS || []).filter(p => p.n >= 2).map(p =>
+    `<h4>Propuesta ${p.n} · ${esc(p.corto)}</h4>` + p.gal.map(g => `<figure><img src="img/${g[0]}-s.webp" alt="" loading="lazy"><figcaption>${esc(g[1])}</figcaption></figure>`).join('')).join('');
+
+  $('#lista').innerHTML = S.map(s => `<section class="rv-sec" style="--c:${s.c}"><div class="wrap">
+    <h2><i>${s.ico}</i>${s.t}</h2><p>${s.d}</p><div class="rv-lista">` + s.its.map((it, i) => {
+      const id = s.k + (i + 1), e = E[id] || {};
+      return `<div class="it${e.ok ? ' ok' : ''}" data-id="${id}">
+        <input type="checkbox" id="c-${id}"${e.ok ? ' checked' : ''} aria-label="Marcar ${id} como hecho">
+        <h3><label for="c-${id}">${id} · ${esc(it[0])}</label></h3>
+        <p>${esc(it[1])}</p>
+        <div class="meta">${it[2].map(m => `<span>${esc(m)}</span>`).join('')}${it[3] ? `<a href="${it[3]}" target="_blank" rel="noopener">Verlo en el sitio ↗</a>` : ''}</div>
+        ${it[4] === 'PIES' ? `<div class="pies">${pies()}</div>` : ''}
+        <textarea placeholder="Tu corrección, respuesta o comentario" aria-label="Comentario para ${id}">${esc(e.t || '')}</textarea>
+      </div>`; }).join('') + '</div></div></section>').join('');
+
+  $('#quien').value = E._quien || '';
+  const total = S.reduce((n, s) => n + s.its.length, 0);
+  const pinta = () => {
+    const hechos = Object.keys(E).filter(k => k[0] !== '_' && E[k].ok).length;
+    $('#cuenta').textContent = hechos + ' de ' + total + ' marcados';
+    let txt = '*Revisión del sitio de Ecotonos*' + (E._quien ? '\nDe: ' + E._quien : '') + '\n';
+    S.forEach(s => {
+      const ls = s.its.map((it, i) => { const id = s.k + (i + 1), e = E[id] || {}; return (e.ok || e.t) ? (e.ok ? '✅ ' : '✏️ ') + id + ' ' + it[0] + (e.t ? '\n   → ' + e.t.trim() : '') : ''; }).filter(Boolean);
+      if (ls.length) txt += '\n_' + s.t + '_\n' + ls.join('\n') + '\n';
+    });
+    if (!Object.keys(E).some(k => k[0] !== '_' && (E[k].ok || E[k].t))) txt += '\n(Todavía no has marcado ni escrito nada.)';
+    $('#vista').textContent = txt;
+    $('#wa').href = 'https://wa.me/?text=' + encodeURIComponent(txt);
+  };
+  $('#lista').addEventListener('input', e => {
+    const it = e.target.closest('.it'); if (!it) return;
+    const id = it.dataset.id; E[id] = E[id] || {};
+    E[id].ok = it.querySelector('input').checked; E[id].t = it.querySelector('textarea').value;
+    it.classList.toggle('ok', E[id].ok); guarda(); pinta();
+  });
+  $('#quien').addEventListener('input', e => { E._quien = e.target.value.trim(); guarda(); pinta(); });
+  $('#copiar').addEventListener('click', async e => {
+    try { await navigator.clipboard.writeText($('#vista').textContent); e.target.textContent = 'Copiado ✓'; } catch (x) { e.target.textContent = 'Selecciona y copia el texto de arriba'; }
+    setTimeout(() => e.target.textContent = 'Copiar el texto', 2200);
+  });
+  pinta();
+})();
+</script>
+</body>
+</html>
