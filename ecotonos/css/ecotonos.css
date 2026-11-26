@@ -717,3 +717,6 @@ details.mas[open]>*:not(summary){animation:entra .4s}
 .video-s .video button span i{width:56px;height:56px;font-size:1.2rem}
 .btn .tri{font-size:.8em}
 @media(max-width:860px){.video-p{grid-template-columns:1fr}.video-s .wrap{display:flex;flex-direction:column}.video-s .video{margin-inline:-22px;border-radius:0;border-inline:0}}
+
+.ad-notas{grid-template-columns:repeat(3,1fr)}
+@media(max-width:1000px){.ad-notas{grid-template-columns:1fr}}
