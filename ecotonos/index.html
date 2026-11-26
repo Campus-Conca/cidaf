@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/hero.webp" media="(min-width:701px)">
 <link rel="preload" as="image" href="img/hero-m.webp" media="(max-width:700px)">
-<link rel="stylesheet" href="css/ecotonos.css?v=7">
+<link rel="stylesheet" href="css/ecotonos.css?v=8">
 </head>
 <body>
 
@@ -42,6 +42,7 @@
     <source media="(max-width:700px)" srcset="img/hero-m.webp">
     <img src="img/hero.webp" alt="Una acequia y parcelas recién sembradas del valle de Concá al atardecer" fetchpriority="high">
   </picture>
+  <div class="pase" aria-hidden="true"><img data-src="img/l-valle.webp" alt=""><img data-src="img/l-arbol.webp" alt=""><img data-src="img/l-abanico.webp" alt=""></div>
   <div class="wrap">
     <p class="ceja">Valle agrícola de Concá · Arroyo Seco, Querétaro · Reserva de la Biosfera Sierra Gorda</p>
     <h1>El valle se cuida <em>desde adentro</em></h1>
@@ -137,21 +138,19 @@
   </div>
 </section>
 
-<section id="ecotono" >
+<section id="ecotono" class="paseo-s">
   <div class="wrap">
     <div class="sec-cab ver">
       <p class="ceja">Para empezar</p>
       <h2>¿Qué es un ecotono?</h2>
-      <p>Un ecotono es la franja donde dos mundos se encuentran: donde el río toca las parcelas, donde las parcelas llegan al pueblo, donde el campo sube al cerro. Son los bordes que mantienen unido al valle, y los primeros que se pierden cuando el crecimiento no tiene orden.</p>
+      <p>Un ecotono es la franja donde dos mundos se encuentran. Son los bordes que mantienen unido al valle, y los primeros que se pierden cuando el crecimiento no tiene orden. Sigue bajando para recorrerlos.</p>
     </div>
-
-    <div class="corte-caja ver">
-      <div class="conmuta" role="group" aria-label="Ver el valle con sus ecotonos o sin ellos">
-        <button data-estado="bien" aria-pressed="true">Con sus ecotonos</button>
-        <button data-estado="sino" class="mal" aria-pressed="false">Si crece sin orden</button>
-      </div>
-      <div class="corte-scroll">
-      <svg viewBox="0 26 1200 346" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Corte del valle de Concá: río, parcelas, pueblo y cerro, con sus tres ecotonos">
+  </div>
+  <div class="paseo" data-paso="0">
+    <div class="paseo-fijo">
+      <div class="wrap">
+        <div class="corte-caja paseo-dib">
+          <svg viewBox="0 26 1200 346" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Corte del valle de Concá: río, parcelas, pueblo y cerro, con sus tres ecotonos">
         <defs>
           <linearGradient id="gcerro" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A9B87A"/><stop offset="1" stop-color="#7A8B4F"/></linearGradient>
         </defs>
@@ -260,14 +259,49 @@
           <text x="68" y="350">RÍO</text><text x="386" y="350">PARCELAS Y ACEQUIAS</text><text x="744" y="350">PUEBLO</text><text x="1070" y="350">CERRO</text>
         </g>
       </svg>
+          <div class="paseo-prog" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="paseo-txt">
+          <div class="pt on" data-p="0"><i>↓</i><div><h3>El valle, del río al cerro</h3><p>Baja despacio. Vas a cruzar el valle de lado a lado y a detenerte en sus tres bordes.</p></div></div>
+          <div class="pt" data-p="1"><i>1</i><div><h3>Donde el agua toca las parcelas</h3><p>La orilla con árboles que dan sombra al río y el suelo que filtra el agua de los manantiales. Cuidarlo es cuidar el agua.</p><p class="pt-enl"><a href="rio.html">Corredor del río →</a><a href="manantiales.html">Manantiales y acequias →</a></p></div><img src="img/p1-nado-s.webp" alt="" loading="lazy"></div>
+          <div class="pt" data-p="2"><i>2</i><div><h3>Donde las parcelas tocan el pueblo</h3><p>Las huertas y árboles que marcan hasta dónde llegan las casas. Cuidarlo evita que el pueblo crezca sobre la tierra de cultivo.</p><p class="pt-enl"><a href="corredores.html">Corredores verdes →</a><a href="tejidos.html">Nuevos barrios →</a></p></div><img src="img/p6-frutales-s.webp" alt="" loading="lazy"></div>
+          <div class="pt" data-p="3"><i>3</i><div><h3>Donde el campo sube al cerro</h3><p>El monte que guarda a los animales, las veredas y la historia. Cuidarlo protege el cerro y sus caminos.</p><p class="pt-enl"><a href="camino-real.html">Camino Real y puertas del cerro →</a></p></div><img src="img/l-cerro-s.webp" alt="" loading="lazy"></div>
+          <div class="pt mal" data-p="4"><i>!</i><div><h3>Y si el valle crece sin orden</h3><p>El río se queda sin ribera, el pueblo sin borde y el cerro sin franja: bardas en la parcela, arena sacada del cauce, cabañas en el monte. Es lo que la gente ya ve pasar.</p></div></div>
+          <div class="pt" data-p="5"><i>✓</i><div><h3>Cuidar esos bordes es el proyecto</h3><p>Un área agrícola al centro y un cinturón de ecotonos que la protege. De eso tratan las siete propuestas.</p><p class="pt-enl"><a href="propuestas.html">Ver las siete propuestas →</a></p></div></div>
+        </div>
       </div>
-      <p class="desliza">Desliza el dibujo hacia los lados →</p>
+    </div>
+    <div class="pp" data-p="0"></div>
+    <div class="pp" data-p="1"></div>
+    <div class="pp" data-p="2"></div>
+    <div class="pp" data-p="3"></div>
+    <div class="pp" data-p="4"></div>
+    <div class="pp" data-p="5"></div>
+  </div>
+</section>
 
-      <div class="eco-textos">
-        <button class="eco-t" data-eco="1"><i>1</i><b>Donde el agua toca las parcelas</b><span class="bien">La orilla con árboles que dan sombra al río y el suelo que filtra el agua de los manantiales. Cuidarlo es cuidar el agua.</span><span class="mal">Sin ribera, el río se queda sin sombra: se saca arena donde la gente nada, se invade la zona federal y las descargas llegan directo al agua.</span></button>
-        <button class="eco-t" data-eco="2"><i>2</i><b>Donde las parcelas tocan el pueblo</b><span class="bien">Las huertas y árboles que marcan hasta dónde llegan las casas. Cuidarlo evita que el pueblo crezca sobre la tierra de cultivo.</span><span class="mal">Sin borde, el pueblo avanza barda por barda sobre la tierra de riego. Cada parcela lotificada se pierde con su acequia.</span></button>
-        <button class="eco-t" data-eco="3"><i>3</i><b>Donde el campo sube al cerro</b><span class="bien">El monte que guarda a los animales, las veredas y la historia. Cuidarlo protege el cerro y sus caminos.</span><span class="mal">Sin franja, las cabañas y los desmontes suben al cerro: se pierden la selva baja, sus veredas y el antiguo Camino Real.</span></button>
+<!-- ═══════════ TU COMUNIDAD ═══════════ -->
+<section id="comunidad" class="crema">
+  <div class="wrap">
+    <div class="sec-cab ver">
+      <p class="ceja">Tu comunidad</p>
+      <h2>¿De dónde eres?</h2>
+      <p>Elige tu comunidad y mira qué parte del proyecto te queda más cerca.</p>
+    </div>
+    <div class="com-chips ver" role="group" aria-label="Elige tu comunidad"><button data-c="Concá" aria-pressed="false">Concá</button><button data-c="Las Trancas" aria-pressed="false">Las Trancas</button><button data-c="El Salitrillo" aria-pressed="false">El Salitrillo</button><button data-c="El Crucero" aria-pressed="false">El Crucero</button><button data-c="Mesa de Palo Blanco" aria-pressed="false">Mesa de Palo Blanco</button><button data-c="El Coyote" aria-pressed="false">El Coyote</button><button data-c="Otro lugar" aria-pressed="false">Otro lugar</button></div>
+    <div class="com-panel" id="com-panel" hidden aria-live="polite"></div>
+    <div class="sumate" id="sumate" hidden>
+      <div>
+        <p class="ceja">Yo cuido el valle</p>
+        <p class="sum-n"><b id="sum-total">0</b><span>personas del valle ya se sumaron</span></p>
+        <p class="sum-de" id="sum-de"></p>
       </div>
+      <form id="sum-form">
+        <label for="sum-nombre">Tu nombre (si quieres)</label>
+        <input id="sum-nombre" maxlength="60" autocomplete="name" placeholder="Como te conocen en el valle">
+        <button class="btn ambar" type="submit">Sumarme</button>
+        <small>No se publica tu nombre: solo se cuenta cuántas personas y de qué comunidad.</small>
+      </form>
     </div>
   </div>
 </section>
@@ -350,7 +384,8 @@
   </div>
 </footer>
 
+<script src="js/config.js?v=1"></script>
 <script src="js/datos.js?v=3"></script>
-<script src="js/ecotonos.js?v=5"></script>
+<script src="js/ecotonos.js?v=6"></script>
 </body>
 </html>

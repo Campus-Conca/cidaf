@@ -224,6 +224,72 @@
     $('.otra', sim).addEventListener('click', () => { tm.forEach(clearTimeout); tm = []; pasos.forEach(l => { l.classList.remove('ok'); $('i', l).textContent = ''; }); acuse.classList.remove('on'); form.style.display = ''; });
   }
 
+  /* ── portada: pase lento de fotos, cargadas después de la primera ── */
+  const pase = $('.pase');
+  if (pase && !matchMedia('(prefers-reduced-motion: reduce)').matches) addEventListener('load', () => setTimeout(() => {
+    const fs = $$('img', pase); let n = 0;
+    fs.forEach(f => { f.onload = () => { if (++n === fs.length) pase.classList.add('lista'); }; f.src = f.dataset.src; });
+  }, 1800));
+
+  /* ── el recorrido por el corte del valle ── */
+  const paseo = $('.paseo');
+  if (paseo && io) {
+    const caja = $('.corte-caja', paseo), pts = $$('.pt', paseo), dots = $$('.paseo-prog i', paseo), pps = $$('.pp', paseo);
+    const pon = k => { paseo.dataset.paso = k; caja.classList.toggle('sino', k === 4); pts.forEach((x, i) => x.classList.toggle('on', i === k)); dots.forEach((d, i) => d.classList.toggle('on', i <= k)); };
+    const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) pon(+e.target.dataset.p); }), { rootMargin: '-50% 0px -50% 0px' });
+    pps.forEach(x => o.observe(x)); pon(0);
+    $$('.banda', paseo).forEach(g => g.addEventListener('click', () => pps[+g.dataset.eco].scrollIntoView({ behavior: 'smooth', block: 'center' })));
+  }
+
+  /* ── tu comunidad y «yo cuido el valle» ── */
+  const COMUN = {
+    'Concá': ['Aquí están los manantiales, el árbol milenario y la Acequia Madre. En el taller se dijo que las casas ya rodean los nacimientos de agua.', [['manantiales', 'El Nacimiento, El Abanico y las acequias que cruzan el pueblo'], ['corredores', 'El parque lineal de la Acequia Madre'], ['tejidos', 'Crecer primero en los baldíos con servicios y hacia Concá Norte'], ['rio', 'El corredor del río que bordea el pueblo']]],
+    'Las Trancas': ['Aquí la tierra ya se vende hasta en $1,000 el metro cuadrado y hay terrenos ejidales lotificándose hacia El Salitrillo.', [['tejidos', 'Dónde sí y dónde no crecer'], ['carretera', 'Un tramo piloto de carretera con sombra y paso seguro'], ['rio', 'El arroyo Las Trancas y sus accesos'], ['camino-real', 'La reforestación piloto entre Las Trancas y El Salitrillo']]],
+    'El Salitrillo': ['Entre El Salitrillo y Las Trancas se están lotificando terrenos ejidales sin una planeación clara.', [['aca', 'Las parcelas del distrito de riego El Abanico–El Salitrillo'], ['camino-real', 'El Camino Real y la franja que cuida el cerro'], ['tejidos', 'Completar el poblado sin bajar sobre las parcelas'], ['corredores', 'La franja verde que envuelve al pueblo']]],
+    'El Crucero': ['Es donde más se nota el crecimiento sobre la carretera entre 2010 y 2026.', [['carretera', 'El corte de la propuesta se dibujó justo aquí'], ['tejidos', 'Ocupar primero los lotes vacíos del Crucero'], ['corredores', 'La franja verde entre las casas y las parcelas']]],
+    'Mesa de Palo Blanco': ['Un poblado que la propuesta busca consolidar sin que baje sobre la tierra de riego.', [['tejidos', 'Consolidar la Mesa como núcleo, con sus servicios'], ['camino-real', 'El tramo del sendero entre el centro vecinal y el monte'], ['corredores', 'La franja productiva que la rodea']]],
+    'El Coyote': ['La entrada al valle por la carretera, con selva baja a los dos lados.', [['carretera', 'El tramo empieza aquí: más espacio para la selva y pasos de fauna']]],
+    'Otro lugar': ['Vengas de donde vengas, el valle también te toca: de aquí salen el agua, la fruta y el paisaje que visitas.', [['aca', 'El corazón del proyecto: 455 hectáreas de riego'], ['rio', 'El río donde se nada y se descansa']]]
+  };
+  const chips = $('.com-chips');
+  if (chips && P.length) {
+    const panel = $('#com-panel'), sum = $('#sumate'), API = window.ECOTONOS_API || '';
+    let elegida = '', datos = null;
+    const guardado = k => { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } };
+    const guarda = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+    const pintaCuenta = () => {
+      if (!datos) return;
+      $('#sum-total').textContent = datos.total;
+      const n = elegida && datos.por ? (datos.por[elegida] || 0) : 0;
+      $('#sum-de').textContent = elegida && elegida !== 'Otro lugar' ? (n ? n + (n === 1 ? ' es' : ' son') + ' de ' + elegida + '.' : 'Todavía nadie de ' + elegida + '. Sé la primera persona.') : '';
+    };
+    const elige = c => {
+      elegida = c; guarda('eco-comunidad', c);
+      $$('button', chips).forEach(b => b.setAttribute('aria-pressed', b.dataset.c === c));
+      const [nota, props] = COMUN[c];
+      panel.hidden = false;
+      panel.innerHTML = `<h3>${c === 'Otro lugar' ? 'Aunque no vivas aquí' : 'En ' + esc(c)}</h3><p>${esc(nota)}</p><div class="com-props">` + props.map(([s, por]) => { const p = P.find(x => x.slug === s); return `<a class="e-${p.eco}" href="${s}.html"><b>${esc(p.corto)}</b><span>${esc(por)}</span></a>`; }).join('') + '</div>';
+      pintaCuenta();
+    };
+    chips.addEventListener('click', e => { const b = e.target.closest('button'); if (b) elige(b.dataset.c); });
+    const antes = guardado('eco-comunidad'); if (COMUN[antes]) elige(antes);
+    if (API) {
+      sum.hidden = false;
+      const form = $('#sum-form');
+      if (guardado('eco-sumado')) form.innerHTML = '<p class="sum-ok">Ya estás en la cuenta. Gracias por cuidar el valle.</p>';
+      fetch(API).then(r => r.json()).then(d => { if (d && d.ok) { datos = d; pintaCuenta(); } }).catch(() => {});
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        if (!elegida) { chips.scrollIntoView({ behavior: 'smooth', block: 'center' }); chips.classList.add('falta'); setTimeout(() => chips.classList.remove('falta'), 1600); return; }
+        let id = guardado('eco-id'); if (!id) { id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()); guarda('eco-id', id); }
+        const bot = $('button', form); bot.disabled = true; bot.textContent = 'Enviando…';
+        fetch(API, { method: 'POST', body: JSON.stringify({ id, nombre: $('#sum-nombre').value.trim(), comunidad: elegida }) })
+          .then(r => r.json()).then(d => { if (!d || !d.ok) throw 0; datos = d; guarda('eco-sumado', '1'); form.innerHTML = '<p class="sum-ok">Listo. Gracias por cuidar el valle.</p>'; pintaCuenta(); })
+          .catch(() => { bot.disabled = false; bot.textContent = 'Sumarme'; let m = $('.sum-err', form); if (!m) { m = document.createElement('small'); m.className = 'sum-err'; form.appendChild(m); } m.textContent = 'No se pudo enviar. Revisa tu conexión e inténtalo otra vez.'; });
+      });
+    }
+  }
+
   /* ── antes y después: marcas ── */
   $$('.ad').forEach(ad => {
     const notas = $('#ad-notas'), bot = $('#ad-pins'); if (!notas) return;
